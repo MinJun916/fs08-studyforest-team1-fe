@@ -1,5 +1,4 @@
 import styles from "./Header.module.scss";
-
 import gong from "../assets/brand-marks/brand-gong.svg";
 import bu   from "../assets/brand-marks/brand-bu.svg";
 import ui   from "../assets/brand-marks/brand-ui.svg";

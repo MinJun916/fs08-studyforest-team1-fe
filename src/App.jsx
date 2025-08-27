@@ -1,5 +1,13 @@
-import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout.jsx";
+import Home from "./pages/Home.jsx";
 
 export default function App() {
-  return <Header />;
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />   {/* / 경로 */}
+      </Route>
+    </Routes>
+  );
 }
