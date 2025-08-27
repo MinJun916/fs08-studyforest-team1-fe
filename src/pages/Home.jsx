@@ -1,5 +1,6 @@
-function Home() {
-  return <h1>STUDYFOREST</h1>;
-}
+import React from "react";
+import AuthForm from "@/component/auth/AuthForm.jsx";
 
-export default Home;
+export default function Home() {
+  return <AuthForm />;
+}

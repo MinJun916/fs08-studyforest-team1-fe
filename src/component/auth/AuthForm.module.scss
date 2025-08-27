@@ -1,0 +1,49 @@
+@use "@/config/variables" as v;
+
+.wrap {
+  width: 648px;
+  height: 48px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.inline {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: end;
+}
+.btn {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f7f7f7;
+  cursor: pointer;
+}
+.title {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  background: transparent center center no-repeat;
+  background-size: contain;
+}
+
+.show {
+  background-image: url("/src/Icons/btn_visibility_off_24px.svg");
+}
+
+.hide {
+  background-image: url("/src/Icons/Vector.svg");
+}

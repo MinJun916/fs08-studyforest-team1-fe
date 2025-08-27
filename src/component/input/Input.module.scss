@@ -1,39 +1,20 @@
-/* src/components/input.module.scss */
+/* /src/component/input/Input.module.scss */
 @use "@/config/variables" as v;
 @use "@/config/mixin" as m;
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
 .label {
-  display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
+  @include m.form-label; // ✅ 이제 인식됨
 }
 
 .input,
 .textarea {
-  margin-top: 6px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  outline: none;
-
-  &:focus {
-    border-color: #4cafef;
-    box-shadow: 0 0 4px rgba(76, 175, 239, 0.3);
-  }
+  @include m.input-base; // ✅ 공통 인풋 스타일
 }
 
-.textarea {
-  min-height: 80px;
-  resize: vertical;
+.inline {
+  @include m.inline-center(8px);
+}
+
+.btn {
+  @include m.btn-base;
 }
