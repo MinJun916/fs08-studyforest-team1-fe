@@ -1,0 +1,59 @@
+// 자주 쓰는 믹스인
+@mixin input-base {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: $input-height;
+  padding: 0 16px;
+  border-radius: $input-radius;
+  border: 1px solid $gray-300;
+  background: white;
+  box-shadow: $shadow-sm;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+
+  &:focus-within {
+    border-color: $primary;
+    box-shadow: $focus-ring;
+  }
+
+  &.error {
+    border-color: $danger;
+  }
+
+  input {
+    flex: 1;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 16px;
+    color: $gray-900;
+    &::placeholder {
+      color: $gray-500;
+    }
+  }
+
+  button.icon {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 6px;
+    display: grid;
+    place-items: center;
+  }
+}
+
+@mixin sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,7 +1,5 @@
 function Home() {
-    return (
-        <h1>STUDYFOREST</h1>
-    )
+  return <h1>STUDYFOREST</h1>;
 }
 
 export default Home;
