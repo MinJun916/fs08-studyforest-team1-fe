@@ -1,6 +1,5 @@
-import "./Header.scss";
+import styles from "./Header.module.scss";
 
-// Vite 파일 URL import
 import gong from "../assets/brand-marks/brand-gong.svg";
 import bu   from "../assets/brand-marks/brand-bu.svg";
 import ui   from "../assets/brand-marks/brand-ui.svg";
@@ -10,25 +9,18 @@ export default function Header() {
   return (
     <header className="site-header" role="banner">
       <div className="header-inner">
-        {/* 브랜드 마크 (공/부/의/숲) */}
-        <ul className="brand-marks" aria-label="브랜드 마크">
-          <li className="brand-mark">
-            <img src={gong} alt="공" width={41} height={44} />
-          </li>
-          <li className="brand-mark">
-            <img src={bu} alt="부" width={42} height={44} />
-          </li>
-          <li className="brand-mark">
-            <img src={ui} alt="의" width={33} height={35} />
-          </li>
-          <li className="brand-mark">
-            <img src={sup} alt="숲" width={57} height={58} />
-          </li>
-        </ul>
 
-        <button className="cta" type="button" aria-label="스터디 만들기">
-          <span>스터디 만들기</span>
-        </button>
+        {/* 브랜드 링크로 묶기 */}
+        <a href="/" className= {styles.brand} aria-label="공부의 숲 홈">
+          <ul className={styles.brand-marks}>
+            <li className={styles.brand-marks}><img src={gong} alt="공" width={41} height={44} /></li>
+            <li className={styles.brand-marks}><img src={bu}   alt="부" width={42} height={44} /></li>
+            <li className={styles.brand-marks}><img src={ui}   alt="의" width={33} height={35} /></li>
+            <li className={styles.brand-marks}><img src={sup}  alt="숲" width={57} height={58} /></li>
+          </ul>
+        </a>
+
+        <button className={styles.cta} type="button"><span>스터디 만들기</span></button>
       </div>
     </header>
   );
