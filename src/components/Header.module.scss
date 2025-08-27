@@ -1,57 +1,124 @@
 @use "../config/variables" as v;
 @use "sass:color";
 
-
+/* 레이아웃 */
 $header-h: 100px;
-$pad-y: 20px;
-$pad-x-desktop: 260px;
+$pad-y: 21px;
+$pad-x-desktop: 220px;
 $maxw: 1920px;
 
-.site-header { background: v.$bg; border-bottom: 1px solid v.$grayDD; }
-.header-inner {
-  height: $header-h; max-width: $maxw; margin: 0 auto;
+.siteHeader {
+  background: v.$bg;
+  border-bottom: 1px solid v.$grayDD;
+}
+
+.headerInner {
+  height: $header-h;
+  max-width: $maxw;
+  margin: 0 auto;
   padding: $pad-y $pad-x-desktop;
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
 }
 
-/* 변경: stickers -> brand-marks */
-.brand-marks {
-  display: flex; 
-  gap: 3px; 
-  margin: 0; 
-  padding: 0; 
-  list-style: none;
-  /* align-items: flex-end; // 바닥선 맞출 때만 사용 */
-}
-.brand-mark { display: grid; place-items: center; }
-.brand-mark img { display: block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.15)); }
+/* 브랜드(로고) */
+.brand {
+  display: inline-flex;
+  text-decoration: none;
 
-/* CTA 동일 */
-.cta {
-  position: relative; 
-  width: 252px; 
-  height: 58px; 
-  border: none; 
-  border-radius: 16px;
-  background: v.$brand; 
-  cursor: pointer;
-  &::after { content:""; position:absolute; inset:0; border-radius:inherit;
-    transform: translateY(2px); background: rgba(0,0,0,.12); filter: blur(.5px); z-index:-1; }
-  span {
-    display:grid; place-items:center; height:100%; color:#fff; font-size:18px; font-weight:400;
-    font-family:"EF_jejudoldam", system-ui, "Noto Sans KR", Arial, sans-serif; line-height:1;
+  &:focus-visible {
+    outline: 3px solid rgba(0,0,0,.35);
+    outline-offset: 4px;
+    border-radius: 6px;
   }
-  transition: transform .05s ease, filter .2s ease, box-shadow .2s ease;
-  &:hover { filter: brightness(.97); }
-  &:active { transform: translateY(1px); }
 }
 
-@media (max-width:1280px){ .header-inner{ padding:$pad-y 40px; } .cta{ width:220px; height:50px; } }
-@media (max-width:744px){
-  .header-inner{ padding:$pad-y 16px; }
-  .brand-marks{ gap:8px; }
-  .cta{ width:auto; min-width:160px; padding:0 16px; }
+.brandMarks {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: flex-end; /* 바닥선 맞춤 */
+  height: 60px;
+}
+
+.brandMark {
+  display: grid;
+  place-items: end center;
+}
+
+.brandMark + .brandMark {
+  margin-left: -4px; /* SVG 좌우 여백 상쇄해서 더 붙여 보이게 */
+}
+
+.brandMark img {
+  display: block;
+  filter: drop-shadow(0 1px 0 rgba(0,0,0,.15));
+}
+
+/* CTA 버튼 (입체감 스타일 유지 예시) */
+.cta {
+  position: relative;
+  width: 252px;
+  height: 58px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid color.scale(v.$brand, $lightness: -18%);
+  border-radius: 18px;
+  cursor: pointer;
+
+  background: linear-gradient(
+    to bottom,
+    color.scale(v.$brand, $lightness: 10%),
+    color.scale(v.$brand, $lightness: -4%)
+  );
+  box-shadow:
+    0 3px 0 color.scale(v.$brand, $lightness: -28%),
+    inset 0 2px 0 rgba(255,255,255,.35),
+    inset 0 -3px 0 rgba(0,0,0,.12);
+
+  display: grid;
+  place-items: center;
+
+  span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "EF_jejudoldam", system-ui, "Noto Sans KR", Arial, sans-serif;
+    line-height: 1;
+    letter-spacing: .2px;
+    text-shadow:
+      0 1px 0 rgba(0,0,0,.18),
+      0 0 1px rgba(0,0,0,.08);
+  }
+
+  transition: transform .05s ease, filter .2s ease, box-shadow .2s ease;
+
+  &:hover  { filter: brightness(.98); }
+  &:active {
+    transform: translateY(1px);
+    box-shadow:
+      0 2px 0 color.scale(v.$brand, $lightness: -28%),
+      inset 0 1px 0 rgba(255,255,255,.3),
+      inset 0 -2px 0 rgba(0,0,0,.18);
+  }
+  &:focus-visible {
+    outline: 3px solid rgba(0,0,0,.35);
+    outline-offset: 3px;
+  }
+}
+
+/* 반응형 */
+@media (max-width: 1280px) {
+  .headerInner { padding: $pad-y 40px; }
+  .cta { width: 232px; }
+}
+@media (max-width: 744px) {
+  .headerInner { padding: $pad-y 16px; }
+  .brandMarks { gap: 8px; height: 48px; }
+  .brandMark + .brandMark { margin-left: -3px; }
+  .cta { width: auto; min-width: 180px; padding: 8px 16px; }
 }

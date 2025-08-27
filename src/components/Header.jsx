@@ -7,20 +7,30 @@ import sup  from "../assets/brand-marks/brand-sup.svg";
 
 export default function Header() {
   return (
-    <header className="site-header" role="banner">
-      <div className="header-inner">
+    <header className={styles.siteHeader} role="banner">
+      <div className={styles.headerInner}>
 
         {/* 브랜드 링크로 묶기 */}
-        <a href="/" className= {styles.brand} aria-label="공부의 숲 홈">
-          <ul className={styles.brand-marks}>
-            <li className={styles.brand-marks}><img src={gong} alt="공" width={41} height={44} /></li>
-            <li className={styles.brand-marks}><img src={bu}   alt="부" width={42} height={44} /></li>
-            <li className={styles.brand-marks}><img src={ui}   alt="의" width={33} height={35} /></li>
-            <li className={styles.brand-marks}><img src={sup}  alt="숲" width={57} height={58} /></li>
+        <a href="/" className={styles.brand} aria-label="공부의 숲 홈">
+          <ul className={styles.brandMarks}>
+            <li className={styles.brandMark}>
+              <img src={gong} alt="공" width={41} height={44} />
+            </li>
+            <li className={styles.brandMark}>
+              <img src={bu} alt="부" width={42} height={44} />
+            </li>
+            <li className={styles.brandMark}>
+              <img src={ui} alt="의" width={33} height={35} />
+            </li>
+            <li className={styles.brandMark}>
+              <img src={sup} alt="숲" width={57} height={58} />
+            </li>
           </ul>
         </a>
 
-        <button className={styles.cta} type="button"><span>스터디 만들기</span></button>
+        <button className={styles.cta} type="button" aria-label="스터디 만들기">
+          <span>스터디 만들기</span>
+        </button>
       </div>
     </header>
   );
