@@ -1,0 +1,44 @@
+@use "../config/variables" as v;
+
+$header-h: 100px;
+$pad-y: 20px;
+$pad-x-desktop: 260px;
+$maxw: 1920px;
+
+.site-header { background: v.$bg; border-bottom: 1px solid v.$grayDD; }
+.header-inner {
+  height: $header-h; max-width: $maxw; margin: 0 auto;
+  padding: $pad-y $pad-x-desktop;
+  display: flex; align-items: center; justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* 변경: stickers -> brand-marks */
+.brand-marks {
+  display: flex; gap: 10px; margin: 0; padding: 0; list-style: none;
+  /* align-items: flex-end; // 바닥선 맞출 때만 사용 */
+}
+.brand-mark { display: grid; place-items: center; }
+.brand-mark img { display: block; filter: drop-shadow(0 1px 0 rgba(0,0,0,.15)); }
+
+/* CTA 동일 */
+.cta {
+  position: relative; width: 252px; height: 54px; border: none; border-radius: 12px;
+  background: v.$brand; cursor: pointer;
+  &::after { content:""; position:absolute; inset:0; border-radius:inherit;
+    transform: translateY(2px); background: rgba(0,0,0,.12); filter: blur(.5px); z-index:-1; }
+  span {
+    display:grid; place-items:center; height:100%; color:#fff; font-size:18px; font-weight:400;
+    font-family:"EF_jejudoldam", system-ui, "Noto Sans KR", Arial, sans-serif; line-height:1;
+  }
+  transition: transform .05s ease, filter .2s ease, box-shadow .2s ease;
+  &:hover { filter: brightness(.97); }
+  &:active { transform: translateY(1px); }
+}
+
+@media (max-width:1280px){ .header-inner{ padding:$pad-y 40px; } .cta{ width:220px; height:50px; } }
+@media (max-width:744px){
+  .header-inner{ padding:$pad-y 16px; }
+  .brand-marks{ gap:8px; }
+  .cta{ width:auto; min-width:160px; padding:0 16px; }
+}
