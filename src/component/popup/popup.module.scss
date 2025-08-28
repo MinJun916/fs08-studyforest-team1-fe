@@ -1,0 +1,112 @@
+/* src/component/popup/popup.module.scss */
+@use "@/config/variables" as v; // _variables.scss 를 variables 로 import
+/* mixin 파일이 있긴 하지만 안전하게 변수만 사용합니다. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.md {
+  max-width: 720px;
+  margin: 0 20px;
+}
+.sm {
+  max-width: 520px;
+  margin: 0 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: v.$black;
+  text-align: center;
+}
+
+.message {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: v.$gray81;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn {
+  flex: 1;
+  height: 56px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.02s ease-in,
+    box-shadow 0.2s ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.primary {
+  background: v.$brand;
+  color: #fff;
+
+  &:hover {
+    filter: brightness(0.98);
+  }
+  &:focus-visible {
+    outline: 3px solid rgba(153, 192, 142, 0.35);
+    outline-offset: 2px;
+  }
+}
+
+.ghost {
+  background: v.$grayEE;
+  color: v.$black;
+  border-color: v.$grayDD;
+
+  &:hover {
+    filter: brightness(0.98);
+  }
+  &:focus-visible {
+    outline: 3px solid rgba(0, 0, 0, 0.06);
+    outline-offset: 2px;
+  }
+}
+
+/* 반응형 간격 튜닝 */
+@media (max-width: 520px) {
+  .popup {
+    padding: 24px 20px;
+    gap: 20px;
+  }
+  .btn {
+    height: 52px;
+  }
+}
