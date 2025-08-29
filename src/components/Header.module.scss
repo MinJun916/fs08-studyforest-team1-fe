@@ -9,7 +9,8 @@ $maxw: 1920px;
 
 .siteHeader {
   background: v.$bg;
-  border-bottom: 1px solid v.$grayDD;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 .headerInner {
