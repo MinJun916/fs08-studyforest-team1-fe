@@ -1,47 +1,52 @@
-// // CardsDemo
-// import React from "react";
-// import AuthForm from "@/component/auth/AuthForm.jsx";
-// import Input from "@/component/input/Input.jsx";
-// import PasswordInput from "@/component/input/PasswordInput.jsx";
-// import CardsDemo from "@/component/card/card.jsx";
-
-// export default function Home() {
-//   return (
-//     <>
-//       <AuthForm />
-//       <PasswordInput />
-//       {/* <Input /> */}
-//       {/* <CardsDemo /> */}
-//     </>
-//   );
-// }
-
-// pages/Home.jsx (테스트용 일부만 예시)
-import React, { useState } from "react";
-import NicknameInput from "@/component/input/NicknameInput.jsx";
-import SearchInput from "@/component/input/SearchInput.jsx";
-import BioTextarea from "@/component/input/BioTextarea.jsx";
-import StudyNameInput from "@/component/input/StudyNameInput.jsx";
+// CardsDemo
+import React from "react";
+import Input from "@/component/input/Input.jsx";
+import PasswordInput from "@/component/input/PasswordInput.jsx";
+import AuthForm from "@/component/auth/AuthForm.jsx";
+import CardsDemo from "@/component/card/card.jsx";
 
 export default function Home() {
-  const [nickname, setNickname] = useState("");
-  const [keyword, setKeyword] = useState("");
-  const [bio, setBio] = useState("");
-  const [studyName, setStudyName] = useState("");
+  const navigate = useNavigate();
 
   return (
-    <div style={{ padding: 24, maxWidth: 648, margin: "0 auto" }}>
-      <NicknameInput value={nickname} onChange={setNickname} />
-      <SearchInput
-        value={keyword}
-        onChange={setKeyword}
-        onSearch={() => alert(`검색: ${keyword}`)}
-      />
-      <BioTextarea value={bio} onChange={setBio} />
-      <StudyNameInput value={studyName} onChange={setStudyName} />
-    </div>
+    <>
+      <AuthForm />
+      <button onClick={() => navigate("/workshop")}>
+        Workshop 페이지로 이동
+      </button>
+      {/* <PasswordInput />
+      <Input />
+      <CardsDemo /> */}
+    </>
   );
 }
+
+// // pages/Home.jsx (테스트용 일부만 예시)
+// import React, { useState } from "react";
+// import NicknameInput from "@/component/input/NicknameInput.jsx";
+// import SearchInput from "@/component/input/SearchInput.jsx";
+// import BioTextarea from "@/component/input/BioTextarea.jsx";
+// import StudyNameInput from "@/component/input/StudyNameInput.jsx";
+
+// export default function Home() {
+//   const [nickname, setNickname] = useState("");
+//   const [keyword, setKeyword] = useState("");
+//   const [bio, setBio] = useState("");
+//   const [studyName, setStudyName] = useState("");
+
+//   return (
+//     <div style={{ padding: 24, maxWidth: 648, margin: "0 auto" }}>
+//       <NicknameInput value={nickname} onChange={setNickname} />
+//       <SearchInput
+//         value={keyword}
+//         onChange={setKeyword}
+//         onSearch={() => alert(`검색: ${keyword}`)}
+//       />
+//       <BioTextarea value={bio} onChange={setBio} />
+//       <StudyNameInput value={studyName} onChange={setStudyName} />
+//     </div>
+//   );
+// }
 
 // //popup
 // import React, { useState } from "react";

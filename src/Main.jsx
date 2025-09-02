@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "@pages/Home.jsx";
+// import Workshop from "@pages/Workshop.jsx";
 import "./styles/globals.scss";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -9,6 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        {/* <Route path="/workshop" element={<Workshop />} /> */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
