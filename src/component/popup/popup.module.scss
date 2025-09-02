@@ -110,3 +110,33 @@
     height: 52px;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.headerRight {
+  background: transparent;
+  border: 0;
+  font-size: 14px;
+  color: #6a6a6a;
+  cursor: pointer;
+}
+.subtitle {
+  text-align: center;
+  color: #6a6a6a;
+  margin: 8px 0 16px;
+}
+@media (max-width: 768px) {
+  .md {
+    max-width: 94vw;
+  } /* 반응형: 태블릿 이하 폭 유동 */
+}
+@media (max-width: 480px) {
+  .popup {
+    border-radius: 12px;
+    padding: 16px;
+  }
+}
