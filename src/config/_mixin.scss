@@ -1,0 +1,64 @@
+/* /src/config/_mixin.scss */
+@use "sass:color";
+@use "@/config/variables" as v;
+
+/* 라벨 공통 스타일 */
+@mixin form-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333; // 필요하면 v.$black 등으로 교체 가능
+}
+
+/* 포커스 링 */
+@mixin focus-ring($c: #4cafef) {
+  border-color: $c;
+  box-shadow: 0 0 4px rgba(76, 175, 239, 0.3);
+}
+
+/* 인풋/텍스트에어리어 공통 */
+@mixin input-base {
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid v.$grayDD; // variables.scss의 $grayDD 사용
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    @include focus-ring();
+  }
+}
+
+/* 한 줄 정렬 */
+@mixin inline-center($gap: 8px) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+/* 버튼 기본 */
+@mixin btn-base {
+  padding: 8px 12px;
+  border: 1px solid v.$grayDD;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+
+  &:hover {
+    background: v.$grayEE;
+  }
+}
+
+// src/config/_mixin.scss
+
+@mixin button-reset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}

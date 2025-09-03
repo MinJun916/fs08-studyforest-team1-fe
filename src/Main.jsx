@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App.jsx";
-import './styles/fonts.scss';
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "@pages/Home.jsx";
+import Workshop from "@pages/Workshop.jsx";
+import "./styles/globals.scss";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/workshop" element={<Workshop />} />
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode>
 );
