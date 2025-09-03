@@ -1,5 +1,5 @@
-@use "@/config/_variables.scss" as v;
-@use "@/config/_mixin.scss" as m;
+@use '@/config/_variables.scss' as v;
+@use '@/config/_mixin.scss' as m;
 
 .page {
   background: v.$bg;
@@ -211,23 +211,23 @@
     border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
   }
-  &[class*="lg"] .badge {
+  &[class*='lg'] .badge {
     font-size: 18px;
   }
-  &[class*="md"] .badge {
+  &[class*='md'] .badge {
     font-size: 14px;
   }
 
-  .badge[data-variant="pink"] {
+  .badge[data-variant='pink'] {
     background: #f6a1b8;
   }
-  .badge[data-variant="yellow"] {
+  .badge[data-variant='yellow'] {
     background: #f3cc68;
   }
-  .badge[data-variant="blue"] {
+  .badge[data-variant='blue'] {
     background: #82c1d8;
   }
-  .badge[data-variant="green"] {
+  .badge[data-variant='green'] {
     background: #99c08e;
   }
 }

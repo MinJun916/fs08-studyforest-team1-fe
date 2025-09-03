@@ -1,6 +1,6 @@
 // src/component/modal/HabitsEditModal.jsx
-import React, { useState } from "react";
-import Popup from "@/component/popup/popup.jsx";
+import React, { useState } from 'react';
+import Popup from '@/component/popup/popup.jsx';
 
 export default function HabitsEditModal({
   open,
@@ -9,16 +9,15 @@ export default function HabitsEditModal({
   onSubmit, // (habits: string[]) => void
 }) {
   const [habits, setHabits] = useState(initialHabits);
-  const [draft, setDraft] = useState("");
+  const [draft, setDraft] = useState('');
 
   const addHabit = () => {
     const v = draft.trim();
     if (!v) return;
     setHabits((list) => [...list, v]);
-    setDraft("");
+    setDraft('');
   };
-  const removeHabit = (idx) =>
-    setHabits((list) => list.filter((_, i) => i !== idx));
+  const removeHabit = (idx) => setHabits((list) => list.filter((_, i) => i !== idx));
 
   const handleSubmit = () => {
     onSubmit?.(habits);
@@ -30,8 +29,8 @@ export default function HabitsEditModal({
       {/* 리스트 */}
       <div
         style={{
-          maxHeight: "46vh",
-          overflowY: "auto",
+          maxHeight: '46vh',
+          overflowY: 'auto',
           marginTop: 12,
           paddingRight: 4,
         }}
@@ -40,32 +39,32 @@ export default function HabitsEditModal({
           <div
             key={i}
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              background: "#F2F2F2",
-              padding: "14px 16px",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              background: '#F2F2F2',
+              padding: '14px 16px',
               borderRadius: 20,
-              margin: "10px 0",
+              margin: '10px 0',
             }}
           >
-            <span style={{ color: "#666" }}>{h}</span>
+            <span style={{ color: '#666' }}>{h}</span>
             <button
               type="button"
               aria-label="삭제"
               onClick={() => removeHabit(i)}
               style={{
-                display: "grid",
-                placeItems: "center",
+                display: 'grid',
+                placeItems: 'center',
                 width: 36,
                 height: 36,
-                borderRadius: "50%",
-                border: "none",
-                background: "#FFE4EA",
-                color: "#E24672",
+                borderRadius: '50%',
+                border: 'none',
+                background: '#FFE4EA',
+                color: '#E24672',
                 fontSize: 18,
                 fontWeight: 800,
-                cursor: "pointer",
+                cursor: 'pointer',
               }}
             >
               🗑
@@ -78,34 +77,34 @@ export default function HabitsEditModal({
       <div style={{ marginTop: 16 }}>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 8,
-            border: "2px solid #222",
+            border: '2px solid #222',
             borderRadius: 14,
-            padding: "10px 12px",
+            padding: '10px 12px',
           }}
         >
           <input
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addHabit()}
+            onKeyDown={(e) => e.key === 'Enter' && addHabit()}
             placeholder="+"
             style={{
               flex: 1,
-              border: "none",
-              outline: "none",
-              background: "transparent",
+              border: 'none',
+              outline: 'none',
+              background: 'transparent',
             }}
           />
           <button
             type="button"
             onClick={addHabit}
             style={{
-              border: "none",
-              background: "transparent",
+              border: 'none',
+              background: 'transparent',
               fontSize: 20,
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
           >
             ＋
@@ -114,7 +113,7 @@ export default function HabitsEditModal({
       </div>
 
       {/* 하단 액션 */}
-      <div style={{ display: "flex", gap: 12, marginTop: 20 }}>
+      <div style={{ display: 'flex', gap: 12, marginTop: 20 }}>
         <button
           type="button"
           onClick={onClose}
@@ -122,9 +121,9 @@ export default function HabitsEditModal({
             flex: 1,
             height: 56,
             borderRadius: 12,
-            border: "none",
-            background: "#E5E5E5",
-            color: "#666",
+            border: 'none',
+            background: '#E5E5E5',
+            color: '#666',
             fontWeight: 800,
           }}
         >
@@ -137,9 +136,9 @@ export default function HabitsEditModal({
             flex: 1,
             height: 56,
             borderRadius: 12,
-            border: "none",
-            background: "#99C08E",
-            color: "#fff",
+            border: 'none',
+            background: '#99C08E',
+            color: '#fff',
             fontWeight: 800,
           }}
         >

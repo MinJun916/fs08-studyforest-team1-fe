@@ -1,14 +1,43 @@
-.portal { position: fixed; inset: 0; pointer-events: none; }
+.portal {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
 
-.top-right   { display: grid; justify-items: end;   align-content: start;  padding: 20px; }
-.top-left    { display: grid; justify-items: start; align-content: start;  padding: 20px; }
-.bottom-right{ display: grid; justify-items: end;   align-content: end;    padding: 20px; }
-.bottom-left { display: grid; justify-items: start; align-content: end;    padding: 20px; }
-.top-center  { display: grid; justify-items: center;align-content: start;  padding: 20px; }
+.top-right {
+  display: grid;
+  justify-items: end;
+  align-content: start;
+  padding: 20px;
+}
+.top-left {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  padding: 20px;
+}
+.bottom-right {
+  display: grid;
+  justify-items: end;
+  align-content: end;
+  padding: 20px;
+}
+.bottom-left {
+  display: grid;
+  justify-items: start;
+  align-content: end;
+  padding: 20px;
+}
+.top-center {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  padding: 20px;
+}
 .bottom-center {
   display: grid;
-  justify-items: center;  /* 가로 가운데 */
-  align-content: end;     /* 세로 아래 */
+  justify-items: center; /* 가로 가운데 */
+  align-content: end; /* 세로 아래 */
   padding: 20px;
 }
 
@@ -18,27 +47,30 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;                
-  padding: 14px 18px;      
-  border-radius: 12px;      
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 12px;
   box-shadow: none;
 }
 
 /* 베리언트 색 (피그마 토큰 + 폴백) */
-.point   { background: #E1EDDE; color:  #578246; }
-.warning { background: #FDE0E9;  color:  #F50E0E; }
-
-
-
+.point {
+  background: #e1edde;
+  color: #578246;
+}
+.warning {
+  background: #fde0e9;
+  color: #f50e0e;
+}
 
 /* 텍스트 (모바일 스펙에 맞춰 라인하이트 17px) */
-.message { 
-  margin: 0;  
-  font-size: 16px; 
-  line-height: normal; 
+.message {
+  margin: 0;
+  font-size: 16px;
+  line-height: normal;
   font-family: Pretendard;
   font-weight: 500;
- }
+}
 
 /* ─────────────────────────────────────────────── */
 /* 모바일 전용 보정 (≤ 743px: 안전영역까지 고려) */
@@ -70,7 +102,9 @@
   }
   .top-center {
     padding-top: max(20px, env(safe-area-inset-top));
-    padding-right: 20px; padding-bottom: 20px; padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
   }
 
   /* 본체 수치 자체는 이미 피그마 값이어서 변화 없음.

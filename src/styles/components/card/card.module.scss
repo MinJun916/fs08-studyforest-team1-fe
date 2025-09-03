@@ -1,5 +1,5 @@
-@use "@/config/_variables.scss" as v;
-@use "@/config/_mixin.scss" as m;
+@use '@/config/_variables.scss' as v;
+@use '@/config/_mixin.scss' as m;
 
 .card {
   position: relative;
@@ -33,11 +33,7 @@
   display: block;
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.55) 100%
-  );
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.55) 100%);
 }
 
 .inner {
