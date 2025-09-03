@@ -1,18 +1,18 @@
 // src/component/input/StudyNameInput.jsx
-import React from "react";
-import styles from "./Input.module.scss";
+import React from 'react';
+import styles from '@/styles/components/input/Input.module.scss';
 
 const NAME_RE = /^.{2,30}$/; // 최소 2자, 최대 30자(아무 글자)
 
 export default function StudyNameInput({
-  label = "스터디 이름",
-  placeholder = "스터디 이름을 입력하세요",
+  label = '스터디 이름',
+  placeholder = '스터디 이름을 입력하세요',
   value,
   onChange,
   required = true,
   maxLength = 30,
-  helpText = "2~30자",
-  id = "studyName",
+  helpText = '2~30자',
+  id = 'studyName',
 }) {
   const isValid = value ? NAME_RE.test(value) : !required;
   const describedBy = helpText ? `${id}-help` : undefined;

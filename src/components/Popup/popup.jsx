@@ -1,6 +1,6 @@
 // src/component/popup/popup.jsx
-import React, { useEffect, useRef } from "react";
-import styles from "./popup.module.scss";
+import React, { useEffect, useRef } from 'react';
+import styles from '@/styles/components/popup/popup.module.scss';
 
 /**
  * 공용 Popup 컴포넌트
@@ -18,15 +18,15 @@ import styles from "./popup.module.scss";
  */
 export default function Popup({
   open,
-  variant = "alert",
+  variant = 'alert',
   title,
   message,
-  confirmText = "확인",
-  cancelText = "취소",
+  confirmText = '확인',
+  cancelText = '취소',
   onConfirm,
   onCancel,
   onClose,
-  size = "md",
+  size = 'md',
 }) {
   const dialogRef = useRef(null);
   const firstBtnRef = useRef(null);
@@ -35,17 +35,17 @@ export default function Popup({
     if (!open) return;
     // ESC 닫기
     const onKey = (e) => {
-      if (e.key === "Escape") onClose && onClose();
+      if (e.key === 'Escape') onClose && onClose();
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener('keydown', onKey);
     // 최초 포커스
     setTimeout(() => firstBtnRef.current?.focus(), 0);
-    return () => document.removeEventListener("keydown", onKey);
+    return () => document.removeEventListener('keydown', onKey);
   }, [open, onClose]);
 
   if (!open) return null;
 
-  const isConfirm = variant === "confirm";
+  const isConfirm = variant === 'confirm';
 
   return (
     <div
@@ -55,7 +55,7 @@ export default function Popup({
     >
       <section
         ref={dialogRef}
-        className={`${styles.popup} ${size === "sm" ? styles.sm : styles.md}`}
+        className={`${styles.popup} ${size === 'sm' ? styles.sm : styles.md}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="popup-title"

@@ -1,22 +1,22 @@
-import React, { useMemo, useState } from "react";
-import Input from "@/component/input/Input";
-import styles from "./AuthForm.module.scss";
+import React, { useMemo, useState } from 'react';
+import Input from '@/component/input/Input';
+import styles from '@/styles/components/auth/AuthForm.module.scss';
 
 export default function AuthForm() {
   const [values, setValues] = useState({
-    id: "",
-    password: "",
-    passwordConfirm: "",
-    search: "",
+    id: '',
+    password: '',
+    passwordConfirm: '',
+    search: '',
   });
   const [showPw, setShowPw] = useState(false);
 
   const errors = useMemo(() => {
     const e = {};
-    if (!values.id.trim()) e.id = "닉네임을 입력해 주세요";
-    if (values.password.length < 6) e.password = "비밀번호를 입력해 주세요";
+    if (!values.id.trim()) e.id = '닉네임을 입력해 주세요';
+    if (values.password.length < 6) e.password = '비밀번호를 입력해 주세요';
     if (values.passwordConfirm !== values.password)
-      e.passwordConfirm = "비밀번호가 일치하지 않아요.";
+      e.passwordConfirm = '비밀번호가 일치하지 않아요.';
     return e;
   }, [values]);
 
@@ -28,7 +28,7 @@ export default function AuthForm() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (Object.keys(errors).length) {
-      alert("폼을 다시 확인해주세요.");
+      alert('폼을 다시 확인해주세요.');
       return;
     }
     alert(JSON.stringify(values, null, 2));
@@ -37,7 +37,7 @@ export default function AuthForm() {
   const togglePw = () => setShowPw((s) => !s);
 
   const onSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
       alert(`검색: ${values.search}`);
     }
@@ -54,19 +54,19 @@ export default function AuthForm() {
           onChange={onChange}
           placeholder="닉네임을 입력해 주세요"
           error={errors.id}
-          inputProps={{ autoComplete: "username" }}
+          inputProps={{ autoComplete: 'username' }}
         />
 
         <div className={styles.inline}>
           <Input
             label="비밀번호"
             name="password"
-            type={showPw ? "text" : "password"}
+            type={showPw ? 'text' : 'password'}
             value={values.password}
             onChange={onChange}
             placeholder="비밀번호를 입력해 주세요"
             error={errors.password}
-            inputProps={{ autoComplete: "new-password" }}
+            inputProps={{ autoComplete: 'new-password' }}
           />
           <button
             type="button"
@@ -78,12 +78,12 @@ export default function AuthForm() {
         <Input
           label="비밀번호 확인"
           name="passwordConfirm"
-          type={showPw ? "text" : "password"}
+          type={showPw ? 'text' : 'password'}
           value={values.passwordConfirm}
           onChange={onChange}
           placeholder="비밀번호를 다시 한 번 입력해 주세요"
           error={errors.passwordConfirm}
-          inputProps={{ autoComplete: "new-password" }}
+          inputProps={{ autoComplete: 'new-password' }}
         />
 
         <Input

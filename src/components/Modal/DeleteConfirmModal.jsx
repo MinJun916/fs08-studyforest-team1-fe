@@ -1,8 +1,8 @@
 // src/component/modal/PermissionModal.jsx
-import React, { useEffect, useState } from "react";
-import Popup from "@/component/popup/popup.jsx";
-import PasswordInput from "@/component/input/PasswordInput.jsx";
-import styles from "./PermissionModal.module.scss";
+import React, { useEffect, useState } from 'react';
+import Popup from '@/component/popup/popup.jsx';
+import PasswordInput from '@/component/input/PasswordInput.jsx';
+import styles from '@/styles/components/modal/PermissionMordal.module.scss';
 
 /**
  * 권한 확인 모달
@@ -12,30 +12,25 @@ import styles from "./PermissionModal.module.scss";
  * - onSubmit?: (pw:string) => void  // '수정하러 가기' 제출 시 콜백
  * - initialPassword?: string  // (옵션) 초기값
  */
-export default function PermissionModal({
-  isOpen,
-  onClose,
-  onSubmit,
-  initialPassword = "",
-}) {
+export default function PermissionModal({ isOpen, onClose, onSubmit, initialPassword = '' }) {
   const [password, setPassword] = useState(initialPassword);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
 
   // 모달이 열릴 때마다 초기화
   useEffect(() => {
     if (isOpen) {
       setPassword(initialPassword);
-      setError("");
+      setError('');
     }
   }, [isOpen, initialPassword]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!password.trim()) {
-      setError("비밀번호를 입력해 주세요.");
+      setError('비밀번호를 입력해 주세요.');
       return;
     }
-    setError("");
+    setError('');
     if (onSubmit) onSubmit(password);
   };
 
@@ -54,12 +49,7 @@ export default function PermissionModal({
           <h2 id="perm-title" className={styles.title}>
             연우의 개발공장
           </h2>
-          <button
-            type="button"
-            className={styles.exitBtn}
-            onClick={onClose}
-            aria-label="나가기"
-          >
+          <button type="button" className={styles.exitBtn} onClick={onClose} aria-label="나가기">
             나가기
           </button>
         </header>
@@ -85,11 +75,7 @@ export default function PermissionModal({
           </p>
         )}
 
-        <button
-          type="submit"
-          className={styles.primary}
-          disabled={!password.trim()}
-        >
+        <button type="submit" className={styles.primary} disabled={!password.trim()}>
           수정하러 가기
         </button>
       </form>
