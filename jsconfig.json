@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@config/*": ["src/config/*"],
+      "@components/*": ["src/components/*"],
+      "@pages/*": ["src/pages/*"]
+    },
+    "checkJs": false
+  },
+  "include": ["src", "vite.config.js"]
+}
