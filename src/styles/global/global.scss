@@ -1,0 +1,48 @@
+@use "@/config/variables" as v;
+@use "@/config/mixin" as m;
+@use "../config/_variables" as v;
+@font-face {
+  font-family: "EF_jejudoldam";
+  src: url("/fonts/EF_jejudoldam.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+/* 굵기가 하나뿐이어도 700로도 쓰고 싶다면 같은 파일을 한번 더 매핑 */
+@font-face {
+  font-family: "EF_jejudoldam";
+  src: url("/fonts/EF_jejudoldam.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: v.$bg !important; /* 헤더 배경과 같은 값 */
+}
+
+body {
+  margin: 0;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    "Malgun Gothic",
+    sans-serif;
+  color: v.$grayEE;
+  background: #fff;
+}

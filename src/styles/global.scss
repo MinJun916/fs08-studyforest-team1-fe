@@ -1,8 +1,0 @@
-@use "../config/_variables" as v;
-
-html, body, #root {
-  min-height: 100%;
-  background: v.$bg !important; /* 헤더 배경과 같은 값 */
-}
-
-body { margin: 0; }
