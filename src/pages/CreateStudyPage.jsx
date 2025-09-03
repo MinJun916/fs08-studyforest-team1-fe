@@ -1,43 +1,30 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import styles from "./CreateStudyPage.module.scss";
+import imgDesk   from "../assets/icons/bg-desk.png";
+import imgWindow from "../assets/icons/bg-window.png";
+import imgTiles  from "../assets/icons/bg-tiles.png";
+import imgPlant  from "../assets/icons/bg-plant.png";
+import eye from "../assets/icons/eye.png";
+import eyeOff from "../assets/icons/eye-off.png";
+import pawSelected from "../assets/icons/ic_bg_selected.png";
 
 export default function CreateStudyPage() {
-  const fileInputRef = useRef(null);
-
+  // 윗줄: 발바닥(기본) + 파스텔 3색  → 4칸
   const colorTiles = [
-    { id: "c1", type: "color", value: "#DDE7D5" }, // 연한 연두
-    { id: "c2", type: "color", value: "#F8EAB9" }, // 연한 샌드
-    { id: "c3", type: "color", value: "#DAEBF0" }, // 연한 민트블루
-    { id: "c4", type: "color", value: "#F7DCE1" }, // 연한 핑크
+    { id: "c1", kind: "color", value: "#DDE7D5" },
+    { id: "c2", kind: "color", value: "#F8EAB9" },
+    { id: "c3", kind: "color", value: "#DAEBF0" },
+    { id: "c4", kind: "color", value: "#F7DCE1" },
   ];
+  const DEFAULT_BG = { kind: "color", value: colorTiles[0].value }; // "#DDE7D5"
 
-  // 사진 타일은 우선 그라디언트로 대체(나중에 이미지 경로로 교체하면 됨)
+  // 아랫줄: 사진 4개 → 4칸
   const imageTiles = [
-    {
-      id: "g1",
-      type: "gradient",
-      value:
-        "linear-gradient(135deg, #EDEDED 0%, #D9D9D9 100%)", // 데스크 느낌
-    },
-    {
-      id: "g2",
-      type: "gradient",
-      value:
-        "linear-gradient(135deg, #F2E9D9 0%, #E7D6B8 100%)", // 창가/우드 톤
-    },
-    {
-      id: "g3",
-      type: "gradient",
-      value:
-        "linear-gradient(135deg, #9FCAD1 0%, #D9E6E7 100%)", // 타일
-    },
-    {
-      id: "g4",
-      type: "gradient",
-      value:
-        "linear-gradient(135deg, #5F8F68 0%, #9AC39D 100%)", // 몬스테라
-    },
-  ];
+  { id: "g1", kind: "image", value: `url(${imgDesk})` },
+  { id: "g2", kind: "image", value: `url(${imgWindow})` },
+  { id: "g3", kind: "image", value: `url(${imgTiles})` },
+  { id: "g4", kind: "image", value: `url(${imgPlant})` },
+];
 
   const [form, setForm] = useState({
     nickname: "",
@@ -45,9 +32,8 @@ export default function CreateStudyPage() {
     intro: "",
     password: "",
     password2: "",
-    background: null, // {kind: 'color' | 'image' | 'upload', value: string}
+    background: DEFAULT_BG,
   });
-
   const [showPw, setShowPw] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -56,34 +42,18 @@ export default function CreateStudyPage() {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const selectBackground = (bg) => {
-    setForm((f) => ({ ...f, background: bg }));
-  };
-
-  const onPickUpload = () => {
-    fileInputRef.current?.click();
-  };
-
-  const onUploadFile = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      selectBackground({ kind: "upload", value: reader.result });
-    };
-    reader.readAsDataURL(file);
-  };
+  const selectBackground = (bg) => setForm((f) => ({ ...f, background: bg }));
 
   const validate = () => {
     const next = {};
     if (!form.nickname.trim()) next.nickname = "닉네임을 입력해주세요.";
     if (!form.title.trim()) next.title = "스터디 이름을 입력해주세요.";
-    if (form.password.length < 1) next.password = "비밀번호를 입력해주세요.";
+    if (!form.background) next.background = "배경을 선택해주세요.";
+    if (!form.password) next.password = "비밀번호를 입력해주세요.";
     if (form.password && form.password.length < 4)
       next.password = "비밀번호를 4자 이상 입력해주세요.";
     if (form.password !== form.password2)
       next.password2 = "비밀번호가 일치하지 않습니다.";
-    if (!form.background) next.background = "배경을 선택해주세요.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -91,26 +61,21 @@ export default function CreateStudyPage() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-
-    // TODO: 실제 API 연결/라우팅 처리
     console.log("payload", form);
-    alert("임시: 입력값 콘솔 확인해보세요!");
+    alert("임시: 콘솔에서 값 확인하세요!");
   };
 
-  // 선택된 배경을 미리보기 스타일로 만들어서 버튼/타일 하이라이트에 사용
-  const isSelectedBg = (bg) => {
-    const sel = form.background;
-    if (!sel) return false;
-    return sel.kind === bg.kind && sel.value === bg.value;
-  };
-
+ const norm = (x) => (x ?? "").toString().trim().toLowerCase();
+ const isSelected = (bg) => {
+  const sel = form.background;
+  return !!sel && sel.kind === bg.kind && norm(sel.value) === norm(bg.value);
+};
   return (
     <div className={styles.page}>
       <main className={styles.card}>
         <h2 className={styles.title}>스터디 만들기</h2>
 
         <form onSubmit={onSubmit} noValidate>
-          {/* 닉네임 */}
           <div className={styles.field}>
             <label htmlFor="nickname">닉네임</label>
             <input
@@ -126,7 +91,6 @@ export default function CreateStudyPage() {
             )}
           </div>
 
-          {/* 스터디 이름 */}
           <div className={styles.field}>
             <label htmlFor="title">스터디 이름</label>
             <input
@@ -140,7 +104,6 @@ export default function CreateStudyPage() {
             {errors.title && <p className={styles.errorMsg}>{errors.title}</p>}
           </div>
 
-          {/* 소개 */}
           <div className={styles.field}>
             <label htmlFor="intro">소개</label>
             <textarea
@@ -157,71 +120,43 @@ export default function CreateStudyPage() {
           <div className={styles.field}>
             <span className={styles.labelLite}>배경을 선택해주세요</span>
 
+            {/* 1줄: 발바닥 + 파스텔 3개 */}
             <div className={styles.bgGrid}>
-              {/* 업로드 타일 */}
-              <button
-                type="button"
-                className={`${styles.bgTile} ${styles.uploadTile} ${
-                  form.background?.kind === "upload" ? styles.selected : ""
-                }`}
-                onClick={onPickUpload}
-                aria-label="배경 이미지 업로드"
-              >
-                <div className={styles.uploadDot}>
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      d="M12 5v14M5 12h14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  onChange={onUploadFile}
-                  hidden
-                />
-              </button>
-
-              {/* 파스텔 색 타일 3개 */}
-              {colorTiles.slice(1).map((t) => (
+              {colorTiles.map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   className={`${styles.bgTile} ${
-                    isSelectedBg({ kind: "color", value: t.value })
+                    isSelected({ kind: "color", value: t.value })
                       ? styles.selected
                       : ""
                   }`}
-                  style={{ background: t.value }}
+                  style={{ backgroundColor: t.value }}
                   onClick={() =>
                     selectBackground({ kind: "color", value: t.value })
                   }
                   aria-label="색상 배경 선택"
-                />
+                >
+                  {isSelected({ kind: "color", value: t.value }) && (
+                    <img className={styles.tileIcon} src={pawSelected} alt="" />
+                  )}
+                </button>
               ))}
             </div>
 
+            {/* 2줄: 사진 4개 */}
             <div className={styles.bgGrid}>
               {imageTiles.map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   className={`${styles.bgTile} ${
-                    isSelectedBg({ kind: "image", value: t.value })
+                    isSelected({ kind: "image", value: t.value })
                       ? styles.selected
                       : ""
                   }`}
                   style={{
-                    background: t.value,
+                    backgroundImage: t.value,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
@@ -229,7 +164,12 @@ export default function CreateStudyPage() {
                     selectBackground({ kind: "image", value: t.value })
                   }
                   aria-label="이미지 배경 선택"
-                />
+                >
+                {isSelected({ kind: "image", value: t.value }) && (
+                    <img className={styles.tileIcon} src={pawSelected} alt="" />
+                  )}
+                </button>
+                
               ))}
             </div>
 
@@ -257,29 +197,7 @@ export default function CreateStudyPage() {
                 onClick={() => setShowPw((v) => !v)}
                 aria-label={showPw ? "비밀번호 숨기기" : "비밀번호 표시"}
               >
-                {showPw ? (
-                  // eye-off
-                  <svg width="18" height="18" viewBox="0 0 24 24">
-                    <path
-                      d="M3 3l18 18M10.58 10.58A3 3 0 0012 15a3 3 0 002.42-4.42M9.88 5.09A10.45 10.45 0 0112 5c5 0 9.27 3.11 10.5 7.5a10.94 10.94 0 01-3.05 4.77M6.11 6.11A10.94 10.94 0 001.5 12.5a10.89 10.89 0 004.56 5.69"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      fill="none"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                ) : (
-                  // eye
-                  <svg width="18" height="18" viewBox="0 0 24 24">
-                    <path
-                      d="M1.5 12.5C2.73 8.11 7 5 12 5s9.27 3.11 10.5 7.5C21.27 16.89 17 20 12 20S2.73 16.89 1.5 12.5z"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      fill="none"
-                    />
-                    <circle cx="12" cy="12.5" r="3" fill="currentColor" />
-                  </svg>
-                )}
+                <img src={showPw ? eyeOff : eye} alt="" width="20" height="20" />
               </button>
             </div>
             {errors.password && (
@@ -304,7 +222,6 @@ export default function CreateStudyPage() {
             )}
           </div>
 
-          {/* 만들기 버튼 */}
           <div className={styles.btnRow}>
             <button className={styles.submitBtn} type="submit">
               만들기

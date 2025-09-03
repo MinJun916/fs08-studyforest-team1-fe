@@ -1,6 +1,10 @@
 @use "../config/variables" as v;
 @use "sass:color";
 
+$control-h: 44px;   // 모든 input 높이
+$eye-size: 20px;    // 눈 아이콘 이미지 크기
+$eye-gap: 12px;     // 오른쪽 여백
+
 /* CSS 변수는 v 토큰으로 채워서, 어디서든 var(...) 재사용 가능 */
 :root {
   --page-bg: #{v.$bg};          /* #F6F4EF */
@@ -22,7 +26,8 @@
   background: transparent;
   display: grid;
   place-items: start center;
-  padding: calc(100px + 24px) 16px 80px; /* 헤더 높이 100px 기준 */
+  padding: 40px 16px 80px;
+  
 }
 
 /* 카드: 스샷 넓이/라운드/그림자 값 */
@@ -31,15 +36,20 @@
   max-width: 100%;
   background: var(--card-bg);
   border-radius: var(--radius);
-  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+  box-shadow: 0 8px 24px #0000000f;
   padding: 24px 24px 40px 24px;
+}
+
+.card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;          /* <- 이 한 줄이 전체 세로 간격 컨트롤 */
 }
 
 /* 제목: */
 .title {
   font-size: 24px;
   font-weight: 800;
-  margin: 4px 0 12px;
   color: var(--text-1);
 }
 
@@ -47,21 +57,24 @@
 .field {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 16px;
   margin-bottom: 14px;
 }
 
 .field label {
-  font-size: 13px;     /*  라벨은 작고 담백하게 */
+  font-size: 18px;     /*  닉네임, 스터디 이름, 소개 */
   color: var(--text-1);
   font-weight: 600;
+  line-height: 1.3;
 }
 
 .labelLite {
   font-size: 18px;
+  font-family: Pretendard;    /* 배경을 선택해주세요 */
   color: var(--text-1);
   font-weight: 600;
   margin: 6px 0 8px;
+
 }
 
 .field input,
@@ -71,15 +84,21 @@
   border-radius: 10px;
   padding: 12px 14px;
   font-size: 14px;
+  font-family: Pretendard; 
+  color: var(--text-2);
   outline: none;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .field textarea {
-  resize: vertical;
-  min-height: 86px;
+  resize: none;
+  min-height: 88px;
 }
 
+.field input {
+  height: $control-h;
+  box-sizing: border-box;
+}
 .field input::placeholder,
 .field textarea::placeholder { color: var(--text-2); }
 
@@ -102,30 +121,50 @@
 
 /* 비밀번호 눈아이콘 */
 .pwWrap { position: relative; }
+
+.pwWrap input {
+  height: $control-h;
+  padding-right: calc(#{$eye-size} + #{$eye-gap} + 8px); // 아이콘 + 여백
+  width: 100%;
+  box-sizing: border-box;
+}
 .eyeBtn {
   position: absolute;
-  right: 10px; top: 50%;
+  right: $eye-gap;
+  top: 50%;
   transform: translateY(-50%);
-  background: transparent; border: 0;
-  padding: 6px; border-radius: 8px;
-  cursor: pointer; color: #7b7f86;
+  width: $eye-size;
+  height: $eye-size;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  cursor: pointer;
+  
 }
 .eyeBtn:hover { background: #f2f2f2; }
-
+.eyeBtn img { display: block; width: 100%; height: 100%; }
+/* 혹시 버튼 밖에 남은 고아 svg/img가 있으면 숨김 */
+.pwWrap > svg, .pwWrap > img { display: none !important; }
 /* 배경 타일: 1줄에 5개(스샷) */
 .bgGrid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   margin-bottom: 10px;
 }
 
-.bgTile {
-  height: 74px;                 /* 스샷 비율 */
-  border-radius: 12px;
+.bgTile {         
+  aspect-ratio: 1 / 1;          /* 정사각형으로 고정 */
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
   border: 1px solid var(--line);
   background: #f8f8f8;
   cursor: pointer;
+  position: relative;
   transition: transform .06s ease, box-shadow .12s ease, border-color .12s ease;
 }
 .bgTile:hover {
@@ -139,26 +178,28 @@
   border-color: var(--brand);
 }
 
-/* 업로드(+) 타일 */
-.uploadTile {
-  display: grid; place-items: center;
-  background: #e8efe3;
-}
-.uploadDot {
-  width: 28px; height: 28px;    /* 스샷처럼 더 작게 */
-  border-radius: 50%;
-  background: #fff;
-  display: grid; place-items: center;
-  color: #8aa88b;
-  border: 1px solid #d7e1d6;
-  box-shadow: 0 1px 0 rgba(0,0,0,.04) inset;
+/* 발바닥 아이콘(첫 타일) */
+.tileIcon {
+  position: absolute; 
+  inset: 0; 
+  margin: auto;
+  width: 32px; 
+  height: 32px;
+  display: block; 
+  pointer-events: none; 
+  opacity: .95;
+  z-index: 2;
 }
 
+
 /* 만들기 버튼 */
-.btnRow { margin-top: 16px; }
+.btnRow { margin-top: 40px; }
 .submitBtn {
-  width: 100%; height: 44px;
-  border-radius: 10px;
+  font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  width: 648px; height: 58px;
+  border-radius: 16px;
   border: 1px solid color.scale(v.$brand, $lightness: -18%);
   background: var(--brand);
   color: #fff; font-weight: 700; letter-spacing: .02em;

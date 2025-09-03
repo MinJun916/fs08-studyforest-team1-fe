@@ -1,4 +1,4 @@
-import styles from "./StudyCtaButton.module.scss";  // ← .scss 로 변경!
+import styles from "./StudyCtaButton.module.scss";  
 
 export default function StudyCtaButton({
   children = "스터디 만들기",
