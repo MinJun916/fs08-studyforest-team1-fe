@@ -35,6 +35,7 @@ export default function CreateStudyPage() {
     background: DEFAULT_BG,
   });
   const [showPw, setShowPw] = useState(false);
+  const [showPw2, setShowPw2] = useState(false);
   const [errors, setErrors] = useState({});
 
   const onChange = (e) => {
@@ -206,17 +207,29 @@ export default function CreateStudyPage() {
           </div>
 
           {/* 비밀번호 확인 */}
+          {/* 비밀번호 확인 */}
           <div className={styles.field}>
             <label htmlFor="password2">비밀번호 확인</label>
-            <input
-              id="password2"
-              name="password2"
-              type="password"
-              placeholder="닉네임을 입력해 주세요"
-              value={form.password2}
-              onChange={onChange}
-              className={errors.password2 ? styles.errorInput : ""}
-            />
+            <div className={styles.pwWrap}>
+              <input
+                id="password2"
+                name="password2"
+                type={showPw2 ? "text" : "password"}
+                placeholder="비밀번호를 다시 입력해 주세요"
+                value={form.password2}
+                onChange={onChange}
+                className={errors.password2 ? styles.errorInput : ""}
+                autoComplete="new-password"
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPw2(v => !v)}
+                aria-label={showPw2 ? "비밀번호 숨기기" : "비밀번호 표시"}
+              >
+                <img src={showPw2 ? eyeOff : eye} alt="" width="20" height="20" />
+              </button>
+            </div>
             {errors.password2 && (
               <p className={styles.errorMsg}>{errors.password2}</p>
             )}
@@ -224,7 +237,7 @@ export default function CreateStudyPage() {
 
           <div className={styles.btnRow}>
             <button className={styles.submitBtn} type="submit">
-              만들기
+              <span className={styles.btnText}>만들기</span>
             </button>
           </div>
         </form>

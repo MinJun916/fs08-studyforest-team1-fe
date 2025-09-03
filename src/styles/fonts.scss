@@ -1,18 +1,15 @@
 @font-face {
   font-family: "EF_jejudoldam";
-  src:
-    url("/fonts/EF_jejudoldam/EF_jejudoldam-Regular.woff2") format("woff2"),
-    url("/fonts/EF_jejudoldam/EF_jejudoldam.ttf") format("truetype"); /* 폴백(있을 때) */
+  src: url("/fonts/EF_jejudoldam.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
+/* 굵기가 하나뿐이어도 700로도 쓰고 싶다면 같은 파일을 한번 더 매핑 */
 @font-face {
   font-family: "EF_jejudoldam";
-  src:
-    url("/fonts/EF_jejudoldam/EF_jejudoldam-Regular.woff2") format("woff2"),
-    url("/fonts/EF_jejudoldam/EF_jejudoldam.ttf") format("truetype");
-  font-weight: 700; /* Bold가 따로 있으면 그 파일로 한 블록 더 추가 */
+  src: url("/fonts/EF_jejudoldam.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }

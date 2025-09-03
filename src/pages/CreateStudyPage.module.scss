@@ -46,8 +46,17 @@ $eye-gap: 12px;     // 오른쪽 여백
   gap: 10px;          /* <- 이 한 줄이 전체 세로 간격 컨트롤 */
 }
 
+.card :is(h1, h2, h3) {
+  margin: 0;                 /* ← 이 한 줄로 위·아래 기본마진 제거 */
+}
+.card .title { 
+  margin: 0 0 24px;        /* 피그마처럼 제목 ↔ 첫 필드 24px */
+  line-height: 1.25;
+}
+
 /* 제목: */
 .title {
+  margin-top: 0;
   font-size: 24px;
   font-weight: 800;
   color: var(--text-1);
@@ -195,19 +204,38 @@ $eye-gap: 12px;     // 오른쪽 여백
 /* 만들기 버튼 */
 .btnRow { margin-top: 40px; }
 .submitBtn {
-  font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  width: 648px; height: 58px;
+  width: 100%;
+  max-width: 648px;     /* 고정폭 원하면 이 줄을 width: 648px;로 */
+  height: 58px;
+  display: grid;        /* 텍스트/아이콘 정확히 중앙 */
+  place-items: center;
+  padding: 10px;      /* 세로는 0으로 두는 게 안정적 */
   border-radius: 16px;
   border: 1px solid color.scale(v.$brand, $lightness: -18%);
   background: var(--brand);
-  color: #fff; font-weight: 700; letter-spacing: .02em;
   cursor: pointer;
   transition: background .12s ease, transform .06s ease, filter .15s ease;
+
 }
 .submitBtn:hover { background: var(--brand-press); filter: brightness(.99); }
 .submitBtn:active { transform: translateY(1px); }
+
+.btnText {
+  color: #fff;
+  font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: normal;
+  top: 1px;
+  $accent: color.scale(v.$brand, $lightness: -35%);
+  $depth: 3;      // 겹 수
+  $step: 1px;     // 각 겹의 이동량
+  $shadows: ();
+  @for $i from 1 through $depth {
+    $shadows: append($shadows, 0 (-$i * $step) 0 $accent, comma);
+  }
+  text-shadow: $shadows;
+}
 
 /* 반응형: 타일 4 → 3 */
 @media (max-width: 744px) {
