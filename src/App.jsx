@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout.jsx";
-import Home from "./pages/Home.jsx";
-import ToastDemo from "./pages/ToastDemo.jsx";
-import CreateStudyPage from "./pages/CreateStudyPage";
-import Workshop from "./pages/Workshop.jsx";
-import "./styles/global.scss";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout.jsx';
+import Home from './pages/Home.jsx';
+import ToastDemo from './pages/ToastDemo.jsx';
+import CreateStudyPage from './pages/CreateStudyPage';
+import Workshop from './pages/Workshop.jsx';
+import './styles/global.scss';
 
 export default function App() {
   return (
