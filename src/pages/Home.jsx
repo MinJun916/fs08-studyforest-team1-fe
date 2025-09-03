@@ -2,21 +2,33 @@
 import React from "react";
 import Input from "@/component/input/Input.jsx";
 import PasswordInput from "@/component/input/PasswordInput.jsx";
+import RePasswordInput from "@/component/input/RePasswordInput.jsx";
 import AuthForm from "@/component/auth/AuthForm.jsx";
 import CardsDemo from "@/component/card/card.jsx";
+import { Link } from "react-router-dom";
 
 export default function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const [password, setPassword] = useState("");
+  // const [pwError, setPwError] = useState("");
+
+  // const canSubmit = password && !pwError;
 
   return (
     <>
-      <AuthForm />
-      <button onClick={() => navigate("/workshop")}>
-        Workshop 페이지로 이동
-      </button>
-      {/* <PasswordInput />
-      <Input />
-      <CardsDemo /> */}
+      {/* <AuthForm /> */}
+      <Link to="http://localhost:5173/workshop">Workshop 페이지로 이동</Link>
+      <PasswordInput
+      // value={password}
+      // onChange={setPassword} // ← 여기서 값이 저장됨
+      // onValidate={setPwError} // ← 에러 메시지 수신(옵션)
+      // required
+      // rules={{ minLen: 8, requireLetter: true, requireNumber: true }}
+      // hint="영문+숫자 포함, 8자 이상"
+      />
+      <RePasswordInput />
+      {/* <Input /> */}
+      {/* <CardsDemo /> */}
     </>
   );
 }

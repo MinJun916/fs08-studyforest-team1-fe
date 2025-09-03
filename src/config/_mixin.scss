@@ -50,3 +50,15 @@
     background: v.$grayEE;
   }
 }
+
+// src/config/_mixin.scss
+
+@mixin button-reset {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
