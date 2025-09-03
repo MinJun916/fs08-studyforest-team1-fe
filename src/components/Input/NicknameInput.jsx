@@ -1,18 +1,18 @@
 // src/component/input/NicknameInput.jsx
-import React from "react";
-import styles from "./Input.module.scss";
+import React from 'react';
+import styles from '@/styles/components/input/Input.module.scss';
 
 const NICK_RE = /^[A-Za-z0-9가-힣_-]{2,20}$/;
 
 export default function NicknameInput({
-  label = "닉네임",
-  placeholder = "닉네임을 입력하세요",
+  label = '닉네임',
+  placeholder = '닉네임을 입력하세요',
   value,
   onChange,
   required = true,
   maxLength = 20,
-  helpText = "2~20자, 특수문자는 _와 -만 허용",
-  id = "nickname",
+  helpText = '2~20자, 특수문자는 _와 -만 허용',
+  id = 'nickname',
 }) {
   const isValid = value ? NICK_RE.test(value) : !required;
   const describedBy = helpText ? `${id}-help` : undefined;

@@ -1,12 +1,12 @@
-import offPng  from "../assets/icons/stickers/sticker-off.png";
-import limePng from "../assets/icons/stickers/sticker-lime.png";
-import bluePng from "../assets/icons/stickers/sticker-blue.png";
-import pinkPng from "../assets/icons/stickers/sticker-pink.png";
+import offPng from '@assets/icons/stickers/sticker-off.png';
+import limePng from '@assets/icons/stickers/sticker-lime.png';
+import bluePng from '@assets/icons/stickers/sticker-blue.png';
+import pinkPng from '@assets/icons/stickers/sticker-pink.png';
 
 // 매핑 & 기본 톤 (필요하면 바깥에서도 쓰게 named export)
-export const STICKER_ON  = { lime: limePng, blue: bluePng, pink: pinkPng };
+export const STICKER_ON = { lime: limePng, blue: bluePng, pink: pinkPng };
 export const STICKER_OFF = offPng;
-export const DEFAULT_TONE = "lime";
+export const DEFAULT_TONE = 'lime';
 
 /**
  * Controlled 토글 버튼
@@ -25,7 +25,7 @@ export default function Sticker({
   onSrc,
   offSrc,
 }) {
-  const onImg  = onSrc  ?? STICKER_ON[tone] ?? STICKER_ON[DEFAULT_TONE];
+  const onImg = onSrc ?? STICKER_ON[tone] ?? STICKER_ON[DEFAULT_TONE];
   const offImg = offSrc ?? STICKER_OFF;
   const src = active ? onImg : offImg;
 
@@ -34,9 +34,9 @@ export default function Sticker({
       type="button"
       aria-pressed={active}
       onClick={() => onToggle?.(!active)}
-      style={{ border: 0, background: "transparent", cursor: "pointer", padding: 0 }}
+      style={{ border: 0, background: 'transparent', cursor: 'pointer', padding: 0 }}
     >
-      <img src={src} alt={active ? "켜짐" : "꺼짐"} width={size} height={size} />
+      <img src={src} alt={active ? '켜짐' : '꺼짐'} width={size} height={size} />
     </button>
   );
 }

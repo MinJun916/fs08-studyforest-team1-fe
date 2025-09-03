@@ -1,5 +1,5 @@
-@use "../config/variables" as v;
-@use "sass:color";
+@use '@/styles/variables' as v;
+@use 'sass:color';
 
 /* 레이아웃 */
 $header-h: 100px;
@@ -30,7 +30,7 @@ $maxw: 1920px;
   text-decoration: none;
 
   &:focus-visible {
-    outline: 3px solid rgba(0,0,0,.35);
+    outline: 3px solid rgba(0, 0, 0, 0.35);
     outline-offset: 4px;
     border-radius: 6px;
   }
@@ -47,7 +47,7 @@ $maxw: 1920px;
   padding: 0;
   background: none;
   cursor: pointer;
-  line-height: 0;     /* 이미지 주위 여백 제거 */
+  line-height: 0; /* 이미지 주위 여백 제거 */
   display: inline-flex;
   align-items: center;
 
@@ -60,8 +60,8 @@ $maxw: 1920px;
 
   img {
     display: flex;
-    height: 58px;   /* 헤더 높이에 맞게 조절 (필요시 숫자만 바꾸면 됨) */
-    width: 252px;    /* 비율 유지 */
+    height: 58px; /* 헤더 높이에 맞게 조절 (필요시 숫자만 바꾸면 됨) */
+    width: 252px; /* 비율 유지 */
     padding: 10px;
     gap: 10px;
     user-select: none;
@@ -87,8 +87,8 @@ $maxw: 1920px;
   );
   box-shadow:
     0 3px 0 color.scale(v.$brand, $lightness: -28%),
-    inset 0 2px 0 rgba(255,255,255,.35),
-    inset 0 -3px 0 rgba(0,0,0,.12);
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.12);
 
   display: grid;
   place-items: center;
@@ -97,38 +97,58 @@ $maxw: 1920px;
     color: #fff;
     font-size: 18px;
     font-weight: 400;
-    font-family: "EF_jejudoldam", system-ui, "Noto Sans KR", Arial, sans-serif;
+    font-family: 'EF_jejudoldam', system-ui, 'Noto Sans KR', Arial, sans-serif;
     line-height: 1;
-    letter-spacing: .2px;
+    letter-spacing: 0.2px;
     text-shadow:
-      0 1px 0 rgba(0,0,0,.18),
-      0 0 1px rgba(0,0,0,.08);
+      0 1px 0 rgba(0, 0, 0, 0.18),
+      0 0 1px rgba(0, 0, 0, 0.08);
   }
 
-  transition: transform .05s ease, filter .2s ease, box-shadow .2s ease;
+  transition:
+    transform 0.05s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
 
-  &:hover  { filter: brightness(.98); }
+  &:hover {
+    filter: brightness(0.98);
+  }
   &:active {
     transform: translateY(1px);
     box-shadow:
       0 2px 0 color.scale(v.$brand, $lightness: -28%),
-      inset 0 1px 0 rgba(255,255,255,.3),
-      inset 0 -2px 0 rgba(0,0,0,.18);
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -2px 0 rgba(0, 0, 0, 0.18);
   }
   &:focus-visible {
-    outline: 3px solid rgba(0,0,0,.35);
+    outline: 3px solid rgba(0, 0, 0, 0.35);
     outline-offset: 3px;
   }
 }
 
 /* 반응형 */
 @media (max-width: 1280px) {
-  .headerInner { padding: $pad-y 40px; }
-  .cta { width: 232px; }
+  .headerInner {
+    padding: $pad-y 40px;
+  }
+  .cta {
+    width: 232px;
+  }
 }
 @media (max-width: 744px) {
-  .headerInner { padding: $pad-y 16px; }
-  .brandMarks { gap: 8px; height: 48px; }
-  .brandMark + .brandMark { margin-left: -3px; }
-  .cta { width: auto; min-width: 180px; padding: 8px 16px; }
+  .headerInner {
+    padding: $pad-y 16px;
+  }
+  .brandMarks {
+    gap: 8px;
+    height: 48px;
+  }
+  .brandMark + .brandMark {
+    margin-left: -3px;
+  }
+  .cta {
+    width: auto;
+    min-width: 180px;
+    padding: 8px 16px;
+  }
 }

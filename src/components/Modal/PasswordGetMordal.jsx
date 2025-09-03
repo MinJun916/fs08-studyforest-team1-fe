@@ -1,14 +1,14 @@
 // src/component/modal/PasswordGateModal.jsx
-import React, { useState } from "react";
-import Popup from "@/component/popup/popup.jsx";
-import PasswordInput from "@/component/input/PasswordInput.jsx";
+import React, { useState } from 'react';
+import Popup from '@components/popup/popup.jsx';
+import PasswordInput from '@components/input/PasswordInput.jsx';
 
 export default function PasswordGateModal({ open, onClose, onSubmit }) {
-  const [pw, setPw] = useState("");
-  const [err, setErr] = useState("");
+  const [pw, setPw] = useState('');
+  const [err, setErr] = useState('');
 
   const handleSubmit = () => {
-    if (!pw.trim()) return setErr("비밀번호를 입력해 주세요");
+    if (!pw.trim()) return setErr('비밀번호를 입력해 주세요');
     onSubmit?.(pw);
   };
 
@@ -26,7 +26,10 @@ export default function PasswordGateModal({ open, onClose, onSubmit }) {
         <PasswordInput
           label="비밀번호"
           value={pw}
-          onChange={(e) => { setPw(e.target.value); err && setErr(""); }}
+          onChange={(e) => {
+            setPw(e.target.value);
+            err && setErr('');
+          }}
           error={err}
           required
         />
@@ -37,8 +40,13 @@ export default function PasswordGateModal({ open, onClose, onSubmit }) {
           type="button"
           onClick={handleSubmit}
           style={{
-            width: "100%", height: 56, borderRadius: 12,
-            border: "none", fontWeight: 800, color: "#fff", background: "#99C08E"
+            width: '100%',
+            height: 56,
+            borderRadius: 12,
+            border: 'none',
+            fontWeight: 800,
+            color: '#fff',
+            background: '#99C08E',
           }}
         >
           수정하러 가기

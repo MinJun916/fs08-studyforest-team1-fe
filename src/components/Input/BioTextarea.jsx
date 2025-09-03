@@ -1,16 +1,16 @@
 // src/component/input/BioTextarea.jsx
-import React from "react";
-import styles from "./Input.module.scss";
+import React from 'react';
+import styles from '@/styles/components/input/Input.module.scss';
 
 export default function BioTextarea({
-  label = "소개글",
-  placeholder = "자기소개를 입력하세요",
+  label = '소개글',
+  placeholder = '자기소개를 입력하세요',
   value,
   onChange,
   required = false,
   maxLength = 300,
-  helpText = "최대 300자",
-  id = "bio",
+  helpText = '최대 300자',
+  id = 'bio',
   rows = 5,
 }) {
   const describedBy = helpText ? `${id}-help` : undefined;

@@ -1,19 +1,20 @@
-@use "../config/variables" as v;
-@use "sass:color";
+@use '@/styles/variables' as v;
+@use 'sass:color';
+@use 'sass:list';
 
 /* ------------------ Tokens ------------------ */
-$control-h: 44px;   // 모든 input 높이
-$eye-size: 20px;    // 눈 아이콘 이미지 크기
-$eye-gap: 12px;     // 오른쪽 여백
+$control-h: 44px; // 모든 input 높이
+$eye-size: 20px; // 눈 아이콘 이미지 크기
+$eye-gap: 12px; // 오른쪽 여백
 
 :root {
-  --page-bg: #{v.$bg};          /* #F6F4EF */
+  --page-bg: #{v.$bg}; /* #F6F4EF */
   --card-bg: #ffffff;
   --line: #e8e5de;
   --line-dark: #d8d5ce;
-  --text-1: #{v.$black};        /* #414141 */
-  --text-2: #{v.$gray81};       /* #818181 */
-  --brand: #{v.$brand};         /* #99C08E */
+  --text-1: #{v.$black}; /* #414141 */
+  --text-2: #{v.$gray81}; /* #818181 */
+  --brand: #{v.$brand}; /* #99C08E */
   --brand-press: #{color.scale(v.$brand, $lightness: -12%)};
   --error: #{v.$error};
   --focus: #{color.mix(v.$brand, white, 35%)};
@@ -45,8 +46,13 @@ $eye-gap: 12px;     // 오른쪽 여백
 }
 
 /* 헤딩 기본 마진 제거 후, 제목 아래 간격만 관리 */
-.card :is(h1, h2, h3) { margin: 0; }
-.card .title { margin: 0 0 24px; line-height: 1.25; }
+.card :is(h1, h2, h3) {
+  margin: 0;
+}
+.card .title {
+  margin: 0 0 24px;
+  line-height: 1.25;
+}
 
 /* ------------------ Typography ------------------ */
 .title {
@@ -64,7 +70,7 @@ $eye-gap: 12px;     // 오른쪽 여백
 }
 
 .field label {
-  font-size: 18px;  /* 닉네임, 스터디 이름, 소개 */
+  font-size: 18px; /* 닉네임, 스터디 이름, 소개 */
   color: var(--text-1);
   font-weight: 600;
   line-height: 1.3;
@@ -88,11 +94,13 @@ $eye-gap: 12px;     // 오른쪽 여백
   font-family: Pretendard;
   color: var(--text-2);
   outline: none;
-  transition: border-color .15s ease, box-shadow .15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .field textarea {
-  resize: none;      /* 크기 고정(피그마와 동일) */
+  resize: none; /* 크기 고정(피그마와 동일) */
   min-height: 88px;
 }
 
@@ -102,7 +110,9 @@ $eye-gap: 12px;     // 오른쪽 여백
 }
 
 .field input::placeholder,
-.field textarea::placeholder { color: var(--text-2); }
+.field textarea::placeholder {
+  color: var(--text-2);
+}
 
 .field input:focus,
 .field textarea:focus {
@@ -113,7 +123,7 @@ $eye-gap: 12px;     // 오른쪽 여백
 /* ------------------ Error ------------------ */
 .errorInput {
   border-color: var(--error) !important;
-  box-shadow: 0 0 0 3px rgba(196,16,19,.12);
+  box-shadow: 0 0 0 3px rgba(196, 16, 19, 0.12);
 }
 .errorMsg {
   margin: -2px 0 0 2px;
@@ -122,7 +132,9 @@ $eye-gap: 12px;     // 오른쪽 여백
 }
 
 /* ------------------ Password Eye ------------------ */
-.pwWrap { position: relative; }
+.pwWrap {
+  position: relative;
+}
 .pwWrap input {
   height: $control-h;
   padding-right: calc(#{$eye-size} + #{$eye-gap} + 8px);
@@ -134,16 +146,30 @@ $eye-gap: 12px;     // 오른쪽 여백
   right: $eye-gap;
   top: 50%;
   transform: translateY(-50%);
-  width: $eye-size; height: $eye-size;
-  padding: 0; border: 0; background: transparent;
-  display: grid; place-items: center;
-  border-radius: 6px; cursor: pointer;
+  width: $eye-size;
+  height: $eye-size;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  cursor: pointer;
 }
-.eyeBtn:hover { background: #f2f2f2; }
-.eyeBtn img   { display: block; width: 100%; height: 100%; }
+.eyeBtn:hover {
+  background: #f2f2f2;
+}
+.eyeBtn img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
 /* 혹시 남아 있는 고아 svg/img가 있으면 숨김 */
-.pwWrap > svg, .pwWrap > img { display: none !important; }
+.pwWrap > svg,
+.pwWrap > img {
+  display: none !important;
+}
 
 /* ------------------ Background Tiles ------------------ */
 .bgGrid {
@@ -155,17 +181,21 @@ $eye-gap: 12px;     // 오른쪽 여백
 
 .bgTile {
   aspect-ratio: 1 / 1; /* 정사각형 고정 */
-  width: 100%; height: auto;
+  width: 100%;
+  height: auto;
   border-radius: 16px;
   border: 1px solid var(--line);
   background: #f8f8f8;
   cursor: pointer;
   position: relative;
-  transition: transform .06s ease, box-shadow .12s ease, border-color .12s ease;
+  transition:
+    transform 0.06s ease,
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
 }
 .bgTile:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
   border-color: var(--line-dark);
 }
 
@@ -176,29 +206,45 @@ $eye-gap: 12px;     // 오른쪽 여백
 
 /* 발바닥 아이콘(선택 표시) */
 .tileIcon {
-  position: absolute; inset: 0; margin: auto;
-  width: 32px; height: 32px;
-  display: block; pointer-events: none; opacity: .95; z-index: 2;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 32px;
+  height: 32px;
+  display: block;
+  pointer-events: none;
+  opacity: 0.95;
+  z-index: 2;
 }
 
 /* ------------------ Submit Button ------------------ */
-.btnRow { margin-top: 40px; }
+.btnRow {
+  margin-top: 40px;
+}
 
 .submitBtn {
   width: 100%;
-  max-width: 648px;       /* 고정폭 원하면 width: 648px; 로 교체 */
+  max-width: 648px; /* 고정폭 원하면 width: 648px; 로 교체 */
   height: 58px;
-  display: grid;          /* 텍스트 정확 중앙 */
+  display: grid; /* 텍스트 정확 중앙 */
   place-items: center;
-  padding: 0 16px;        /* 세로 패딩 0이 정렬 가장 안정적 */
+  padding: 0 16px; /* 세로 패딩 0이 정렬 가장 안정적 */
   border-radius: 16px;
   border: 1px solid color.scale(v.$brand, $lightness: -18%);
   background: var(--brand);
   cursor: pointer;
-  transition: background .12s ease, transform .06s ease, filter .15s ease;
+  transition:
+    background 0.12s ease,
+    transform 0.06s ease,
+    filter 0.15s ease;
 }
-.submitBtn:hover  { background: var(--brand-press); filter: brightness(.99); }
-.submitBtn:active { transform: translateY(1px); }
+.submitBtn:hover {
+  background: var(--brand-press);
+  filter: brightness(0.99);
+}
+.submitBtn:active {
+  transform: translateY(1px);
+}
 .submitBtn:focus-visible {
   outline: 3px solid color.mix(v.$brand, white, 40%);
   outline-offset: 3px;
@@ -207,17 +253,22 @@ $eye-gap: 12px;     // 오른쪽 여백
 /* 텍스트(입체감) */
 .btnText {
   color: #fff;
-  font: 700 18px/1 "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
+  font:
+    700 18px/1 'EF_jejudoldam',
+    Pretendard,
+    system-ui,
+    'Noto Sans KR',
+    sans-serif;
   position: relative;
   top: 1px; /* 시각 중심 살짝 아래로 */
 
   /* 위쪽으로만 쌓는 그림자 */
   $accent: color.scale(v.$brand, $lightness: -38%);
-  $depth: 3;   // 겹 수 (더 진하게 4~5)
-  $step: 1px;  // 레이어 간격
+  $depth: 3; // 겹 수 (더 진하게 4~5)
+  $step: 1px; // 레이어 간격
   $shadows: ();
   @for $i from 1 through $depth {
-    $shadows: append($shadows, 0 (-$i * $step) 0 $accent, comma);
+    $shadows: list.append($shadows, 0 (-$i * $step) 0 $accent, $separator: comma);
   }
   text-shadow: $shadows;
 }
@@ -225,13 +276,21 @@ $eye-gap: 12px;     // 오른쪽 여백
 /* ------------------ Responsive ------------------ */
 /* iPad mini 및 태블릿 (≤ 744px): 4열 유지, 패딩만 축소 */
 @media (max-width: 744px) {
-  .card  { padding: 20px 16px; }
-  .bgGrid{ grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .card {
+    padding: 20px 16px;
+  }
+  .bgGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
 }
 
 /* 모바일 (≤ 480px): 2열로 변경 */
 @media (max-width: 480px) {
-  .bgGrid{ grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .bgGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
   /* 필요시
   .submitBtn { height: 52px; }
   */

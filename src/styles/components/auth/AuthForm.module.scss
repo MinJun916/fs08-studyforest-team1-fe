@@ -1,4 +1,4 @@
-@use "@/config/variables" as v;
+@use '@/styles/variables' as v;
 
 .wrap {
   width: 648px;
@@ -41,9 +41,9 @@
 }
 
 .show {
-  background-image: url("/src/assets/icons/btn_visibility_off_24px.svg");
+  background-image: url('/src/assets/icons/btn_visibility_off_24px.svg');
 }
 
 .hide {
-  background-image: url("/src/assets/icons/Vector.svg");
+  background-image: url('/src/assets/icons/Vector.svg');
 }

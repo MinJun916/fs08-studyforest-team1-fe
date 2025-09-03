@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./input.module.scss";
+import React from 'react';
+import styles from '@/styles/components/input/Input.module.scss';
 
 /**
  * props
@@ -13,7 +13,7 @@ export default function Input({
   name,
   value,
   onChange,
-  type = "text",
+  type = 'text',
   placeholder,
   error,
   hint,

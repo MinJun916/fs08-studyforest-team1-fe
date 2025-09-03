@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styles from "./card.module.scss";
+import React, { useState } from 'react';
+import styles from '@/styles/components/card/card.module.scss';
 
 /**
  * 재사용 카드
@@ -14,7 +14,7 @@ import styles from "./card.module.scss";
  * - initiallyLiked?: boolean
  */
 export function StudyCard({
-  variant = "light",
+  variant = 'light',
   title,
   daysText,
   subtitle,
@@ -30,12 +30,11 @@ export function StudyCard({
     likes: initiallyLiked,
   });
 
-  const toggleLike = (key) =>
-    setLiked((prev) => ({ ...prev, [key]: !prev[key] }));
+  const toggleLike = (key) => setLiked((prev) => ({ ...prev, [key]: !prev[key] }));
 
   return (
     <article
-      className={`${styles.card} ${variant === "dark" ? styles.dark : styles.light}`}
+      className={`${styles.card} ${variant === 'dark' ? styles.dark : styles.light}`}
       role="group"
       aria-label={`${title} 카드`}
     >
@@ -55,7 +54,7 @@ export function StudyCard({
           <div className={styles.badge} aria-label="포인트 획득">
             <span className={styles.badgeIcon}>🪴</span>
             <span className={styles.badgeText}>
-              {typeof points === "number" ? `${points}P` : points} 획득
+              {typeof points === 'number' ? `${points}P` : points} 획득
             </span>
           </div>
         </header>
@@ -67,8 +66,8 @@ export function StudyCard({
           <div className={styles.pills}>
             <button
               type="button"
-              className={`${styles.pill} ${styles.likePill} ${liked.members ? styles.liked : ""}`}
-              onClick={() => toggleLike("members")}
+              className={`${styles.pill} ${styles.likePill} ${liked.members ? styles.liked : ''}`}
+              onClick={() => toggleLike('members')}
               aria-pressed={liked.members}
             >
               <span className={styles.emoji}>👥</span>
@@ -77,8 +76,8 @@ export function StudyCard({
 
             <button
               type="button"
-              className={`${styles.pill} ${styles.likePill} ${liked.heat ? styles.liked : ""}`}
-              onClick={() => toggleLike("heat")}
+              className={`${styles.pill} ${styles.likePill} ${liked.heat ? styles.liked : ''}`}
+              onClick={() => toggleLike('heat')}
               aria-pressed={liked.heat}
             >
               <span className={styles.emoji}>🔥</span>
@@ -87,8 +86,8 @@ export function StudyCard({
 
             <button
               type="button"
-              className={`${styles.pill} ${styles.likePill} ${liked.likes ? styles.liked : ""}`}
-              onClick={() => toggleLike("likes")}
+              className={`${styles.pill} ${styles.likePill} ${liked.likes ? styles.liked : ''}`}
+              onClick={() => toggleLike('likes')}
               aria-pressed={liked.likes}
             >
               <span className={styles.emoji}>💗</span>

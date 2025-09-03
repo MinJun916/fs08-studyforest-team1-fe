@@ -1,6 +1,6 @@
 /* /src/component/input/Input.module.scss */
-@use "@/config/variables" as v;
-@use "@/config/mixin" as m;
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .label {
   @include m.form-label; // ✅ 이제 인식됨

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import styles from "./Toast.module.scss";
+import { useEffect } from 'react';
+import styles from '@/styles/components/toast/Toast.module.scss';
 
 /**
  * @typedef {"point"|"warning"} ToastVariant
@@ -18,11 +18,11 @@ import styles from "./Toast.module.scss";
  * @param {number}  [props.stackGap=8]       // 같은 위치에서 여러 개 쌓일 때 간격
  */
 export default function Toast({
-  variant = "point",
+  variant = 'point',
   isOpen = false,
   onClose,
   autoClose = 2000,
-  placement = "top-right",
+  placement = 'top-right',
   showClose = false,
   children,
   zIndex = 1000,
@@ -37,25 +37,24 @@ export default function Toast({
 
   if (!isOpen) return null;
 
-  const role = variant === "warning" ? "alert" : "status";
-  const live = variant === "warning" ? "assertive" : "polite";
+  const role = variant === 'warning' ? 'alert' : 'status';
+  const live = variant === 'warning' ? 'assertive' : 'polite';
 
   // placement에 맞춰 padding 인라인 적용
-  const pad = (side) => (offset?.[side] ?? 20);
+  const pad = (side) => offset?.[side] ?? 20;
   const containerStyle = { zIndex, rowGap: `${stackGap}px` };
 
-  if (placement === "top-right")
-    Object.assign(containerStyle, { paddingTop: pad("top"), paddingRight: pad("right") });
-  if (placement === "top-left")
-    Object.assign(containerStyle, { paddingTop: pad("top"), paddingLeft: pad("left") });
-  if (placement === "top-center")
-    Object.assign(containerStyle, { paddingTop: pad("top") });
-  if (placement === "bottom-right")
-    Object.assign(containerStyle, { paddingBottom: pad("bottom"), paddingRight: pad("right") });
-  if (placement === "bottom-left")
-    Object.assign(containerStyle, { paddingBottom: pad("bottom"), paddingLeft: pad("left") });
-  if (placement === "bottom-center")
-    Object.assign(containerStyle, { paddingBottom: pad("bottom") });
+  if (placement === 'top-right')
+    Object.assign(containerStyle, { paddingTop: pad('top'), paddingRight: pad('right') });
+  if (placement === 'top-left')
+    Object.assign(containerStyle, { paddingTop: pad('top'), paddingLeft: pad('left') });
+  if (placement === 'top-center') Object.assign(containerStyle, { paddingTop: pad('top') });
+  if (placement === 'bottom-right')
+    Object.assign(containerStyle, { paddingBottom: pad('bottom'), paddingRight: pad('right') });
+  if (placement === 'bottom-left')
+    Object.assign(containerStyle, { paddingBottom: pad('bottom'), paddingLeft: pad('left') });
+  if (placement === 'bottom-center')
+    Object.assign(containerStyle, { paddingBottom: pad('bottom') });
 
   return (
     <div className={`${styles.portal} ${styles[placement]}`} style={containerStyle}>

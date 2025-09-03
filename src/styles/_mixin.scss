@@ -1,6 +1,6 @@
 /* /src/config/_mixin.scss */
-@use "sass:color";
-@use "@/config/variables" as v;
+@use 'sass:color';
+@use './variables' as v;
 
 /* 라벨 공통 스타일 */
 @mixin form-label {
