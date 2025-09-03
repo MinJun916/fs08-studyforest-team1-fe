@@ -1,0 +1,74 @@
+/* src/component/modal/PermissionModal.module.scss */
+.modal {
+  width: 100%;
+  max-width: 648px; /* 데스크탑 */
+  min-width: 312px; /* 모바일 최소 */
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #333;
+  margin: 0;
+}
+
+.exitBtn {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #818181;
+  cursor: pointer;
+}
+
+.subtitle {
+  margin: 12px 0 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.error {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #c41013; /* project _variables.scss 의 $error 와 동일 톤 */
+}
+
+.primary {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: #99c08e; /* project $brand */
+  cursor: pointer;
+}
+
+.primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 모바일 여백 다듬기 */
+@media (max-width: 420px) {
+  .modal {
+    padding: 20px;
+  }
+  .title {
+    font-size: 18px;
+  }
+}
