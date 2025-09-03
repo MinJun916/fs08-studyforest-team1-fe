@@ -1,5 +1,5 @@
-@use '@/config/_variables.scss' as v;
-@use '@/config/_mixin.scss' as m;
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .page {
   background: v.$bg;

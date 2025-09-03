@@ -1,5 +1,6 @@
-@use '../config/variables' as v;
+@use '@/styles/variables' as v;
 @use 'sass:color';
+@use 'sass:list';
 
 /* ------------------ Tokens ------------------ */
 $control-h: 44px; // 모든 input 높이
@@ -267,7 +268,7 @@ $eye-gap: 12px; // 오른쪽 여백
   $step: 1px; // 레이어 간격
   $shadows: ();
   @for $i from 1 through $depth {
-    $shadows: append($shadows, 0 (-$i * $step) 0 $accent, comma);
+    $shadows: list.append($shadows, 0 (-$i * $step) 0 $accent, $separator: comma);
   }
   text-shadow: $shadows;
 }

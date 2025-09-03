@@ -1,7 +1,7 @@
-import offPng from '../assets/icons/stickers/sticker-off.png';
-import limePng from '../assets/icons/stickers/sticker-lime.png';
-import bluePng from '../assets/icons/stickers/sticker-blue.png';
-import pinkPng from '../assets/icons/stickers/sticker-pink.png';
+import offPng from '@assets/icons/stickers/sticker-off.png';
+import limePng from '@assets/icons/stickers/sticker-lime.png';
+import bluePng from '@assets/icons/stickers/sticker-blue.png';
+import pinkPng from '@assets/icons/stickers/sticker-pink.png';
 
 // 매핑 & 기본 톤 (필요하면 바깥에서도 쓰게 named export)
 export const STICKER_ON = { lime: limePng, blue: bluePng, pink: pinkPng };

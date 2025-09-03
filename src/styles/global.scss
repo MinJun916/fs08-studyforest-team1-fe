@@ -1,6 +1,5 @@
-@use '@/config/variables' as v;
-@use '@/config/mixin' as m;
-@use '../config/_variables' as v;
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 @font-face {
   font-family: 'EF_jejudoldam';
   src: url('/fonts/EF_jejudoldam.ttf') format('truetype');

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import styles from '@/styles/pages/CreateStudyPage.module.scss';
-import imgDesk from '../assets/icons/bg-desk.png';
-import imgWindow from '../assets/icons/bg-window.png';
-import imgTiles from '../assets/icons/bg-tiles.png';
-import imgPlant from '../assets/icons/bg-plant.png';
-import eye from '../assets/icons/eye.png';
-import eyeOff from '../assets/icons/eye-off.png';
-import pawSelected from '../assets/icons/ic_bg_selected.png';
+import imgDesk from '@assets/icons/bg-desk.png';
+import imgWindow from '@assets/icons/bg-window.png';
+import imgTiles from '@assets/icons/bg-tiles.png';
+import imgPlant from '@assets/icons/bg-plant.png';
+import eye from '@assets/icons/eye.png';
+import eyeOff from '@assets/icons/eye-off.png';
+import pawSelected from '@assets/icons/ic_bg_selected.png';
 
 export default function CreateStudyPage() {
   // 윗줄: 발바닥(기본) + 파스텔 3색  → 4칸

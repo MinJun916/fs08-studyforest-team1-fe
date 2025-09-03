@@ -1,4 +1,4 @@
-import Header from './Header.js';
+import Header from '@components/header/Header.jsx';
 import { Outlet } from 'react-router-dom';
 
 export default function Layout() {

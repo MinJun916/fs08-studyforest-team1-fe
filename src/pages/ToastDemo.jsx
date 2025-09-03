@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Toast from '../components/toast';
+import Toast from '@components/toast/Toast.jsx';
 
 export default function ToastDemo() {
   const [placement, setPlacement] = useState('top-right');

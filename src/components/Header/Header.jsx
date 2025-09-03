@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import styles from '@/styles/components/header/Header.module.scss';
 
-import brandLogo from '../assets/brand-marks/brand-logo.svg';
-import makeStudy from '../assets/brand-marks/make-study.svg'; // ← 만든 SVG
+import brandLogo from '@assets/brand-marks/brand-logo.svg';
+import makeStudy from '@assets/brand-marks/make-study.svg'; // ← 만든 SVG
 
 export default function Header() {
   return (

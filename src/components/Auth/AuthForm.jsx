@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import Input from '@/component/input/Input';
+import Input from '@components/input/Input.jsx';
 import styles from '@/styles/components/auth/AuthForm.module.scss';
 
 export default function AuthForm() {

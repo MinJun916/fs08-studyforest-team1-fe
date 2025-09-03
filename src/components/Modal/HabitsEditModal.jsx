@@ -1,6 +1,6 @@
 // src/component/modal/HabitsEditModal.jsx
 import React, { useState } from 'react';
-import Popup from '@/component/popup/popup.jsx';
+import Popup from '@components/popup/popup.jsx';
 
 export default function HabitsEditModal({
   open,
