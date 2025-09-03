@@ -1,11 +1,11 @@
 @use "../config/variables" as v;
 @use "sass:color";
 
+/* ------------------ Tokens ------------------ */
 $control-h: 44px;   // 모든 input 높이
 $eye-size: 20px;    // 눈 아이콘 이미지 크기
 $eye-gap: 12px;     // 오른쪽 여백
 
-/* CSS 변수는 v 토큰으로 채워서, 어디서든 var(...) 재사용 가능 */
 :root {
   --page-bg: #{v.$bg};          /* #F6F4EF */
   --card-bg: #ffffff;
@@ -20,49 +20,42 @@ $eye-gap: 12px;     // 오른쪽 여백
   --radius: 20px;
 }
 
-/* 페이지 래퍼, 헤더(100px)만큼 패딩 */
+/* ------------------ Layout ------------------ */
 .page {
   min-height: 100dvh;
   background: transparent;
   display: grid;
   place-items: start center;
-  padding: 40px 16px 80px;
-  
+  /* 좌우 패딩 16~24px 사이 반응 */
+  padding: 40px clamp(16px, 4vw, 24px) 80px;
 }
 
-/* 카드: 스샷 넓이/라운드/그림자 값 */
 .card {
-  width: 640px;                 /* 스샷 비율에 맞춰 살짝 좁힘 */
-  max-width: 100%;
+  width: min(640px, 100%);
   background: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: 0 8px 24px #0000000f;
-  padding: 24px 24px 40px 24px;
+  padding: 24px; /* top/right/bottom/left */
 }
 
 .card form {
   display: flex;
   flex-direction: column;
-  gap: 10px;          /* <- 이 한 줄이 전체 세로 간격 컨트롤 */
+  gap: 10px; /* 전체 세로 간격 */
 }
 
-.card :is(h1, h2, h3) {
-  margin: 0;                 /* ← 이 한 줄로 위·아래 기본마진 제거 */
-}
-.card .title { 
-  margin: 0 0 24px;        /* 피그마처럼 제목 ↔ 첫 필드 24px */
-  line-height: 1.25;
-}
+/* 헤딩 기본 마진 제거 후, 제목 아래 간격만 관리 */
+.card :is(h1, h2, h3) { margin: 0; }
+.card .title { margin: 0 0 24px; line-height: 1.25; }
 
-/* 제목: */
+/* ------------------ Typography ------------------ */
 .title {
-  margin-top: 0;
   font-size: 24px;
   font-weight: 800;
   color: var(--text-1);
 }
 
-/* 공통 필드 */
+/* ------------------ Fields ------------------ */
 .field {
   display: flex;
   flex-direction: column;
@@ -71,7 +64,7 @@ $eye-gap: 12px;     // 오른쪽 여백
 }
 
 .field label {
-  font-size: 18px;     /*  닉네임, 스터디 이름, 소개 */
+  font-size: 18px;  /* 닉네임, 스터디 이름, 소개 */
   color: var(--text-1);
   font-weight: 600;
   line-height: 1.3;
@@ -79,11 +72,10 @@ $eye-gap: 12px;     // 오른쪽 여백
 
 .labelLite {
   font-size: 18px;
-  font-family: Pretendard;    /* 배경을 선택해주세요 */
+  font-family: Pretendard;
   color: var(--text-1);
   font-weight: 600;
   margin: 6px 0 8px;
-
 }
 
 .field input,
@@ -93,14 +85,14 @@ $eye-gap: 12px;     // 오른쪽 여백
   border-radius: 10px;
   padding: 12px 14px;
   font-size: 14px;
-  font-family: Pretendard; 
+  font-family: Pretendard;
   color: var(--text-2);
   outline: none;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .field textarea {
-  resize: none;
+  resize: none;      /* 크기 고정(피그마와 동일) */
   min-height: 88px;
 }
 
@@ -108,6 +100,7 @@ $eye-gap: 12px;     // 오른쪽 여백
   height: $control-h;
   box-sizing: border-box;
 }
+
 .field input::placeholder,
 .field textarea::placeholder { color: var(--text-2); }
 
@@ -117,10 +110,10 @@ $eye-gap: 12px;     // 오른쪽 여백
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 25%, transparent);
 }
 
-/* 에러 */
+/* ------------------ Error ------------------ */
 .errorInput {
   border-color: var(--error) !important;
-  box-shadow: 0 0 0 3px rgba(196,16,19, .12);
+  box-shadow: 0 0 0 3px rgba(196,16,19,.12);
 }
 .errorMsg {
   margin: -2px 0 0 2px;
@@ -128,12 +121,11 @@ $eye-gap: 12px;     // 오른쪽 여백
   color: var(--error);
 }
 
-/* 비밀번호 눈아이콘 */
+/* ------------------ Password Eye ------------------ */
 .pwWrap { position: relative; }
-
 .pwWrap input {
   height: $control-h;
-  padding-right: calc(#{$eye-size} + #{$eye-gap} + 8px); // 아이콘 + 여백
+  padding-right: calc(#{$eye-size} + #{$eye-gap} + 8px);
   width: 100%;
   box-sizing: border-box;
 }
@@ -142,33 +134,28 @@ $eye-gap: 12px;     // 오른쪽 여백
   right: $eye-gap;
   top: 50%;
   transform: translateY(-50%);
-  width: $eye-size;
-  height: $eye-size;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  display: grid;
-  place-items: center;
-  border-radius: 6px;
-  cursor: pointer;
-  
+  width: $eye-size; height: $eye-size;
+  padding: 0; border: 0; background: transparent;
+  display: grid; place-items: center;
+  border-radius: 6px; cursor: pointer;
 }
 .eyeBtn:hover { background: #f2f2f2; }
-.eyeBtn img { display: block; width: 100%; height: 100%; }
-/* 혹시 버튼 밖에 남은 고아 svg/img가 있으면 숨김 */
+.eyeBtn img   { display: block; width: 100%; height: 100%; }
+
+/* 혹시 남아 있는 고아 svg/img가 있으면 숨김 */
 .pwWrap > svg, .pwWrap > img { display: none !important; }
-/* 배경 타일: 1줄에 5개(스샷) */
+
+/* ------------------ Background Tiles ------------------ */
 .bgGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr)); /* 기본 4열 */
   gap: 16px;
   margin-bottom: 10px;
 }
 
-.bgTile {         
-  aspect-ratio: 1 / 1;          /* 정사각형으로 고정 */
-  width: 100%;
-  height: auto;
+.bgTile {
+  aspect-ratio: 1 / 1; /* 정사각형 고정 */
+  width: 100%; height: auto;
   border-radius: 16px;
   border: 1px solid var(--line);
   background: #f8f8f8;
@@ -187,49 +174,47 @@ $eye-gap: 12px;     // 오른쪽 여백
   border-color: var(--brand);
 }
 
-/* 발바닥 아이콘(첫 타일) */
+/* 발바닥 아이콘(선택 표시) */
 .tileIcon {
-  position: absolute; 
-  inset: 0; 
-  margin: auto;
-  width: 32px; 
-  height: 32px;
-  display: block; 
-  pointer-events: none; 
-  opacity: .95;
-  z-index: 2;
+  position: absolute; inset: 0; margin: auto;
+  width: 32px; height: 32px;
+  display: block; pointer-events: none; opacity: .95; z-index: 2;
 }
 
-
-/* 만들기 버튼 */
+/* ------------------ Submit Button ------------------ */
 .btnRow { margin-top: 40px; }
+
 .submitBtn {
   width: 100%;
-  max-width: 648px;     /* 고정폭 원하면 이 줄을 width: 648px;로 */
+  max-width: 648px;       /* 고정폭 원하면 width: 648px; 로 교체 */
   height: 58px;
-  display: grid;        /* 텍스트/아이콘 정확히 중앙 */
+  display: grid;          /* 텍스트 정확 중앙 */
   place-items: center;
-  padding: 10px;      /* 세로는 0으로 두는 게 안정적 */
+  padding: 0 16px;        /* 세로 패딩 0이 정렬 가장 안정적 */
   border-radius: 16px;
   border: 1px solid color.scale(v.$brand, $lightness: -18%);
   background: var(--brand);
   cursor: pointer;
   transition: background .12s ease, transform .06s ease, filter .15s ease;
-
 }
-.submitBtn:hover { background: var(--brand-press); filter: brightness(.99); }
+.submitBtn:hover  { background: var(--brand-press); filter: brightness(.99); }
 .submitBtn:active { transform: translateY(1px); }
+.submitBtn:focus-visible {
+  outline: 3px solid color.mix(v.$brand, white, 40%);
+  outline-offset: 3px;
+}
 
+/* 텍스트(입체감) */
 .btnText {
   color: #fff;
-  font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: normal;
-  top: 1px;
-  $accent: color.scale(v.$brand, $lightness: -35%);
-  $depth: 3;      // 겹 수
-  $step: 1px;     // 각 겹의 이동량
+  font: 700 18px/1 "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
+  position: relative;
+  top: 1px; /* 시각 중심 살짝 아래로 */
+
+  /* 위쪽으로만 쌓는 그림자 */
+  $accent: color.scale(v.$brand, $lightness: -38%);
+  $depth: 3;   // 겹 수 (더 진하게 4~5)
+  $step: 1px;  // 레이어 간격
   $shadows: ();
   @for $i from 1 through $depth {
     $shadows: append($shadows, 0 (-$i * $step) 0 $accent, comma);
@@ -237,11 +222,17 @@ $eye-gap: 12px;     // 오른쪽 여백
   text-shadow: $shadows;
 }
 
-/* 반응형: 타일 4 → 3 */
+/* ------------------ Responsive ------------------ */
+/* iPad mini 및 태블릿 (≤ 744px): 4열 유지, 패딩만 축소 */
 @media (max-width: 744px) {
-  .card { width: 100%; padding: 16px 14px 20px; }
-  .bgGrid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .card  { padding: 20px 16px; }
+  .bgGrid{ grid-template-columns: repeat(4, 1fr); gap: 12px; }
 }
-@media (max-width: 420px) {
-  .bgGrid { grid-template-columns: repeat(3, 1fr); }
+
+/* 모바일 (≤ 480px): 2열로 변경 */
+@media (max-width: 480px) {
+  .bgGrid{ grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  /* 필요시
+  .submitBtn { height: 52px; }
+  */
 }
