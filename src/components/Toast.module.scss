@@ -1,0 +1,79 @@
+.portal { position: fixed; inset: 0; pointer-events: none; }
+
+.top-right   { display: grid; justify-items: end;   align-content: start;  padding: 20px; }
+.top-left    { display: grid; justify-items: start; align-content: start;  padding: 20px; }
+.bottom-right{ display: grid; justify-items: end;   align-content: end;    padding: 20px; }
+.bottom-left { display: grid; justify-items: start; align-content: end;    padding: 20px; }
+.top-center  { display: grid; justify-items: center;align-content: start;  padding: 20px; }
+.bottom-center {
+  display: grid;
+  justify-items: center;  /* 가로 가운데 */
+  align-content: end;     /* 세로 아래 */
+  padding: 20px;
+}
+
+/* 본체 */
+.toast {
+  pointer-events: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;                
+  padding: 14px 18px;      
+  border-radius: 12px;      
+  box-shadow: none;
+}
+
+/* 베리언트 색 (피그마 토큰 + 폴백) */
+.point   { background: #E1EDDE; color:  #578246; }
+.warning { background: #FDE0E9;  color:  #F50E0E; }
+
+
+
+
+/* 텍스트 (모바일 스펙에 맞춰 라인하이트 17px) */
+.message { 
+  margin: 0;  
+  font-size: 16px; 
+  line-height: normal; 
+  font-family: Pretendard;
+  font-weight: 500;
+ }
+
+/* ─────────────────────────────────────────────── */
+/* 모바일 전용 보정 (≤ 743px: 안전영역까지 고려) */
+@media (max-width: 743px) {
+  /* iOS 노치 대응: 안전영역과 20px 중 큰 값 사용 */
+  .top-right {
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: 20px;
+    padding-left: 20px;
+  }
+  .top-left {
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-bottom: 20px;
+    padding-right: 20px;
+  }
+  .bottom-right {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  .bottom-left {
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-top: 20px;
+    padding-right: 20px;
+  }
+  .top-center {
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-right: 20px; padding-bottom: 20px; padding-left: 20px;
+  }
+
+  /* 본체 수치 자체는 이미 피그마 값이어서 변화 없음.
+     혹시 텍스트가 너무 길면 한 줄로 유지하고 싶을 때 아래 주석 해제:
+     .message { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } */
+}
