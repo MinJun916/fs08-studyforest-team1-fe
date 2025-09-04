@@ -5,7 +5,6 @@ import styles from '../../styles/components/DropDown/DropDown.module.scss'
 export const SORTOPTIONS = [
   { value: 'newest', label: '최근순' },
   { value: 'oldest', label: '오래된순' },
-  { value: 'points', label: '점수높은순' },
   { value: 'points_desc', label: '점수높은순' },
   { value: 'points_asc', label: '점수낮은순' },
 ]
@@ -85,7 +84,9 @@ export default function DropDown({ options = [], value, onChange = () => {} }) {
       >
         <span className={styles.label}>{selected ? selected.label : '최근순'}</span>
         <span className={styles.caret} aria-hidden>
-          ▾
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M12.0005 14.6538L7.59668 10.25H16.4043L12.0005 14.6538Z" fill="#818181"/>
+          </svg>
         </span>
       </button>
 
