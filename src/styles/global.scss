@@ -1,5 +1,6 @@
 @use '@/styles/variables' as v;
 @use '@/styles/mixin' as m;
+
 @font-face {
   font-family: 'EF_jejudoldam';
   src: url('/fonts/EF_jejudoldam.ttf') format('truetype');
@@ -7,6 +8,7 @@
   font-style: normal;
   font-display: swap;
 }
+
 /* 굵기가 하나뿐이어도 700로도 쓰고 싶다면 같은 파일을 한번 더 매핑 */
 @font-face {
   font-family: 'EF_jejudoldam';
