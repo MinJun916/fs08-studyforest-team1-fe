@@ -2,7 +2,6 @@
 import React from 'react';
 import Input from '@components/input/Input.jsx';
 import PasswordInput from '@components/input/PasswordInput.jsx';
-import RePasswordInput from '@components/input/RePasswordInput.jsx';
 import AuthForm from '@components/auth/AuthForm.jsx';
 import CardsDemo from '@components/card/card.jsx';
 import { Link } from 'react-router-dom';
@@ -26,7 +25,6 @@ export default function Home() {
       // rules={{ minLen: 8, requireLetter: true, requireNumber: true }}
       // hint="영문+숫자 포함, 8자 이상"
       />
-      <RePasswordInput />
       {/* <Input /> */}
       {/* <CardsDemo /> */}
     </>

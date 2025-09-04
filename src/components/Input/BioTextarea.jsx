@@ -1,5 +1,5 @@
 // src/component/input/BioTextarea.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '@/styles/components/input/Input.module.scss';
 
 export default function BioTextarea({
@@ -13,6 +13,8 @@ export default function BioTextarea({
   id = 'bio',
   rows = 5,
 }) {
+  const [touched, setTouched] = useState(false);
+  const showError = touched && !value;
   const describedBy = helpText ? `${id}-help` : undefined;
 
   return (
@@ -21,25 +23,18 @@ export default function BioTextarea({
         {label}
         <textarea
           id={id}
-          className={styles.textarea}
+          className={`${styles.textarea} ${showError ? styles.invalid : ''}`}
           placeholder={placeholder}
           value={value}
           maxLength={maxLength}
           onChange={(e) => onChange?.(e.target.value)}
+          onFocus={() => setTouched(true)}
+          onBlur={() => setTouched(false)} // 🔹 blur 시 원래 상태
           aria-describedby={describedBy}
           required={required}
           rows={rows}
         />
       </label>
-
-      {helpText && (
-        <p id={describedBy} className={styles.help}>
-          {helpText}
-        </p>
-      )}
-      <p className={styles.counter}>
-        {value?.length ?? 0}/{maxLength}
-      </p>
     </div>
   );
 }

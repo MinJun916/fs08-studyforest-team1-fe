@@ -2,13 +2,34 @@
 @use '@/styles/variables' as v;
 @use '@/styles/mixin' as m;
 
+.textarea.invalid,
+.input.invalid {
+  border: 1px solid v.$error;
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 4px;
+}
+
 .label {
   @include m.form-label; // ✅ 이제 인식됨
 }
 
 .input,
 .textarea {
-  @include m.input-base; // ✅ 공통 인풋 스타일
+  @include m.input-base;
+  // ✅ 공통 인풋 스타일
+}
+
+.textarea {
+  resize: none; /* 드래그로 크기 조절 불가 */
+  overflow: auto; /* 내용이 넘치면 스크롤 표시 */
+  line-height: 1.5; /* 줄 간격 일정하게 유지 */
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px;
 }
 
 .inline {
@@ -60,7 +81,7 @@
   place-items: center;
 
   &:focus-visible {
-    outline: 2px solid v.$brand;
+    outline: 2px solid v.$error;
     border-radius: 6px;
   }
 }

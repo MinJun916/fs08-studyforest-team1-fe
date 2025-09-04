@@ -1,3 +1,4 @@
+// src/component/input/Input.jsx
 import React from 'react';
 import styles from '@/styles/components/input/Input.module.scss';
 
@@ -17,8 +18,11 @@ export default function Input({
   placeholder,
   error,
   hint,
+  required = false, // 🔹 required 기본값 추가
   inputProps = {},
 }) {
+  const isEmptyError = required && !value; // 🔹 빈 값일 때만 true
+
   return (
     <div className={styles.row}>
       {label && (
@@ -32,16 +36,20 @@ export default function Input({
         type={type}
         value={value}
         onChange={onChange}
-        className={styles.input}
+        className={`${styles.input} ${isEmptyError ? styles.errorInput : ''}`} // 🔹 에러 시 스타일 추가
         placeholder={placeholder}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${name}-error` : undefined}
+        aria-invalid={isEmptyError}
+        aria-describedby={isEmptyError ? `${name}-error` : undefined}
+        required={required}
         {...inputProps}
       />
-      {hint && !error && <div className={styles.hint}>{hint}</div>}
-      {error && (
+
+      {hint && !isEmptyError && <div className={styles.hint}>{hint}</div>}
+
+      {/* 🔹 빈 값일 때만 에러 문구 출력 */}
+      {isEmptyError && (
         <div id={`${name}-error`} className={styles.error}>
-          {error}
+          *{label}을(를) 입력해주세요
         </div>
       )}
     </div>
