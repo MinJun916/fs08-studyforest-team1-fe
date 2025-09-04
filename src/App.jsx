@@ -4,6 +4,7 @@ import Home from '@pages/Home.jsx';
 import ToastDemo from '@pages/ToastDemo.jsx';
 import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import Workshop from '@pages/Workshop.jsx';
+import Emoji from './components/Emoji/Emoji';
 import '@/styles/global.scss';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/workshop" element={<Workshop />} />
           <Route path="toast" element={<ToastDemo />} />
           <Route path="/study/new" element={<CreateStudyPage />} />
+          <Route path="/emoji" element={<Emoji />} />
         </Route>
       </Routes>
     </BrowserRouter>
