@@ -1,11 +1,12 @@
 import Header from '@components/header/Header.jsx';
+import styles from '@styles/components/layout/Layout.module.scss';
 import { Outlet } from 'react-router-dom';
 
 export default function Layout() {
   return (
     <>
       <Header />
-      <main style={{ maxWidth: 1200, margin: '24px auto', padding: '0 16px' }}>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </>

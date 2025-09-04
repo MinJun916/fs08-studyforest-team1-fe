@@ -1,4 +1,4 @@
-import styles from '@/styles/components/sticker/StudyCtaButton.module.scss';
+import styles from '@styles/components/header/StudyCreateBtn.module.scss';
 
 export default function StudyCtaButton({
   children = '스터디 만들기',
