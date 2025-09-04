@@ -11,7 +11,7 @@ export default function NicknameInput({
   onChange,
   required = true,
   maxLength = 20,
-  helpText = '2~20자, 특수문자는 _와 -만 허용',
+  helpText = '',
   id = 'nickname',
 }) {
   const isValid = value ? NICK_RE.test(value) : !required;

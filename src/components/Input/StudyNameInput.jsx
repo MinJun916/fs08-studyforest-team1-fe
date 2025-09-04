@@ -11,7 +11,7 @@ export default function StudyNameInput({
   onChange,
   required = true,
   maxLength = 30,
-  helpText = '2~30자',
+  helpText = '',
   id = 'studyName',
 }) {
   const isValid = value ? NAME_RE.test(value) : !required;

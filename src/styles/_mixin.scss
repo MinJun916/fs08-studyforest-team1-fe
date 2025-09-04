@@ -6,9 +6,12 @@
 @mixin form-label {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
   font-weight: 600;
-  color: #333; // 필요하면 v.$black 등으로 교체 가능
+  line-height: normal;
+  color: v.$black; // 필요하면 v.$black 등으로 교체 가능
 }
 
 /* 포커스 링 */

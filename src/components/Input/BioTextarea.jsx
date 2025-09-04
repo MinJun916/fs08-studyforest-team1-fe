@@ -9,7 +9,7 @@ export default function BioTextarea({
   onChange,
   required = false,
   maxLength = 300,
-  helpText = '최대 300자',
+  helpText = '',
   id = 'bio',
   rows = 5,
 }) {
