@@ -24,10 +24,21 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
     return [...emoji].map((c) => c.codePointAt(0).toString(16)).join('-');
   };
 
+  // helper: keep items sorted by count desc (stable by id/emoji)
+  const sortItems = (arr) => {
+    return (arr || []).slice().sort((a, b) => {
+      const diff = (b.count || 0) - (a.count || 0);
+      if (diff !== 0) return diff;
+      const aKey = (a.id ?? a.emoji ?? '').toString();
+      const bKey = (b.id ?? b.emoji ?? '').toString();
+      return aKey.localeCompare(bKey);
+    });
+  };
+
   // fetch list from server
   useEffect(() => {
     let url = `${host}/emojis?offset=0&limit=10`;
-    if (studyId) url = `${host}/emojis?studyId=${studyId}&order=recent&offset=0&limit=10`;
+    if (studyId) url = `${host}/emojis?studyId=${studyId}&order=count&offset=0&limit=10`;
     let cancelled = false;
 
     axios
@@ -41,7 +52,7 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
           count: it.count || 0,
           emojiType: it.emojiType || emojiToType(it.emojiChar || it.emoji || ''),
         }));
-        setItems(mapped);
+  setItems(sortItems(mapped));
       })
       .catch((err) => {
         // non-blocking: keep local items
@@ -59,30 +70,27 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
 
     const emojiType = emojiToType(emojiChar);
 
-    // POST to create or increment on backend; backend will return current list/item
     axios
       .post(`${host}/emojis`, { studyId, emojiType })
       .then((res) => {
         const data = res?.data?.data ?? [];
-        // update items from server response (best source of truth)
         const mapped = data.map((it) => ({
           id: it.id,
           emoji: it.emojiChar || it.emoji || emojiChar,
           count: it.count || 0,
           emojiType: it.emojiType || emojiType,
         }));
-        setItems(mapped);
+        setItems(sortItems(mapped));
       })
       .catch((err) => {
-        // fallback: increment locally
         setItems((prev) => {
           const idx = prev.findIndex((it) => it.emoji === emojiChar);
           if (idx >= 0) {
             const next = prev.slice();
             next[idx] = { ...next[idx], count: next[idx].count + 1 };
-            return next;
+            return sortItems(next);
           }
-          return [...prev, { emoji: emojiChar, count: 1, emojiType }];
+          return sortItems([...prev, { emoji: emojiChar, count: 1, emojiType }]);
         });
         console.warn('failed to post emoji', err?.message || err);
       })
@@ -105,7 +113,7 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
           count: it.count || 0,
           emojiType: it.emojiType || emojiType,
         }));
-        setItems(mapped);
+        setItems(sortItems(mapped));
       })
       .catch((err) => {
         setItems((prev) => {
@@ -113,9 +121,9 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
           if (idx >= 0) {
             const next = prev.slice();
             next[idx] = { ...next[idx], count: next[idx].count + 1 };
-            return next;
+            return sortItems(next);
           }
-          return [...prev, { emoji: emojiChar, count: 1, emojiType }];
+          return sortItems([...prev, { emoji: emojiChar, count: 1, emojiType }]);
         });
         console.warn('failed to post emoji', err?.message || err);
       });
