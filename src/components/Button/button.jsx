@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import styles from "@/styles/components/button/Button.module.scss";
 
 /**
@@ -12,45 +13,39 @@ import styles from "@/styles/components/button/Button.module.scss";
 export default function Button({
   children,
   type = "button",
-  variant = "green",
-  size = "md",
-  shape = "pill",
+  variant = "green",      // "green" | "white" | "danger" | "gray"
+  size = "md",            // "sm" | "md" | "lg"
+  shape = "pill",         // "pill" | "rect" | "circle"
+  width,                  // px 숫자
   circleSize = "md",
-  block = false,
-  width,                 // ex) 600
+  leftIcon = null,        // ✅ 아이콘 지원
   disabled = false,
-  leftIcon,
-  rightIcon,
-  className = "",
+  className,
   ...rest
 }) {
-  const isCircle = shape === "circle";
-
-  const cls = [
-    styles.btn,
-    styles[`v-${variant}`],
-    isCircle ? styles[`circle-${circleSize}`] : styles[`s-${size}`],
-    isCircle ? styles.circle : styles[shape],
-    block ? styles.full : "",
-    className,
-  ]
-    .filter(Boolean)
-    .join(" ");
-
   const style = width ? { width } : undefined;
 
   return (
     <button
       type={type}
-      className={cls}
+      className={clsx(
+        styles.btn,
+        styles[variant],
+        styles[shape],
+        styles[`size-${size}`],
+        shape === "circle" && styles[`circle-${circleSize}`],
+        disabled && styles.isDisabled,
+        className
+      )}
       style={style}
       disabled={disabled}
+      aria-disabled={disabled || undefined}
       {...rest}
     >
-      {!isCircle && leftIcon && <span className={styles.icon}>{leftIcon}</span>}
-      {!isCircle && <span className={styles.label}>{children}</span>}
-      {!isCircle && rightIcon && <span className={styles.icon}>{rightIcon}</span>}
-      {isCircle && <span className={styles.iconOnly}>{children}</span>}
+      <span className={styles.btnInner}>
+        {leftIcon ? <span className={styles.iconLeft}>{leftIcon}</span> : null}
+        {children}
+      </span>
     </button>
   );
 }

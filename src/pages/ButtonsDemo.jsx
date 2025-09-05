@@ -1,5 +1,6 @@
 import Button from "@/components/Button/button";
 
+
 export default function ButtonsDemo() {
   const box = { padding: 24, display: "grid", gap: 16, maxWidth: 720, margin: "0 auto" };
   const row = { display: "flex", gap: 12 };
@@ -26,22 +27,15 @@ export default function ButtonsDemo() {
           수정하러 가기
         </Button>
 
-         {/* 중간 초록 버튼(예: 오늘의 습관으로 가기) */}
+        {/* 중간/작은 사이즈 예시 */}
         <div style={row}>
-          <Button variant="green" size="md" shape="pill">
-            오늘의 습관으로 가기
-          </Button>
+          <Button variant="green" size="md" shape="pill">오늘의 습관으로 가기</Button>
+        </div>
+        <div style={row}>
+          <Button variant="green" size="sm" shape="pill">수정 완료</Button>
         </div>
 
-
-        {/* 작은 초록 버튼(예: 완료) */}
-        <div style={row}>
-          <Button variant="green" size="sm" shape="pill">
-            수정 완료
-          </Button>
-        </div>
-
-        {/* 동그란 컨트롤 */}
+        {/* 동그란 컨트롤들 */}
         <div style={row}>
           <Button shape="circle" circleSize="md" aria-label="다시시작">⟳</Button>
           <Button shape="circle" circleSize="md" aria-label="일시정지">⏸</Button>

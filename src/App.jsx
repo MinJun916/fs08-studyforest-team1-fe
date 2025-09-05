@@ -32,8 +32,7 @@ export default function App() {
           {/* 아래는 테스트 페이지입니다 나중에 삭제요망 */}
           <Route path="test">
             <Route path="toast" element={<ToastDemo />} />
-            {import.meta.env.DEV && <Route path="buttons" element={<ButtonsDemo />} />}
-            
+            <Route path="buttons" element={<ButtonsDemo />} />
 
           </Route>
           {/* 위는 테스트 페이지입니다 나중에 삭제요망 */}
