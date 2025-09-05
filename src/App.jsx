@@ -11,6 +11,7 @@ import Focus from '@pages/Focus.jsx';
 import ToastDemo from '@pages/ToastDemo.jsx';
 import Emoji from './components/Emoji/Emoji';
 import DropDown from './components/DropDown/DropDown';
+import Tag from './components/Tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="toast" element={<ToastDemo />} />
             <Route path="emoji" element={<Emoji studyId='6b78c2cd-cc98-44ea-810e-2c68d46ab6a4'/>} />
             <Route path="dropdown" element={<DropDown />} />
+            <Route path="tag" element={<Tag bgColor={'rgba(0,0,0,0.5)'} fontSize={12} studyId={'6b78c2cd-cc98-44ea-810e-2c68d46ab6a4'}/>} />
           </Route>
           {/* 위는 테스트 페이지입니다 나중에 삭제요망 */}
         </Route>
