@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from '@/components/layout/Layout.jsx';
+// import Layout from '@/components/layout/Layout.jsx';
+import Header from '@components/header/Header.jsx';
 
 import Home from '@pages/Home.jsx';
 import CreateStudyPage from '@pages/CreateStudyPage.jsx';
@@ -9,9 +10,9 @@ import Focus from '@pages/Focus.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
 import ToastDemo from '@pages/ToastDemo.jsx';
-import Emoji from '@components/emoji/emoji';
-import DropDown from '@components/dropdown/dropdown';
-import Tag from '@components/tag/Tag';
+import Emoji from '@/components/emoji/emoji';
+import DropDown from '@/components/dropdown/dropdown';
+import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Layout />}>
+        <Route element={<Header />}>
           <Route index element={<Home />} />
           <Route path="study">
             <Route path="new" element={<CreateStudyPage />} />
