@@ -1,12 +1,12 @@
 import '@styles/global.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from '@components/header/Header.jsx';
+import Toast from '@/components/toast/Toast';
 
 function Test() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Header />} />
+        <Route index element={<Toast />} />
       </Routes>
     </BrowserRouter>
   );
