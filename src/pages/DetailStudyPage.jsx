@@ -1,9 +1,7 @@
-
-
 import styles from '@styles/pages/DetailStudyPage.module.scss';
 import React from 'react';
 
-import Emoji from '@/components/Emoji/Emoji';
+import Emoji from '@/components/emoji/Emoji';
 // import pawIcon from '@/assets/icons/paw.svg';
 
 export default function DetailStudyPage() {
@@ -11,7 +9,11 @@ export default function DetailStudyPage() {
   const habits = [
     { id: 1, title: '미라클모닝 6시 기상', records: [true, false, true, true, false, true, false] },
     { id: 2, title: '아침 챙겨 먹기', records: [false, true, false, false, false, false, false] },
-    { id: 3, title: 'React 스터디 책 1챕터 읽기', records: [true, false, false, false, false, false, false] },
+    {
+      id: 3,
+      title: 'React 스터디 책 1챕터 읽기',
+      records: [true, false, false, false, false, false, false],
+    },
     { id: 4, title: '스트레칭', records: [false, false, false, false, false, false, false] },
     { id: 5, title: '사이드 프로젝트', records: [false, false, false, false, false, false, false] },
     { id: 6, title: '물 2L 마시기', records: [false, false, false, false, false, false, false] },
@@ -22,7 +24,7 @@ export default function DetailStudyPage() {
       {/* 상단 헤더 영역 */}
       <div className={styles.background}>
         <div>
-          <Emoji studyId='6b78c2cd-cc98-44ea-810e-2c68d46ab6a4'/>
+          <Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />
           <h1 className={styles.title}>연우의 개발공장</h1>
         </div>
 
@@ -62,7 +64,9 @@ export default function DetailStudyPage() {
               <tr>
                 <th scope="col">습관</th>
                 {days.map((d) => (
-                  <th key={d} scope="col">{d}</th>
+                  <th key={d} scope="col">
+                    {d}
+                  </th>
                 ))}
               </tr>
             </thead>
@@ -72,8 +76,7 @@ export default function DetailStudyPage() {
                 <tr key={habit.id}>
                   <td>{habit.title}</td>
                   {habit.records.map((ok, idx) => (
-                    <td key={idx} aria-label={`${habit.title}-${days[idx]}`}>
-                    </td>
+                    <td key={idx} aria-label={`${habit.title}-${days[idx]}`}></td>
                   ))}
                 </tr>
               ))}
