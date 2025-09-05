@@ -8,9 +8,10 @@ import DetailStudyPage from '@pages/DetailStudyPage.jsx';
 import Focus from '@pages/Focus.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
+import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 import ToastDemo from '@pages/ToastDemo.jsx';
-import Emoji from './components/Emoji/Emoji';
-import DropDown from './components/DropDown/DropDown';
+
+
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -31,8 +32,9 @@ export default function App() {
           {/* 아래는 테스트 페이지입니다 나중에 삭제요망 */}
           <Route path="test">
             <Route path="toast" element={<ToastDemo />} />
-            <Route path="emoji" element={<Emoji studyId='6b78c2cd-cc98-44ea-810e-2c68d46ab6a4'/>} />
-            <Route path="dropdown" element={<DropDown />} />
+            {import.meta.env.DEV && <Route path="buttons" element={<ButtonsDemo />} />}
+            
+
           </Route>
           {/* 위는 테스트 페이지입니다 나중에 삭제요망 */}
         </Route>

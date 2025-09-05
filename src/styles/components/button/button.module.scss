@@ -1,0 +1,43 @@
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0 solid transparent;
+  cursor: pointer;
+  font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
+}
+
+.btnText {
+  $accent: #6a9b60; // v.$brand에서 어둡게 뺀 값 직접 넣기
+  text-shadow:
+    0 -1px 0 $accent,
+    0 -2px 0 $accent,
+    0 -3px 0 $accent;
+}
+
+.full { width: 100%; }
+
+/* 모양 */
+.pill { border-radius: 16px; }
+.rect { border-radius: 50px; }
+.circle { border-radius: 9999px; padding: 0; }
+
+/* 사이즈(높이/폰트) */
+.s-sm { width: 140px; height: 58px; padding: 10px; font-size: 18px; }
+.s-md { width: 312px; height: 58px; padding: 10px; font-size: 18px; }
+.s-lg { width: 648px; height: 58px; padding: 10px; font-size: 18px; }
+
+/* 원형 지름 */
+.circle-sm { width: 32px; height: 32px; }
+.circle-md { width: 48px; height: 48px; }
+.circle-lg { width: 64px; height: 64px; }
+
+.icon, .iconOnly { line-height: 0; display: inline-flex; }
+
+/* 변형(variant) */
+.v-green  { background:#99C08E; border-color:#6d9a61; color:#fff; }
+.v-green:hover { background:#7ea673; }
+
+

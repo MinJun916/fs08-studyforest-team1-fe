@@ -8,6 +8,7 @@ import eye from '@assets/icons/eye.png';
 import eyeOff from '@assets/icons/eye-off.png';
 import pawSelected from '@assets/icons/ic_bg_selected.png';
 
+
 export default function CreateStudyPage() {
   // 윗줄: 발바닥(기본) + 파스텔 3색  → 4칸
   const colorTiles = [
