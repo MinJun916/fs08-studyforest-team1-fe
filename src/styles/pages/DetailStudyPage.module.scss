@@ -3,22 +3,98 @@
 
 *{
   color: v.$black;
+  word-break: keep-all;
 }
 
-main {
+.root {
   /* layout wrapper */
   background: #fff;
   border-radius: 20px;
   padding: 20px;
 }
 
-.title {
-  /* page title */
-  font-size: 32px;
-  line-height: 1.2;
-}
 
-header {
+.header {
   display: flex;
   justify-content: space-between;
+  .adminButtons {
+    display: flex;
+    gap: 8px;
+  }
+}
+
+.intro {
+  h1 {
+    /* page title */
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 400;
+    color: v.$gray81;
+    margin: 0;
+    margin-bottom: 8px;
+  }
+  p {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+}
+
+.record {
+  padding: 24px;
+  border: 1px solid v.$grayDD;
+  border-radius: 20px;
+  margin-top: 40px;
+  overflow-x: auto;
+  h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    text-align: center;
+    padding: 12px 8px;
+    font-weight: 600;
+  }
+
+  td {
+    padding: 14px 41px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .habitTitle {
+    text-align: right;
+    padding-left: 16px;
+    font-weight: 600;
+    max-width: 190px;
+  }
+
+  .pawCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+  }
+
+  .pawSvg {
+    width: 28px;
+    height: 28px;
+  }
 }

@@ -5,7 +5,7 @@ import styles from '@/styles/components/tag/tag.module.scss';
 // props: bgColor?: string, fontSize?: number|string, studyId?: string
 function Tag({ bgColor, fontSize, studyId }) {
   // only set inline styles when props are provided so default CSS remains in effect
-  const containerStyle = bgColor ? { backgroundColor: bgColor } : undefined;
+  const containerStyle = bgColor ? { backgroundColor: bgColor  } : undefined;
   const textStyle = fontSize
     ? { fontSize: typeof fontSize === 'number' ? `${fontSize}px` : fontSize }
     : undefined;

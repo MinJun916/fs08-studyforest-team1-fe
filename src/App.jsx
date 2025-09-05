@@ -9,9 +9,9 @@ import Focus from '@pages/Focus.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
 import ToastDemo from '@pages/ToastDemo.jsx';
-import Emoji from './components/Emoji/Emoji';
+import Emoji from './components/emoji/Emoji';
 import DropDown from './components/DropDown/DropDown';
-import Tag from './components/Tag/Tag';
+import Tag from './components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
