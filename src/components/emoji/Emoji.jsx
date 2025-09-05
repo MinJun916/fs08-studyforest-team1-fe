@@ -3,7 +3,8 @@ import Picker from 'emoji-picker-react';
 import axios from 'axios';
 import styles from '@/styles/components/emoji/Emoji.module.scss';
 
-function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854', host = 'https://studyforest-n1at.onrender.com' }) {
+function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
+  const host = 'https://studyforest-n1at.onrender.com';
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]); // { emoji: '😀', count: 1, id, emojiType }
   const rootRef = useRef(null);
@@ -62,7 +63,7 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
     return () => {
       cancelled = true;
     };
-  }, [studyId, host]);
+  }, [studyId]);
 
   const handleEmojiClick = (emojiData) => {
     const emojiChar = emojiData?.emoji ?? emojiData?.native ?? '';
