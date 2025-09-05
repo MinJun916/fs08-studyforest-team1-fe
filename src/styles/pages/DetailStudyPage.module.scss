@@ -1,0 +1,24 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
+*{
+  color: v.$black;
+}
+
+main {
+  /* layout wrapper */
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.title {
+  /* page title */
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
