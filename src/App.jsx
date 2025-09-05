@@ -9,13 +9,9 @@ import Focus from '@pages/Focus.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
 import ToastDemo from '@pages/ToastDemo.jsx';
-import Emoji from './components/emoji/Emoji';
-<<<<<<< HEAD
-import DropDown from './components/dropdown/DropDown';
-import Tag from './components/tag/Tag';
-=======
-import DropDown from './components/dropDown/DropDown';
->>>>>>> 1da3ea7a905362e55a786aed1e5138fd893cbe1e
+import Emoji from '@components/emoji/emoji';
+import DropDown from '@components/dropdown/dropdown';
+import Tag from '@components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';

@@ -3,11 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import Emoji from '@/components/emoji/Emoji';
-<<<<<<< HEAD
 import Tag from '@/components/tag/Tag';
-=======
-// import pawIcon from '@/assets/icons/paw.svg';
->>>>>>> 1da3ea7a905362e55a786aed1e5138fd893cbe1e
 
 export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);
@@ -51,18 +47,8 @@ export default function DetailStudyPage() {
     { id: 6, title: '물 2L 마시기', records: [false, false, false, false, false, false, false] },
   ];
 
-<<<<<<< HEAD
   const habitColors = ['#D2E869', '#B2D570', '#99C08E', '#97CFD8', '#89D5C9', '#4CDD84', '#73E8F2', '#06C0E1', '#0189BE', '#C7A8DA', '#C589DE', '#CD69A7', '#FDE3A6', '#FED054', '#FF9E01', '#FFA3A5', '#F885A7', '#E26575'];
-=======
-  return (
-    <main>
-      {/* 상단 헤더 영역 */}
-      <div className={styles.background}>
-        <div>
-          <Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />
-          <h1 className={styles.title}>연우의 개발공장</h1>
-        </div>
->>>>>>> 1da3ea7a905362e55a786aed1e5138fd893cbe1e
+
 
   return (
     <div className={styles.root}>
@@ -118,7 +104,6 @@ export default function DetailStudyPage() {
                 <tr key={habit.id}>
                   <td className={styles.habitTitle}>{habit.title}</td>
                   {habit.records.map((ok, idx) => (
-<<<<<<< HEAD
                     <td key={idx} aria-label={`${habit.title}-${days[idx]}`}>
                       <div className={styles.pawCell}>
                         {/* simple single-path paw SVG; fill switches based on record */}
@@ -128,9 +113,6 @@ export default function DetailStudyPage() {
                         </svg>
                       </div>
                     </td>
-=======
-                    <td key={idx} aria-label={`${habit.title}-${days[idx]}`}></td>
->>>>>>> 1da3ea7a905362e55a786aed1e5138fd893cbe1e
                   ))}
                 </tr>
               ))}
