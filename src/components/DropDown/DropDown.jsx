@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styles from '../../styles/components/DropDown/DropDown.module.scss'
+import styles from '@styles/components/DropDown/DropDown.module.scss'
 
 // 기본 정렬 옵션 매핑 (요청받은 값과 한글 라벨 매핑)
 export const SORTOPTIONS = [
