@@ -1,0 +1,95 @@
+/* src/pages/Home.module.scss (또는 home.module.scss) */
+
+/* 공통 박스 스타일을 placeholder로 정의해서 재사용 */
+%surface-box {
+  background: var(--surface, #fff);
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: var(--radius-12, 12px);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.04));
+  padding: var(--space-24, 24px);
+}
+
+.page {
+  padding: var(--space-24, 24px);
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* 바깥 프레임은 모서리만 살짝 더 크게 */
+.frame {
+  @extend %surface-box;
+  border-radius: var(--radius-16, 16px);
+}
+
+/* 섹션 박스(흰색 박스) */
+.sectionBox {
+  @extend %surface-box;
+}
+
+/* 섹션 간 간격 40px (토큰이 있으면 사용, 없으면 40px로) */
+.sectionGap {
+  margin-top: var(--space-40, 40px);
+}
+
+/* 제목: 프로젝트 토큰 우선, 없으면 기본값 사용 */
+.title {
+  font-size: var(--fs-lg, 20px);
+  font-weight: var(--fw-extrabold, 800);
+  color: var(--text-strong, #000); /* 요구사항: 검정 */
+  letter-spacing: var(--tracking-tight, -0.01em);
+  margin-bottom: var(--space-16, 16px);
+}
+
+/* 상단 컨트롤 바: 검색 + 드롭다운 자리 */
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: var(--gap-12, 12px);
+  align-items: center;
+  margin-bottom: var(--space-16, 16px);
+}
+
+.searchBox {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+/* 드롭다운 자리(제작 전) */
+.dropdownPlaceholder {
+  min-height: 48px;
+  border: 1px dashed var(--color-border-muted, #cbd5e1);
+  border-radius: var(--radius-8, 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-sm, 14px);
+  color: var(--text-muted, #64748b);
+  background: var(--surface-subtle, #f8fafc);
+}
+
+/* 카드 그리드 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--gap-16, 16px);
+}
+
+.empty {
+  margin-top: var(--space-16, 16px);
+  color: var(--text-muted, #64748b);
+}
+
+/* 더보기 버튼 */
+.moreWrap {
+  text-align: center;
+  margin-top: var(--space-16, 16px);
+}
+
+.moreBtn {
+  padding: 10px 16px;
+  border-radius: var(--radius-10, 10px);
+  border: 1px solid var(--color-border, #e5e7eb);
+  background: var(--surface, #fff);
+  cursor: pointer;
+}
