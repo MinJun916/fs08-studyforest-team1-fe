@@ -1,6 +1,6 @@
 // src/component/modal/PermissionModal.jsx
 import React, { useEffect, useState } from 'react';
-import Popup from '@components/popup/popup.jsx';
+import Popup from '@/components/popup/Popup.jsx';
 import PasswordInput from '@components/input/PasswordInput.jsx';
 import styles from '@/styles/components/modal/PermissionMordal.module.scss';
 

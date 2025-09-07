@@ -1,12 +1,12 @@
 import '@styles/global.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Toast from '@/components/toast/Toast';
+import PasswordGateModal from '@/components/modal/PasswordGetModal';
 
 function Test() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Toast />} />
+        <Route index element={<PasswordGateModal />} />
       </Routes>
     </BrowserRouter>
   );

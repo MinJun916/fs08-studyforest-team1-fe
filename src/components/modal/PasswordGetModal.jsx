@@ -1,6 +1,6 @@
 // src/component/modal/PasswordGateModal.jsx
 import React, { useState } from 'react';
-import Popup from '@components/popup/popup.jsx';
+import Popup from '@/components/popup/Popup.jsx';
 import PasswordInput from '@components/input/PasswordInput.jsx';
 
 export default function PasswordGateModal({ open, onClose, onSubmit }) {
