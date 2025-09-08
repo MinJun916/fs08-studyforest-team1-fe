@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Home from '@pages/Home.jsx';
+import Header from '@/components/header/Header';
 import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import Workshop from '@pages/Workshop.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
@@ -8,7 +8,6 @@ import Focus from '@pages/Focus.jsx';
 import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
-
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag';
@@ -16,6 +15,7 @@ import Tag from '@/components/tag/Tag';
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
 import Toast from '@components/toast/Toast.jsx';
+import Input from '@/components/input/Input.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -24,7 +24,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<Header />} />
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
           <Route path="detail" element={<DetailStudyPage />} />
@@ -55,7 +55,7 @@ export default function App() {
 
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<Toast />} />
+          <Route index element={<Input />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>
