@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/axios.js';
 
-import Popup from '@components/popup/Popup.jsx';
+import Popup from '@/components/popup/Popup.jsx';
 import HabitList from '@components/modal/HabitList.jsx';
 import styles from '@styles/components/modal/HabitModal.module.scss';
 

@@ -4,42 +4,77 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  border: none;
   box-sizing: border-box;         /* ✅ 높이 계산 안정화 */
-  border: 1px solid transparent;
   cursor: pointer;
   line-height: 1;                 /* ✅ 텍스트 수직 중앙 안정화 */
   -webkit-appearance: none;       /* 브라우저 기본 스타일 제거 */
   appearance: none;
+  color: #fff !important;
   font-family: "EF_jejudoldam", Pretendard, system-ui, "Noto Sans KR", sans-serif;
 }
 
+.cancel {
+  background: #ddd;
+  color: #fff;
+  text-shadow: 
+    0 -1px 0 #818181,  
+    0 -2px 0 #818181,
+    0 -3px 0 #818181;
+}
+
+.btn * {color: inherit; }
+.btn svg { fill: currentColor; }
+
+.full { width: 100%; }
+
 /* 모양 */
-.pill   { border-radius: 16px; }
-.rect   { border-radius: 12px; }
+.pill { border-radius: 16px; }
+.rect { border-radius: 50px; }
 .circle { border-radius: 9999px; padding: 0; }
 
 /* 사이즈 — 세로는 height로만, 패딩은 좌우만! */
-.size-sm { height: 44px; padding: 0 14px; min-width: 140px; }
-.size-md { height: 58px; padding: 0 16px; width: 312px; }
-.size-lg { height: 58px; padding: 0 20px; width: 648px; }
+.size-sm { width: 140px; height: 58px; padding: 10px; font-size: 18px; }
+.size-md { width: 312px; height: 58px; padding: 10px; font-size: 18px; }
+.size-lg { width: 648px; height: 58px; padding: 10px; font-size: 18px; }
 
 /* 원형 지름 */
 .circle-sm { width: 32px; height: 32px; }
 .circle-md { width: 48px; height: 48px; }
 .circle-lg { width: 64px; height: 64px; }
 
+.icon, .iconOnly { line-height: 0; display: inline-flex; }
 /* 변형(색상) */
-.green  { background:#99C08E; border-color:#6d9a61; color:#fff; }
+.green  { 
+  background:#99C08E; 
+  border-color:none;
+  color:#fff;
+  text-shadow: 
+    0 -1px 0 #578246,
+    0 -2px 0 #578246,
+    0 -3px 0 #578246;;
+ }
+
+ .gray {
+  background:#818181; 
+  border-color:none;
+  color:#fff;
+
+ }
 .green:hover { background:#7ea673; }
 
 /* 회색(비활성/중립) */
-.gray {
+.light-gray {
   background: #DDDDDD;
   border: 1px solid #DDDDDD;
   color: #ffffff;
+  text-shadow: 
+    0 -1px 0 #818181,
+    0 -2px 0 #818181,
+    0 -3px 0 #818181;;
 }
-.gray:hover,
-.gray:active {
+.light-gray:hover,
+.light-gray:active {
   background: #DDDDDD;
   border-color: #DDDDDD;
   filter: none;
@@ -52,16 +87,26 @@
   cursor: default;
 }
 
+.startStopFont {
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  font-family: Pretendard, !important;
+  text-shadow: none !important;
+}
+
+
+
+/* 모바일 (최대 743px)에서는 작은 버튼 */
+@media (max-width: 743px) {
+  .green, .gray {
+    height: 44px;
+    padding: 0 14px;
+    font-size: 16px;
+    border-radius: 30px;
+  }
+}
 /* 아이콘/텍스트 정렬 */
 .btnInner { display:inline-flex; align-items:center; justify-content:center; gap:10px; }
 .iconLeft { display:inline-flex; align-items:center; justify-content:center; }
 
-/* (선택) 입체 텍스트 그림자 */
-.btnText {
-  /* color.scale 사용 대신 직접 색 지정 */
-  $accent: #6a9b60;
-  text-shadow:
-    0 -1px 0 $accent,
-    0 -2px 0 $accent,
-    0 -3px 0 $accent;
-}
