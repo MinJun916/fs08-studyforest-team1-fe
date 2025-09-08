@@ -34,18 +34,20 @@ export default function DetailStudyPage() {
     };
   }, []);
   const days = ['월', '화', '수', '목', '금', '토', '일'];
-  const habits = [
+  // fallback sample habits used while study data is loading or if API returns unexpected shape
+  const fallbackHabits = [
     { id: 1, title: '미라클모닝 6시 기상', records: [true, false, true, true, false, true, false] },
     { id: 2, title: '아침 챙겨 먹기', records: [false, true, false, false, false, false, false] },
-    {
-      id: 3,
-      title: 'React 스터디 책 1챕터 읽기',
-      records: [true, false, false, false, false, false, false],
-    },
+    { id: 3, title: 'React 스터디 책 1챕터 읽기', records: [true, false, false, false, false, false, false] },
     { id: 4, title: '스트레칭', records: [false, false, false, false, false, false, false] },
     { id: 5, title: '사이드 프로젝트', records: [false, false, false, false, false, false, false] },
     { id: 6, title: '물 2L 마시기', records: [false, false, false, false, false, false, false] },
   ];
+
+  // Map API response shape to the local habit shape used by the table.
+  // API returns study.weeklyHabits: [{ habitId, habitName, isCompleted: [bool,...] }, ...]
+  const habits =
+    study?.weeklyHabits?.map((h) => ({ id: h.habitId, title: h.habitName, records: h.isCompleted })) ?? fallbackHabits;
 
   const habitColors = ['#D2E869', '#B2D570', '#99C08E', '#97CFD8', '#89D5C9', '#4CDD84', '#73E8F2', '#06C0E1', '#0189BE', '#C7A8DA', '#C589DE', '#CD69A7', '#FDE3A6', '#FED054', '#FF9E01', '#FFA3A5', '#F885A7', '#E26575'];
 
@@ -77,7 +79,7 @@ export default function DetailStudyPage() {
         <div>
           <h3>현재까지 획득한 포인트</h3>
           <div>
-            <Tag bgColor={'rgba(255,255,255,0.3)'} fontSize={12} studyId={studyId}/>
+            <Tag bgColor={'rgba(255,255,255,0.3)'} fontSize={12} points={study?.totalPoints ?? 0}/>
           </div>
         </div>
       </section>
