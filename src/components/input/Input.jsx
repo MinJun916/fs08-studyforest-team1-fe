@@ -4,25 +4,36 @@ import EyeOff from '@assets/icons/Ic_eyeOff.svg';
 import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
-function Input({ type = 'search' }) {
-  const [value, setValue] = useState('');
+function Input({ type = 'search', onValueChange }) {
+  const [nickName, setNickName] = useState('');
+  const [studyName, setStudyName] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
+  const [keyword, setKeyword] = useState('');
 
-  const handleChange = (e) => {
-    setValue(e.target.value);
-    console.log(value);
+  const handleNickNameChange = (e) => {
+    setNickName(e.target.value);
+    onValueChange(nickName);
+    console.log(nickName);
+  };
+
+  const handleStudyNameChange = (e) => {
+    setStudyName(e.target.value);
+    onValueChange(studyName);
+    console.log(studyName);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    onValueChange(password);
     console.log(password);
   };
 
   const handleCheckPasswordChange = (e) => {
     setCheckPassword(e.target.value);
+    onValueChange(checkPassword);
     console.log(checkPassword);
   };
 
@@ -36,6 +47,12 @@ function Input({ type = 'search' }) {
 
   const isPasswordValid = password === checkPassword;
 
+  const handleKeywordChange = (e) => {
+    setKeyword(e.target.value);
+    onValueChange(keyword);
+    console.log(keyword);
+  };
+
   // 렌더링 코드
   if (type === 'nickName') {
     return (
@@ -45,8 +62,8 @@ function Input({ type = 'search' }) {
           className={styles.input}
           type="text"
           placeholder="닉네임을 입력해주세요"
-          value={value}
-          onChange={handleChange}
+          value={nickName}
+          onChange={handleNickNameChange}
         ></input>
       </div>
     );
@@ -58,14 +75,14 @@ function Input({ type = 'search' }) {
         <div className={styles.inputWrapper}>
           <div className={styles.inputTitle}>스터디 이름</div>
           <input
-            className={`${styles.input} ${value ? '' : styles.errorInput}`}
+            className={`${styles.input} ${studyName ? '' : styles.errorInput}`}
             type="text"
             placeholder="스터디 이름을 입력해주세요"
-            value={value}
-            onChange={handleChange}
+            value={studyName}
+            onChange={handleStudyNameChange}
           ></input>
         </div>
-        {!value && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
+        {!studyName && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
       </div>
     );
   }
@@ -130,7 +147,13 @@ function Input({ type = 'search' }) {
     return (
       <div className={styles.searchWrapper}>
         <img src={Ic_search} alt="검색" className={styles.searchIcon} />
-        <input className={styles.searchInput} type="text" placeholder="검색" />
+        <input
+          className={styles.searchInput}
+          type="text"
+          placeholder="검색"
+          value={keyword}
+          onChange={handleKeywordChange}
+        />
       </div>
     );
   }
