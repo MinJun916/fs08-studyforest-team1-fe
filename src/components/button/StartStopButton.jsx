@@ -1,7 +1,7 @@
 import Button from "@/components/button/Button";
 import playPng from "@assets/icons/play.png";
 
-export default function StartButton({
+export default function StartStopButton({
   active = false,        // true면 회색, false면 초록
   label = "Start!",
   width,
