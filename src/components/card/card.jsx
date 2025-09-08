@@ -13,7 +13,7 @@ import styles from '@/styles/components/card/card.module.scss';
  * - stats?: { members:number|string, heat:number|string, likes:number|string }
  * - initiallyLiked?: boolean
  */
-export function StudyCard({
+export function Card({
   variant = 'light',
   title,
   daysText,

@@ -1,21 +1,20 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Home from '@pages/Home.jsx';
-import CreateStudyPage from '@pages/CreateStudyPage.jsx';
+import Header from '@/components/header/Header';
 import Workshop from '@pages/Workshop.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
+import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import Focus from '@pages/Focus.jsx';
 import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
-
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
-import HabitModal from '@components/modal/HabitModal.jsx';
+import Card from '@/components/card/Card.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -69,7 +68,7 @@ export default function App() {
           {/* 위는 테스트 페이지입니다 나중에 삭제요망 */}
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<HabitModal />} />
+          <Route index element={<Card />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>
