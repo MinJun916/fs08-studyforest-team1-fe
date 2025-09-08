@@ -89,3 +89,33 @@
   width: 24px;
   height: 24px;
 }
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  width: 335px;
+  height: 42px;
+  padding: 12px 20px;
+  gap: 10px;
+  border-radius: 15px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
+}
+
+.searchIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: v.$gray81;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}

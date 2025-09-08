@@ -14,7 +14,7 @@ import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
-import TextArea from '@components/input/TextArea.jsx';
+import Input from '@components/input/Input.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -54,7 +54,7 @@ export default function App() {
 
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<TextArea />} />
+          <Route index element={<Input />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>

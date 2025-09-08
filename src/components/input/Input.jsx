@@ -2,8 +2,9 @@ import { useState } from 'react';
 import Eye from '@assets/icons/Ic_eye.svg';
 import EyeOff from '@assets/icons/Ic_eyeOff.svg';
 import styles from '@styles/components/input/Input.module.scss';
+import Ic_search from '@assets/icons/Ic_search.svg';
 
-function Input({ type = 'password' }) {
+function Input({ type = 'search' }) {
   const [value, setValue] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -121,6 +122,15 @@ function Input({ type = 'password' }) {
           </div>
           {!isPasswordValid && <div className={styles.error}>*비밀번호가 일치하지 않습니다</div>}
         </div>
+      </div>
+    );
+  }
+
+  if (type === 'search') {
+    return (
+      <div className={styles.searchWrapper}>
+        <img src={Ic_search} alt="검색" className={styles.searchIcon} />
+        <input className={styles.searchInput} type="text" placeholder="검색" />
       </div>
     );
   }
