@@ -14,7 +14,7 @@ import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
-import Input from '@components/input/Input.jsx';
+import Card from '@/components/card/Card.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -54,7 +54,7 @@ export default function App() {
 
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<Input />} />
+          <Route index element={<Card />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>
