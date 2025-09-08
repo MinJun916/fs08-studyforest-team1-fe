@@ -1,5 +1,5 @@
 // src/component/input/NicknameInput.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '@/styles/components/input/Input.module.scss';
 
 const NICK_RE = /^[A-Za-z0-9가-힣_-]{2,20}$/;
@@ -10,12 +10,12 @@ export default function NicknameInput({
   value,
   onChange,
   required = true,
-  maxLength = 20,
-  helpText = '2~20자, 특수문자는 _와 -만 허용',
   id = 'nickname',
 }) {
+  const [touched, setTouched] = useState(false); // 클릭 여부 추적
+
+  const showError = touched && !value; // 클릭했는데 값이 비어있을 때만 에러 표시
   const isValid = value ? NICK_RE.test(value) : !required;
-  const describedBy = helpText ? `${id}-help` : undefined;
 
   return (
     <div className={styles.field}>
@@ -24,25 +24,18 @@ export default function NicknameInput({
         <input
           id={id}
           type="text"
-          className={styles.input}
+          className={`${styles.input} ${showError ? styles.invalid : ''}`}
           placeholder={placeholder}
           value={value}
-          maxLength={maxLength}
           onChange={(e) => onChange?.(e.target.value)}
+          onFocus={() => setTouched(true)} // 포커스되면 touched = true
+          onBlur={() => setTouched(false)} // 🔹 포커스 해제되면 원래 상태로 복귀
           aria-invalid={!isValid}
-          aria-describedby={describedBy}
           required={required}
         />
       </label>
 
-      {helpText && (
-        <p id={describedBy} className={styles.help}>
-          {helpText}
-        </p>
-      )}
-      <p className={styles.counter}>
-        {value?.length ?? 0}/{maxLength}
-      </p>
+      {showError && <p className={styles.error}>*닉네임을 입력해주세요.</p>}
     </div>
   );
 }
