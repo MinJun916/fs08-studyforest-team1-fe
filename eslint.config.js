@@ -28,13 +28,7 @@ export default [
       'react/jsx-uses-react': 'error',
       'react/react-in-jsx-scope': 'off',
       // Relax unused vars but ignore common placeholders and `React`
-      'no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^React$',
-        },
-      ],
+      'no-unused-vars': 'off',
       'import/no-unresolved': 'off',
       'import/extensions': 'off',
     },

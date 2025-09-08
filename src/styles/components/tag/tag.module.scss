@@ -1,0 +1,14 @@
+@use '@/styles/variables' as v;
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
