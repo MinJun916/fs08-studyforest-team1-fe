@@ -25,7 +25,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="study">
             <Route path="new" element={<CreateStudyPage />} />
-            <Route path="detail" element={<DetailStudyPage />} />
+            <Route path=":id" element={<DetailStudyPage />} />
             {/*미구현*/}
           </Route>
           <Route path="/workshop" element={<Workshop />} />

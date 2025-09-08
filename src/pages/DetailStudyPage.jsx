@@ -1,5 +1,5 @@
 import styles from '@styles/pages/DetailStudyPage.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
 
 import Emoji from '@/components/emoji/Emoji';
@@ -9,32 +9,45 @@ export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [habitsState, setHabitsState] = useState([]);
+  const studyId = window.location.pathname.split('/').pop(); // URL에서 ID 추출
 
-  // 임시로 사용할 studyId
-  const studyId = 'c9c64ff1-b54a-4722-90d3-4e99c8a480ed';
+  const isMountedRef = useRef(true);
+
+  const fetchStudy = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get(`https://studyforest-n1at.onrender.com/studies/${studyId}`);
+      if (isMountedRef.current) setStudy(res.data?.data ?? null);
+    } catch (err) {
+      if (isMountedRef.current) setError(err);
+    } finally {
+      if (isMountedRef.current) setLoading(false);
+    }
+  }, [studyId]);
 
   useEffect(() => {
-    let mounted = true;
-    const fetchStudy = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await axios.get(`https://studyforest-n1at.onrender.com/studies/${studyId}`);
-        if (mounted) setStudy(res.data?.data ?? null);
-      } catch (err) {
-        if (mounted) setError(err);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    };
-
+    isMountedRef.current = true;
     fetchStudy();
     return () => {
-      mounted = false;
+      isMountedRef.current = false;
     };
-  }, []);
+  }, [fetchStudy]);
+
+  const toggleHabit = async (habitId) => {
+    try {
+      setLoading(true);
+      setError(null);
+      await axios.post(`https://studyforest-n1at.onrender.com/habitChecks/${studyId}/${habitId}/habitCheck/toggle`);
+      await fetchStudy();
+    } catch (err) {
+      setError(err);
+    } finally {
+      if (isMountedRef.current) setLoading(false);
+    }
+  };
   const days = ['월', '화', '수', '목', '금', '토', '일'];
-  // fallback sample habits used while study data is loading or if API returns unexpected shape
   const fallbackHabits = [
     { id: 1, title: '미라클모닝 6시 기상', records: [true, false, true, true, false, true, false] },
     { id: 2, title: '아침 챙겨 먹기', records: [false, true, false, false, false, false, false] },
@@ -44,8 +57,6 @@ export default function DetailStudyPage() {
     { id: 6, title: '물 2L 마시기', records: [false, false, false, false, false, false, false] },
   ];
 
-  // Map API response shape to the local habit shape used by the table.
-  // API returns study.weeklyHabits: [{ habitId, habitName, isCompleted: [bool,...] }, ...]
   const habits =
     study?.weeklyHabits?.map((h) => ({ id: h.habitId, title: h.habitName, records: h.isCompleted })) ?? fallbackHabits;
 
@@ -74,7 +85,7 @@ export default function DetailStudyPage() {
           </div>
         </div>
         <h3>소개</h3>
-        <p>{loading ? '로딩 중...' : error ? '소개를 불러오는 중 오류가 발생했습니다.' : study?.description ?? 'Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅 :)'}</p>
+        <p>{study?.description ?? 'Slow And Steady Wins The Race! 다들 오늘 하루도 화이팅'}</p>
 
         <div>
           <h3>현재까지 획득한 포인트</h3>
@@ -89,6 +100,9 @@ export default function DetailStudyPage() {
         <h2>습관 기록표</h2>
 
         <div>
+          {habits.length === 0
+            ? <p className={styles.habitMsg}>아직 습관이 없어요.<br/> 오늘의 습관에서 습관을 생성해 보세요</p>
+            :
           <table>
             <thead>
               <tr>
@@ -104,7 +118,21 @@ export default function DetailStudyPage() {
             <tbody>
               {habits.map((habit, hIdx) => (
                 <tr key={habit.id}>
-                  <td className={styles.habitTitle}>{habit.title}</td>
+                  <td
+                    className={styles.habitTitle}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => toggleHabit(habit.id)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleHabit(habit.id);
+                      }
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    {habit.title}
+                  </td>
                   {habit.records.map((ok, idx) => (
                     <td key={idx} aria-label={`${habit.title}-${days[idx]}`}>
                       <div className={styles.pawCell}>
@@ -120,6 +148,7 @@ export default function DetailStudyPage() {
               ))}
             </tbody>
           </table>
+  }
         </div>
       </section>
     </div>
