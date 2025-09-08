@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Input from '@components/input/Input.jsx';
-import styles from '@/styles/components/auth/AuthForm.module.scss';
+import styles from '@/styles/components/input/AuthForm.module.scss';
 
 export default function AuthForm() {
   const [values, setValues] = useState({

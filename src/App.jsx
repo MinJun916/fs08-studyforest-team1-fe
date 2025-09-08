@@ -13,7 +13,7 @@ import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
-import HabitModal from '@components/modal/HabitModal.jsx';
+import Toast from '@components/toast/Toast.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -51,7 +51,7 @@ export default function App() {
 
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<HabitModal />} />
+          <Route index element={<Toast />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>

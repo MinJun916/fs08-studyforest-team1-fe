@@ -3,7 +3,7 @@ import React from 'react';
 import Input from '@components/input/Input.jsx';
 import PasswordInput from '@components/input/PasswordInput.jsx';
 import RePasswordInput from '@components/input/RePasswordInput.jsx';
-import AuthForm from '@components/auth/AuthForm.jsx';
+import AuthForm from '@/components/input/AuthForm.jsx';
 import CardsDemo from '@components/card/card.jsx';
 import { Link } from 'react-router-dom';
 
