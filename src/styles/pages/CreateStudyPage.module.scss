@@ -122,7 +122,7 @@ $eye-gap: 12px; // 오른쪽 여백
 
 /* ------------------ Error ------------------ */
 .errorInput {
-  border-color: var(--error) !important;
+  border-color: var(--error);
   box-shadow: 0 0 0 3px rgba(196, 16, 19, 0.12);
 }
 .errorMsg {
@@ -168,7 +168,7 @@ $eye-gap: 12px; // 오른쪽 여백
 /* 혹시 남아 있는 고아 svg/img가 있으면 숨김 */
 .pwWrap > svg,
 .pwWrap > img {
-  display: none !important;
+  display: none;
 }
 
 /* ------------------ Background Tiles ------------------ */

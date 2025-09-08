@@ -10,12 +10,19 @@ export default function PasswordInput({
   value,
   onChange,
   placeholder = '비밀번호를 입력해 주세요',
-  error,
+  error, // 외부에서 넘겨주는 검증 에러(선택)
   hint,
   required = false,
   inputProps = {},
 }) {
   const [showPw, setShowPw] = useState(false);
+  const [touched, setTouched] = useState(false);
+
+  // 포커스했고 값이 비었을 때(필수인 경우)에만 비어있음 에러 노출
+  const emptyError = required && touched && !value;
+  // 외부 error가 있으면 우선 표시, 없고 비어있음이면 해당 문구
+  const errorMessage = error || (emptyError ? '비밀번호를 입력해주세요.' : '');
+  const hasError = Boolean(errorMessage);
 
   return (
     <div className={styles.row}>
@@ -33,14 +40,15 @@ export default function PasswordInput({
           type={showPw ? 'text' : 'password'}
           value={value}
           onChange={onChange}
+          onFocus={() => setTouched(true)}
+          onBlur={() => setTouched(false)} // 🔹 blur 시 원래 상태
           placeholder={placeholder}
-          className={`${styles.input} ${error ? styles.invalid : ''}`}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${name}-error` : undefined}
+          className={`${styles.input} ${hasError ? styles.invalid : ''}`}
+          aria-invalid={hasError}
+          aria-describedby={hasError ? `${name}-error` : undefined}
           {...inputProps}
         />
 
-        {/* 👁 아이콘 버튼이 input 내부 오른쪽에 들어옴 */}
         <button
           type="button"
           className={styles.toggleBtn}
@@ -51,10 +59,10 @@ export default function PasswordInput({
         </button>
       </div>
 
-      {hint && !error && <div className={styles.hint}>{hint}</div>}
-      {error && (
+      {hint && !hasError && <div className={styles.hint}>{hint}</div>}
+      {hasError && (
         <div id={`${name}-error`} className={styles.error}>
-          {error}
+          {errorMessage}
         </div>
       )}
     </div>
