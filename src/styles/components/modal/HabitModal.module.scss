@@ -1,0 +1,55 @@
+@use '@/styles/variables' as v;
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  align-items: center;
+
+  .title {
+    width: 100%;
+
+    color: v.$black_text;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+}
+
+.habitContent {
+  width: 100%;
+
+  .controlButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding-top: 24px;
+
+    .cancelButton {
+      width: 100%;
+    }
+
+    .submitButton {
+      width: 100%;
+    }
+  }
+}
+
+.habitListContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    .title {
+      font-size: 20px;
+    }
+  }
+}
