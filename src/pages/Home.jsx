@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 // src/pages/Home.jsx
 import React, { useMemo, useState, useEffect } from 'react';
-import Input from '@components/input/Input.jsx'; // 별칭(@components) 사용 중이면 그대로 두세요.
+import Input from '@/components/input/Input_seungjeon.jsx'; // 별칭(@components) 사용 중이면 그대로 두세요.
 import { StudyCard } from '@components/card/card.jsx';
 import styles from '@styles/pages/Home.module.scss';
 
