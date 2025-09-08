@@ -5,9 +5,9 @@ import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import Workshop from '@pages/Workshop.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
 import Focus from '@pages/Focus.jsx';
+import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
-
 
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
@@ -24,18 +24,17 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-
         <Route index element={<Home />} />
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
           <Route path="detail" element={<DetailStudyPage />} />
           {/*미구현*/}
-
         </Route>
         <Route path="/workshop" element={<Workshop />} />
         <Route path="/focus" element={<Focus />} />
         {/*미구현*/}
+
+        <Route path="buttons" element={<ButtonsDemo />} />
 
         {/* 아래는 테스트 페이지입니다 나중에 삭제요망 */}
         <Route path="test">
