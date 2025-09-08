@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from '@/components/header/Header';
 import Workshop from '@pages/Workshop.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
+import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import Focus from '@pages/Focus.jsx';
 import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 
@@ -13,7 +14,7 @@ import Tag from '@/components/tag/Tag';
 /* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
 /* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
-import CreateStudyPage from '@pages/CreateStudyPage.jsx';
+import TextArea from '@components/input/TextArea.jsx';
 /* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
 import '@/styles/global.scss';
@@ -53,7 +54,7 @@ export default function App() {
 
         {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
         <Route path="refactor">
-          <Route index element={<CreateStudyPage />} />
+          <Route index element={<TextArea />} />
         </Route>
         {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
       </Routes>
