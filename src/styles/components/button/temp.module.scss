@@ -1,0 +1,166 @@
+@use '@styles/variables' as v;
+
+// 색상 변수
+$primary-green: #99c08e;
+$primary-green-hover: #7ea673;
+$primary-green-shadow: #578246;
+$secondary-green: #578246;
+$gray-disabled: #818181;
+$gray-cancel: #ddd;
+
+// 공통 믹스인
+@mixin button-base {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+@mixin text-shadow($color) {
+  text-shadow:
+    0 -1px 0 $color,
+    0 -2px 0 $color,
+    0 -3px 0 $color;
+}
+
+@mixin flex-center {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin green-button($with-shadow: true) {
+  @include button-base;
+  background: $primary-green;
+  @if $with-shadow {
+    @include text-shadow($primary-green-shadow);
+  }
+  &:hover {
+    background: $primary-green-hover;
+  }
+}
+
+/* base */
+.btn {
+  @include flex-center;
+  gap: 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  color: #fff !important;
+
+  * {
+    color: inherit;
+    font-family: 'EF_jejudoldam';
+  }
+}
+
+/* 모양 */
+.pill {
+  border-radius: 16px;
+}
+.rect {
+  border-radius: 50px;
+}
+
+/* 사이즈 - 반응형 */
+.template {
+  height: 58px;
+  padding: 10px;
+  font-size: 18px;
+  width: 648px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    width: 312px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 140px;
+  }
+}
+
+/* 원형 지름 - 반응형 */
+.circleTemplate {
+  width: 64px;
+  height: 64px;
+  border-radius: 9999px;
+  padding: 0;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* 버튼 타입별 스타일 */
+.habit,
+.focus,
+.modify,
+.create,
+.confirm,
+.restart {
+  @include green-button(true);
+}
+
+.start,
+.stop {
+  @include green-button(false);
+}
+
+.cancel {
+  @include button-base;
+  background: $gray-cancel;
+  @include text-shadow($gray-disabled);
+}
+
+.pause {
+  @include button-base;
+  background: $secondary-green;
+}
+
+.isToggled,
+.isDisabled {
+  @include button-base;
+  background: $gray-disabled !important;
+}
+
+/* 내부 요소들 */
+.btnInner {
+  @include flex-center;
+  gap: 10px;
+}
+
+.inlineIcon,
+.childrenIcon {
+  @include flex-center;
+}
+
+.inlineIcon {
+  width: 44px;
+  height: 44px;
+}
+
+.childrenIcon {
+  width: 35.2px;
+  height: 35.2px;
+}
+
+.start,
+.stop {
+  .btnText {
+    font-family: 'Pretendard';
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+}
+
+.isDisabled {
+  pointer-events: none;
+  opacity: 1;
+  cursor: default;
+  text-shadow: none;
+}
