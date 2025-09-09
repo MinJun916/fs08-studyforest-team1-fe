@@ -5,14 +5,12 @@ import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
 function Input({ type = 'search', onValueChange }) {
-  // 공통화된 상태 관리
   const [inputValue, setInputValue] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
 
-  // 공통 핸들러 함수
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
