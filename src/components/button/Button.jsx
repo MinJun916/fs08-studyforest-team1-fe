@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import styles from '@styles/components/button/ButtonTemp.module.scss';
+import styles from '@styles/components/button/Button.module.scss';
 
 export default function Button({
   variant = 'green', // "green" | "gray" | "light-gray" | "cancel"

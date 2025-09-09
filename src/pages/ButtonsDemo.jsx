@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '@/components/button/ButtonTemp.jsx';
+import Button from '@/components/button/Button.jsx';
 
 // assets
 import playPng from '@assets/icons/play.png';
