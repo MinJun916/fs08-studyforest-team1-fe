@@ -6,11 +6,30 @@
   word-break: keep-all;
 }
 
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  &.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+}
+
 .root {
   /* layout wrapper */
   background: #fff;
   border-radius: 20px;
   padding: 20px;
+  margin: 40px auto 0 auto;
+  max-width: 1200px;
 }
 
 
@@ -19,7 +38,29 @@
   justify-content: space-between;
   .adminButtons {
     display: flex;
-    gap: 8px;
+    button {
+      width: max-content;
+      padding: 0;
+      border-radius: 999px;
+      background: white;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: v.$green_text;
+      cursor: pointer;
+      &:after {
+        padding: 0 8px;
+        color: v.$gray81;
+        content: '|';
+      }
+    }
+    button:last-child {
+      color: v.$gray81;
+      &:after {
+        content: '';
+        padding: 0;
+    }
+    }
   }
 }
 
@@ -97,5 +138,58 @@
   .pawSvg {
     width: 28px;
     height: 28px;
+  }
+  .habitMsg {
+    text-align: center;
+    color: v.$gray81;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 170px auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .root {
+    margin: 40px 24px 0 24px;
+  }
+  .record {
+    h2 {
+      font-size: 20px;
+    }
+    .habitTitle {
+      padding: 14px;
+    }
+    td {
+      padding: 14px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    position: relative;
+    padding-top: 40px;
+    .adminButtons {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .intro {
+    .top {
+      flex-flow: row wrap;
+    }
+    h1 {
+      width: 100%;
+      font-size: 24px;
+    }
+  }
+  .record {
+    h2 {
+      font-size: 20px;
+    }
+    .habitTitle {
+      font-size: 14px;
+    }
   }
 }

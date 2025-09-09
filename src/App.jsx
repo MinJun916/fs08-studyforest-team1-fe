@@ -1,28 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "@pages/Home.jsx";
-import CreateStudyPage from "@pages/CreateStudyPage.jsx";
-import Workshop from "@pages/Workshop.jsx";
-import DetailStudyPage from "@pages/DetailStudyPage.jsx";
-import Focus from "@pages/Focus.jsx";
+import Header from '@/components/header/Header';
+import Home from '@pages/Home.jsx';
+import Workshop from '@pages/Workshop.jsx';
+import DetailStudyPage from '@pages/DetailStudyPage.jsx';
+import CreateStudyPage from '@pages/CreateStudyPage.jsx';
+import Focus from '@pages/Focus.jsx';
+import ButtonsDemo from '@pages/ButtonsDemo.jsx';
+import ToastDemo from '@pages/ToastDemo.jsx';
 
-/* 테스트 페이지 */
+/* 아래는 테스트 페이지입니다 나중에 삭제요망 */
 import ButtonsDemo from "@pages/ButtonsDemo.jsx";
-import Emoji from "@/components/emoji/emoji";
-import DropDown from "@/components/dropdown/dropdown";
-import Tag from "@/components/tag/Tag";
+import Emoji from '@/components/emoji/emoji';
+import DropDown from '@/components/dropdown/dropdown';
+import Tag from '@/components/tag/Tag';
+/* 위는 테스트 페이지입니다 나중에 삭제요망 */
 
-/* 리팩토링 임시 페이지 */
-import HabitModal from "@components/modal/HabitModal.jsx";
+/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */
+import Card from '@/components/card/Card.jsx';
+/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */
 
-import "@/styles/global.scss";
+import '@/styles/global.scss';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         {/* 홈 */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Header />} />
 
         {/* 스터디 */}
         <Route path="study/new" element={<CreateStudyPage />} />

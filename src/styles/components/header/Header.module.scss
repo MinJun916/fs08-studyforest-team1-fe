@@ -32,8 +32,8 @@ $maxw: 1920px;
 .createStudyBtn {
   display: flex;
   width: 252px;
-  height: 58px;
-  padding: 10px;
+  height: 57px;
+  padding: 13px 68px;
   justify-content: center;
   align-items: center;
   gap: 10px;
@@ -63,18 +63,18 @@ $maxw: 1920px;
     color: white;
     text-decoration: none;
   }
+}
 
-  .createStudyBtnText {
-    color: #fff;
-    text-align: center;
-    font-family: 'EF_jejudoldam';
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+.createStudyBtnText {
+  color: #fff;
+  text-align: center;
+  font-family: 'EF_jejudoldam';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
-    text-shadow: 0px -2px 0px #2f4f2f;
-  }
+  text-shadow: 0px -2px 0px #2f4f2f;
 }
 
 /* 반응형 */
@@ -86,6 +86,7 @@ $maxw: 1920px;
 
   .createStudyBtn {
     width: 160px;
+    padding: 0;
   }
 }
 
@@ -103,9 +104,10 @@ $maxw: 1920px;
   .createStudyBtn {
     width: 106px;
     height: 38px;
+    padding: 0;
   }
 
   .createStudyBtnText {
-    font-size: 11.925px;
+    font-size: 11px;
   }
 }
