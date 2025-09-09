@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import STICKER_OFF from '@assets/icons/stickers/sticker-off.png';
 import limePng from '@assets/icons/stickers/sticker-lime.png';
 import bluePng from '@assets/icons/stickers/sticker-blue.png';
@@ -32,10 +33,26 @@ export default function Sticker({
   offImg = STICKER_OFF,
   size = DEFAULT_SIZE,
 }) {
+  // 내부 상태 관리 (props가 전달되지 않았을 때 사용)
+  const [internalActive, setInternalActive] = useState(false);
+
+  // onToggle이 없으면 내부 상태 사용
+  const currentActive = onToggle ? isActive : internalActive;
+
+  const handleToggle = () => {
+    if (onToggle) {
+      // 외부에서 상태를 관리하는 경우
+      onToggle(!isActive);
+    } else {
+      // 내부에서 상태를 관리하는 경우
+      setInternalActive(!internalActive);
+    }
+  };
+
   return (
-    <button type="button" className={styles.sticker} onClick={() => onToggle?.(!isActive)}>
+    <button type="button" className={styles.sticker} onClick={handleToggle}>
       <img
-        src={isActive ? onImg : STICKER_OFF}
+        src={currentActive ? onImg : STICKER_OFF}
         alt="sticker"
         width={SIZE_MAP[size]}
         height={SIZE_MAP[size]}

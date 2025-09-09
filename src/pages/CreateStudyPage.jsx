@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import styles from '@/styles/pages/CreateStudyPage.module.scss';
 
-import imgDesk from '@assets/icons/bg-desk.png';
-import imgWindow from '@assets/icons/bg-window.png';
-import imgTiles from '@assets/icons/bg-tiles.png';
-import imgPlant from '@assets/icons/bg-plant.png';
 import pawSelected from '@assets/icons/ic_bg_selected.png';
 
 import Input from '@/components/input/Input.jsx';
@@ -21,10 +17,10 @@ export default function CreateStudyPage() {
 
   // 아랫줄: 사진 4개 → 4칸
   const imageTiles = [
-    { id: 'g1', kind: 'image', value: `url(${imgDesk})` },
-    { id: 'g2', kind: 'image', value: `url(${imgWindow})` },
-    { id: 'g3', kind: 'image', value: `url(${imgTiles})` },
-    { id: 'g4', kind: 'image', value: `url(${imgPlant})` },
+    { id: 'g1', kind: 'image' },
+    { id: 'g2', kind: 'image' },
+    { id: 'g3', kind: 'image' },
+    { id: 'g4', kind: 'image' },
   ];
 
   const [form, setForm] = useState({

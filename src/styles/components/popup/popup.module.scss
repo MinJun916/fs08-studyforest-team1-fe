@@ -8,7 +8,7 @@
   padding: 40px 24px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: v.$breakpoint-mobile) {
   .overlay {
     width: 344px;
 

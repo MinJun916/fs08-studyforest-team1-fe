@@ -119,6 +119,33 @@ function Input({ type = 'search', onValueChange }) {
         </div>
       );
 
+    case 'passwordOnly':
+      return (
+        <div className={styles.inputWrapper}>
+          <div className={styles.inputTitle}>비밀번호</div>
+          <div className={styles.passwordInputWrapper}>
+            <input
+              className={styles.input}
+              type={showPassword ? 'text' : 'password'}
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={handlePasswordChange}
+            ></input>
+            <button
+              type="button"
+              className={styles.passwordToggleButton}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              <img
+                src={showPassword ? Eye : EyeOff}
+                alt={showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
+                className={styles.passwordToggleIcon}
+              />
+            </button>
+          </div>
+        </div>
+      );
+
     case 'search':
       return (
         <div className={styles.searchWrapper}>

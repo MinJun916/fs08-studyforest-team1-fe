@@ -54,27 +54,41 @@ function HabitList({ habits: initialHabits, studyId }) {
     }
   };
 
-  const handleDeleteHabit = (habitId) => {
-    // 로컬 상태에서 해당 습관만 제거
-    setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
+  const handleDeleteHabit = async (habitId, studyId) => {
+    try {
+      await api.patch(`/habits/delete/${habitId}`);
+      await api.delete(`/habitModify/${habitId}`, {
+        data: { studyId: studyId },
+      });
+
+      // 성공 시 로컬 상태에서 해당 습관만 제거
+      setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
+    } catch (error) {
+      console.error('습관 삭제 실패:', error);
+    }
   };
 
-  const handleDeleteClick = (habitId) => {
-    handleDeleteHabit(habitId);
+  const handleDeleteClick = (habitId, studyId) => {
+    handleDeleteHabit(habitId, studyId);
   };
 
   return (
     <div className={styles.habitList}>
-      {habits.map((habit, index) => (
-        <div key={habit.id || index} className={styles.habitRow}>
-          <div className={styles.habitItem}>
-            <div className={styles.habitName}>{habit.name}</div>
+      {habits
+        .filter((habit) => !habit.isDeleted) // isDeleted가 false인 습관만 표시
+        .map((habit, index) => (
+          <div key={habit.id || index} className={styles.habitRow}>
+            <div className={styles.habitItem}>
+              <div className={styles.habitName}>{habit.name}</div>
+            </div>
+            <button
+              className={styles.deleteBtn}
+              onClick={() => handleDeleteClick(habit.id, studyId)}
+            >
+              <img src={Ic_delete} alt="delete" />
+            </button>
           </div>
-          <button className={styles.deleteBtn} onClick={() => handleDeleteClick(habit.id)}>
-            <img src={Ic_delete} alt="delete" />
-          </button>
-        </div>
-      ))}
+        ))}
       {/* 습관 입력 필드 */}
       {isAddingHabit && (
         <div className={styles.habitRow}>
