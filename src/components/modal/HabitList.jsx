@@ -54,12 +54,12 @@ function HabitList({ habits: initialHabits, studyId }) {
     }
   };
 
-  const handleDeleteHabit = async (habitId) => {
+  const handleDeleteHabit = async (habitId, studyId) => {
     try {
-      // // API 요청으로 습관 삭제 (isDeleted를 true로 설정)
-      // await api.delete(`/habitModify/${habitId}`, {
-      //   data: { studyId },
-      // });
+      await api.patch(`/habits/delete/${habitId}`);
+      await api.delete(`/habitModify/${habitId}`, {
+        data: { studyId: studyId },
+      });
 
       // 성공 시 로컬 상태에서 해당 습관만 제거
       setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
@@ -68,8 +68,8 @@ function HabitList({ habits: initialHabits, studyId }) {
     }
   };
 
-  const handleDeleteClick = (habitId) => {
-    handleDeleteHabit(habitId);
+  const handleDeleteClick = (habitId, studyId) => {
+    handleDeleteHabit(habitId, studyId);
   };
 
   return (
@@ -81,7 +81,10 @@ function HabitList({ habits: initialHabits, studyId }) {
             <div className={styles.habitItem}>
               <div className={styles.habitName}>{habit.name}</div>
             </div>
-            <button className={styles.deleteBtn} onClick={() => handleDeleteClick(habit.id)}>
+            <button
+              className={styles.deleteBtn}
+              onClick={() => handleDeleteClick(habit.id, studyId)}
+            >
               <img src={Ic_delete} alt="delete" />
             </button>
           </div>

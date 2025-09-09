@@ -14,7 +14,7 @@ import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
-import StudyCard from '@/components/card/StudyCard.jsx';
+import HabitModal from '@/components/modal/HabitModal.jsx';
 
 export default function App() {
   return (
@@ -51,7 +51,7 @@ export default function App() {
         </Route>
 
         {/* 리팩토링 임시 */}
-        <Route path="refactor" element={<StudyCard />} />
+        <Route path="refactor" element={<HabitModal />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
