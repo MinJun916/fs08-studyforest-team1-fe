@@ -8,13 +8,12 @@ import Focus from '@pages/Focus.jsx';
 import NotFoundPage from '@pages/NotFoundPage.jsx';
 
 /* 테스트 페이지 */
-import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
-import HabitModal from '@/components/modal/HabitModal.jsx';
+import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 
 export default function App() {
   return (
@@ -51,7 +50,7 @@ export default function App() {
         </Route>
 
         {/* 리팩토링 임시 */}
-        <Route path="refactor" element={<HabitModal />} />
+        <Route path="refactor" element={<ButtonsDemo />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />

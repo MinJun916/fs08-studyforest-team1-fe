@@ -1,22 +1,22 @@
-import Button from "@/components/button/Button";
-import playPng from "@assets/icons/play.png";
+import Button from '@/components/button/Button';
+import playPng from '@assets/icons/play.png';
 
 export default function StartStopButton({
-  active = false,        // true면 회색, false면 초록
-  label = "Start!",
+  active = false, // true면 회색, false면 초록
+  label = 'Start!',
   width,
   onClick,
   disabled = false,
-  "aria-label": ariaLabel,
+  'aria-label': ariaLabel,
 }) {
-  const variant = active ? "gray" : "green";
+  const variant = active ? 'gray' : 'green';
 
   const leftIcon = (
     <img
       src={playPng}
       alt=""
       aria-hidden="true"
-      style={{ width: 18, height: "auto", display: "block" }}
+      style={{ width: 18, height: 'auto', display: 'block' }}
       draggable="false"
     />
   );
