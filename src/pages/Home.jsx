@@ -10,6 +10,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Input from '@/components/input/Input_seungjeon.jsx'; // 별칭(@components) 사용 중이면 그대로 두세요.
 import Card from '@/components/card/Card.jsx';
 import styles from '@styles/pages/Home.module.scss';
+import Header from '@/components/header/Header.jsx';
 
 // 더미 데이터 (실제 API 연동 시 교체)
 const RECENT_STUDIES = [

@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from '@/styles/components/tag/tag.module.scss';
 
-function Tag({ bgColor, fontSize, points }) {
+function Tag({ bgColor, fontSize = 14, fontColor = '#414141', points }) {
   const containerStyle = bgColor ? { backgroundColor: bgColor } : undefined;
-  const textStyle = fontSize
-    ? { fontSize: typeof fontSize === 'number' ? `${fontSize}px` : fontSize }
-    : undefined;
+  const textStyle = {
+    fontSize: typeof fontSize === 'number' ? `${fontSize}px` : fontSize,
+    color: fontColor,
+  };
 
   return (
     <div className={styles.tag} style={containerStyle}>
-      <svg xmlns="http://www.w3.org/2000/svg" width={fontSize} height={fontSize} viewBox="0 0 14 14" fill="none" style={textStyle}>
+      <svg xmlns="http://www.w3.org/2000/svg" width={fontSize} height={fontSize} viewBox="0 0 14 14" fill="none" style={{ display: 'inline-block', verticalAlign: 'middle' }}>
       <g clipPath="url(#clip0_1_37953)">
       <path d="M11.1952 0.24152C10.7063 0.00155102 8.22806 0.275645 6.44044 1.98977C3.62513 4.80158 3.69272 8.50458 3.69272 8.50458C3.69272 8.50458 3.59997 8.88587 3.20316 8.33308C2.33516 7.2273 2.78994 4.68236 2.84069 4.32755C2.91244 3.82858 2.59416 3.81327 2.46138 3.97864C-0.674405 8.33286 2.15775 11.8987 4.01253 13.0305C6.18341 14.3551 10.4668 14.3546 12.1732 10.5963C14.2975 5.91568 11.8075 0.541864 11.1952 0.24152Z" fill="#79AC6A"/>
       <path d="M11.1468 4.37136C11.3645 2.91164 11.3658 1.50552 11.1868 0.238518C10.6815 0.0048925 8.21949 0.284017 6.44084 1.98983C3.62552 4.80164 3.69312 8.50464 3.69312 8.50464C3.69312 8.50464 3.60037 8.88593 3.20355 8.33314C2.33555 7.22736 2.79034 4.68242 2.84109 4.32761C2.91284 3.82864 2.59455 3.81333 2.46177 3.9787C0.566524 6.61027 0.85243 8.95264 1.78365 10.6451C2.71574 11.6459 3.77646 12.3037 4.75887 12.4502C7.55887 12.868 10.4184 9.25102 11.1468 4.37136Z" fill="#CAE5C2"/>
