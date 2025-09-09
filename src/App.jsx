@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from '@/components/header/Header';
 import Home from '@pages/Home.jsx';
@@ -10,6 +10,7 @@ import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 import ToastDemo from '@pages/ToastDemo.jsx';
 
 /* 아래는 테스트 페이지입니다 나중에 삭제요망 */
+import ButtonsDemo from "@pages/ButtonsDemo.jsx";
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag';
@@ -25,36 +26,41 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Header />}>
-          <Route index element={<Home />} />
-          <Route path="study">
-            <Route path="new" element={<CreateStudyPage />} />
-            <Route path=":id" element={<DetailStudyPage />} />
-          </Route>
-          <Route path="/workshop" element={<Workshop />} />
-          <Route path="/focus" element={<Focus />} />
+        {/* 홈 */}
+        <Route path="/" element={<Header />} />
+
+        {/* 스터디 */}
+        <Route path="study/new" element={<CreateStudyPage />} />
+        <Route path="study/detail" element={<DetailStudyPage />} />
+
+        {/* 기타 */}
+        <Route path="workshop" element={<Workshop />} />
+        <Route path="focus" element={<Focus />} />
+
+        {/* 테스트 */}
+        <Route path="test">
           <Route path="buttons" element={<ButtonsDemo />} />
-
-          {/* 아래는 테스트 페이지입니다 나중에 삭제요망 */}
-          <Route path="test">
-            <Route
-              path="emoji"
-              element={<Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />}
-            />
-            <Route path="dropdown" element={<DropDown />} />
-            <Route
-              path="tag"
-              element={<Tag bgColor={'rgba(0,0,0,0.5)'} fontSize={12} points={30} />}
-            />
-          </Route>
-          {/* 위는 테스트 페이지입니다 나중에 삭제요망 */}
-
-          {/* 아래는 리팩토링 페이지입니다 나중에 삭제요망 */}
-          <Route path="refactor">
-            <Route index element={<Card />} />
-          </Route>
-          {/* 위는 리팩토링 페이지입니다 나중에 삭제요망 */}
+          <Route path="emoji" element={<Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />} />
+          <Route path="dropdown" element={<DropDown />} />
+          <Route
+            path="tag"
+            element={
+              <Tag
+                bgColor="rgba(0,0,0,0.5)"
+                fontSize={12}
+                studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4"
+              />
+            }
+          />
         </Route>
+
+        {/* 리팩토링 임시 */}
+        <Route path="refactor">
+          <Route index element={<HabitModal />} />
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<div style={{ padding: 40 }}>Not Found</div>} />
       </Routes>
     </BrowserRouter>
   );

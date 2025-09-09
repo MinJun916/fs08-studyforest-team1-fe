@@ -1,6 +1,6 @@
-import Popup from '@components/popup/Popup.jsx';
+import Popup from '@/components/popup/Popup.jsx';
 import styles from '@styles/components/modal/PasswordModal.module.scss';
-import useWindowSize from '@/hooks/useWindowSize.jsx';
+import useWindowSize from '@/hooks/UseWindowSize.jsx';
 
 function PasswordModal({ studyName = '스터디 이름', onClose, onClick }) {
   const { isMobile } = useWindowSize();
