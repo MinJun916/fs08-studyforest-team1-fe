@@ -13,7 +13,7 @@ import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
-import HabitModal from '@/components/modal/HabitModal';
+import Sticker from '@/components/sticker/Sticker';
 
 export default function App() {
   return (
@@ -49,7 +49,7 @@ export default function App() {
         </Route>
 
         {/* 리팩토링 임시 */}
-        <Route path="refactor" element={<HabitModal />} />
+        <Route path="refactor" element={<Sticker />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
