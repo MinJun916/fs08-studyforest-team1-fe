@@ -16,8 +16,6 @@ import Tag from '@/components/tag/Tag.jsx';
 /* 리팩토링 페이지 */
 import StudyCard from '@/components/card/StudyCard.jsx';
 
-import '@/styles/global.scss';
-
 export default function App() {
   return (
     <BrowserRouter>

@@ -3,15 +3,17 @@ import Emoji from '@components/emoji/emoji';
 import Tag from '@components/tag/Tag.jsx';
 import api from '@/lib/axios.js';
 import dDayCounter from '@/lib/dDayCounter.js';
+import clsx from 'clsx';
 import styles from '@styles/components/card/StudyCard.module.scss';
 
-function StudyCard({ studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
+function StudyCard({ studyId = '344430e2-c74d-4dce-aedf-33f0bdd6734c' }) {
   const initialStudy = {
     studyName: '',
     createdAt: '',
     point: 0,
     backgroundImg: '',
     description: '',
+    nickName: '',
   };
 
   const [study, setStudy] = useState(initialStudy);
@@ -22,6 +24,7 @@ function StudyCard({ studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
     try {
       const res = await api.get(`/studies/${studyId}`);
       setStudy(res.data.data);
+      console.log(res.data.data);
     } catch (error) {
       console.error(error);
       setStudy(initialStudy);
@@ -36,13 +39,47 @@ function StudyCard({ studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
 
   const dDay = dDayCounter(study.createdAt);
 
+  const bgMap = {
+    green: styles.green,
+    yellow: styles.yellow,
+    blue: styles.blue,
+    pink: styles.pink,
+    alvaro: styles.alvaro,
+    mikey: styles.mikey,
+    andrew: styles.andrew,
+    chris: styles.chris,
+  };
+
+  const isImg =
+    study.backgroundImg === 'alvaro' ||
+    study.backgroundImg === 'mikey' ||
+    study.backgroundImg === 'andrew' ||
+    study.backgroundImg === 'chris';
+
+  const imgTagStyleMap = {
+    bgColor: 'rgba(0, 0, 0, 0.50)',
+    fontSize: 12,
+    points: study.point,
+    fontColor: '#fff',
+  };
+
+  const colorTagStyleMap = {
+    bgColor: 'rgba(255, 255, 255, 0.30)',
+    fontSize: 12,
+    points: study.point,
+    fontColor: '#414141',
+  };
+
   return (
-    <div className={styles.studyCard}>
+    <div className={clsx(styles.studyCard, bgMap[study.backgroundImg], isImg || styles.blackFont)}>
       <div className={styles.header}>
         <div className={styles.headerWrapper}>
-          <div className={styles.title}>{study.studyName}</div>
+          <div className={styles.title}>
+            <span className={styles.nickName}>{study.nickName}</span>
+            <span className={styles.studyName}>{`의 ${study.studyName}`}</span>
+          </div>
           <div className={styles.point}>
-            <Tag bgColor={'#00000080'} fontSize={12} points={study.point} fontColor={'#fff'} />
+            <Tag {...(isImg ? imgTagStyleMap : colorTagStyleMap)} />
           </div>
         </div>
         <div className={styles.dDate}>{dDay}일째 진행 중</div>

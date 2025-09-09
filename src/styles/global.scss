@@ -14,20 +14,16 @@
   font-display: swap;
 }
 
-*,
-*::before,
-*::after {
+:where(*, *::before, *::after) {
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+:where(html, body, #root) {
   min-height: 100%;
   background: v.$bg;
 }
 
-body {
+:where(body) {
   margin: 0;
   font-family:
     ui-sans-serif,
