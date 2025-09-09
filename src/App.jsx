@@ -25,7 +25,7 @@ export default function App() {
         {/* 스터디 관련 라우트 */}
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
-          <Route path="detail" element={<DetailStudyPage />} />
+          <Route path=":id" element={<DetailStudyPage />} />
         </Route>
 
         {/* 기타 */}
