@@ -14,7 +14,6 @@ export default function Button({ childrenType, disabled = false }) {
   let childrenContent = null;
   let childrenIcon = null;
   let inlineIcon = null;
-  let shape = 'pill';
   switch (childrenType) {
     case 'habit':
       childrenContent = '오늘의 습관으로 가기';
@@ -34,22 +33,21 @@ export default function Button({ childrenType, disabled = false }) {
     case 'cancel':
       childrenContent = '취소';
       break;
+    case 'completeModify':
+      childrenContent = '수정 완료';
+      break;
     case 'start':
       childrenContent = 'Start!';
       inlineIcon = ic_play;
-      shape = 'rect';
       break;
     case 'stop':
       childrenContent = 'Stop!';
       inlineIcon = ic_stop;
-      shape = 'rect';
       break;
     case 'restart':
-      shape = 'circle';
       childrenIcon = ic_restart;
       break;
     case 'pause':
-      shape = 'circle';
       childrenIcon = ic_pause;
       break;
     default:
@@ -65,7 +63,7 @@ export default function Button({ childrenType, disabled = false }) {
 
   const className = clsx(
     styles[childrenType],
-    shape === 'circle' ? styles.circleTemplate : styles.template,
+    childrenType === 'confirm' ? styles.confirmTemplate : styles.template,
     disabled && styles.isDisabled,
     toggled && styles.isToggled,
   );
@@ -73,7 +71,7 @@ export default function Button({ childrenType, disabled = false }) {
   return (
     <button
       type="button"
-      className={`${styles.btn} ${className} ${styles[shape]}`}
+      className={`${styles.btn} ${className}`}
       disabled={disabled}
       onClick={handleClick}
     >

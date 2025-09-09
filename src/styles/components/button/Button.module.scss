@@ -1,6 +1,6 @@
 @use '@styles/variables' as v;
 
-// 색상 변수
+// ===== 색상 변수 =====
 $primary-green: #99c08e;
 $primary-green-hover: #7ea673;
 $primary-green-shadow: #578246;
@@ -8,7 +8,7 @@ $secondary-green: #578246;
 $gray-disabled: #818181;
 $gray-cancel: #ddd;
 
-// 공통 믹스인
+// ===== 공통 믹스인 =====
 @mixin button-base {
   color: #fff;
   border: none;
@@ -23,7 +23,7 @@ $gray-cancel: #ddd;
 }
 
 @mixin flex-center {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -39,7 +39,15 @@ $gray-cancel: #ddd;
   }
 }
 
-/* base */
+@mixin button-size($width, $height: 58px, $font-size: 18px) {
+  width: $width;
+  height: $height;
+  font-size: $font-size;
+  @include flex-center;
+  flex-shrink: 0;
+}
+
+// ===== 기본 버튼 스타일 =====
 .btn {
   @include flex-center;
   gap: 10px;
@@ -53,55 +61,66 @@ $gray-cancel: #ddd;
   }
 }
 
-/* 모양 */
-.pill {
-  border-radius: 16px;
-}
-.rect {
-  border-radius: 50px;
-}
-
-/* 사이즈 - 반응형 */
-.template {
-  height: 58px;
-  padding: 10px;
-  font-size: 18px;
-  width: 648px;
-
-  @media (max-width: v.$breakpoint-tablet) {
-    width: 312px;
-  }
-
-  @media (max-width: v.$breakpoint-mobile) {
-    width: 140px;
-  }
-}
-
-/* 원형 지름 - 반응형 */
-.circleTemplate {
-  width: 64px;
-  height: 64px;
-  border-radius: 9999px;
-  padding: 0;
-
-  @media (max-width: v.$breakpoint-tablet) {
-    width: 48px;
-    height: 48px;
-  }
-
-  @media (max-width: v.$breakpoint-mobile) {
-    width: 32px;
-    height: 32px;
-  }
-}
-
-/* 버튼 타입별 스타일 */
+// ===== 모양 (border-radius) =====
 .habit,
 .focus,
 .modify,
 .create,
 .confirm,
-.restart {
+.cancel,
+.completeModify {
+  border-radius: 16px;
+}
+
+.start,
+.stop {
+  border-radius: 50px;
+}
+
+.restart,
+.pause {
+  border-radius: 9999px;
+}
+
+// ===== 크기 (사이즈) =====
+.template {
+  @include button-size(600px);
+
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(312px);
+    padding-bottom: 0.007px;
+  }
+}
+
+.confirmTemplate {
+  @include button-size(288px);
+  padding-bottom: 0.007px;
+}
+
+.restart,
+.pause {
+  @include button-size(64px, 64px);
+  padding: 0;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(48px, 48px);
+
+    .childrenIcon {
+      width: 26.4px;
+      height: 26.4px;
+      padding: 1.65px 4.911px 4.05px 3.926px;
+    }
+  }
+}
+
+// ===== 색상 (버튼 타입별) =====
+.habit,
+.focus,
+.modify,
+.create,
+.confirm,
+.restart,
+.completeModify {
   @include green-button(true);
 }
 
@@ -127,7 +146,7 @@ $gray-cancel: #ddd;
   background: $gray-disabled !important;
 }
 
-/* 내부 요소들 */
+// ===== 내부 요소들 =====
 .btnInner {
   @include flex-center;
   gap: 10px;
@@ -148,6 +167,7 @@ $gray-cancel: #ddd;
   height: 35.2px;
 }
 
+// ===== 특수 스타일 =====
 .start,
 .stop {
   .btnText {
@@ -155,6 +175,26 @@ $gray-cancel: #ddd;
     text-align: center;
     font-size: 28px;
     font-weight: 800;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(140px, 48px);
+
+    .btnText {
+      font-size: 18px;
+    }
+
+    .inlineIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.confirm,
+.completeModify {
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(140px);
   }
 }
 
