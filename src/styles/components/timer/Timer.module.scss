@@ -1,0 +1,23 @@
+.timer {
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 150px;
+  font-weight: 800;
+  line-height: normal;
+  color: var(--black-black_414141, #414141); /* 기본 검정 */
+}
+
+.running {
+  color: var(--red-red_F50E0E, #F50E0E); /* 작동 중 빨강 */
+}
+
+.overtime {
+  color: var(--gray-gray_818181, #818181); /* 초과 회색 */
+}
+
+@media (max-width: 744px) {
+  .timer { font-size: 96px; }
+}
+@media (max-width: 480px) {
+  .timer { font-size: 72px; }
+}

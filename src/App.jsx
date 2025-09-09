@@ -9,6 +9,7 @@ import NotFoundPage from '@pages/NotFoundPage.jsx';
 
 /* 테스트 페이지 */
 import ButtonsDemo from '@pages/ButtonsDemo.jsx';
+import TimerDemo from '@/pages/TimerDemo.jsx';
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
@@ -39,6 +40,7 @@ export default function App() {
         {/* 테스트 페이지 */}
         <Route path="test">
           <Route path="buttons" element={<ButtonsDemo />} />
+          <Route path="timer" element={<TimerDemo />} />
           <Route path="emoji" element={<Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />} />
           <Route path="dropdown" element={<DropDown />} />
           <Route
