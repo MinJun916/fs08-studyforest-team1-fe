@@ -130,14 +130,14 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: v.$breakpoint-tablet) {
   .studyCard {
     width: 312px;
     height: 243px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: v.$breakpoint-mobile) {
   .studyCard {
     width: 312px;
     height: 180px;
@@ -154,6 +154,7 @@
     flex-direction: column-reverse;
     justify-content: flex-end;
     align-items: flex-start;
+    gap: 6px;
 
     .title {
       font-size: 16px;
