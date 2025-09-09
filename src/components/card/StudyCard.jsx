@@ -6,7 +6,7 @@ import dDayCounter from '@/lib/dDayCounter.js';
 import clsx from 'clsx';
 import styles from '@styles/components/card/StudyCard.module.scss';
 
-function StudyCard({ studyId = '344430e2-c74d-4dce-aedf-33f0bdd6734c' }) {
+function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
   const initialStudy = {
     studyName: '',
     createdAt: '',
@@ -72,22 +72,24 @@ function StudyCard({ studyId = '344430e2-c74d-4dce-aedf-33f0bdd6734c' }) {
 
   return (
     <div className={clsx(styles.studyCard, bgMap[study.backgroundImg], isImg || styles.blackFont)}>
-      <div className={styles.header}>
-        <div className={styles.headerWrapper}>
-          <div className={styles.title}>
-            <span className={styles.nickName}>{study.nickName}</span>
-            <span className={styles.studyName}>{`의 ${study.studyName}`}</span>
+      <div className={styles.studyCardWrapper}>
+        <div className={styles.header}>
+          <div className={styles.headerWrapper}>
+            <div className={styles.title}>
+              <span className={styles.nickName}>{study.nickName}</span>
+              <span className={styles.studyName}>{`의 ${study.studyName}`}</span>
+            </div>
+            <div className={styles.point}>
+              <Tag {...(isImg ? imgTagStyleMap : colorTagStyleMap)} />
+            </div>
           </div>
-          <div className={styles.point}>
-            <Tag {...(isImg ? imgTagStyleMap : colorTagStyleMap)} />
-          </div>
+          <div className={styles.dDate}>{dDay}일째 진행 중</div>
         </div>
-        <div className={styles.dDate}>{dDay}일째 진행 중</div>
-      </div>
-      <div className={styles.description}>{study.description}</div>
-      <div className={styles.emojiWrapper}>
-        <div className={styles.emoji}>
-          <Emoji studyId={studyId} />
+        <div className={styles.description}>{study.description}</div>
+        <div className={styles.emojiWrapper}>
+          <div className={styles.emoji}>
+            <Emoji studyId={studyId} />
+          </div>
         </div>
       </div>
     </div>
