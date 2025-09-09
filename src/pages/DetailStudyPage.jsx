@@ -75,8 +75,9 @@ export default function DetailStudyPage() {
     { id: 6, title: '물 2L 마시기', records: [false, false, false, false, false, false, false] },
   ];
 
+  // Exclude habits that were marked deleted on the server
   const habits =
-    study?.weeklyHabits?.map((h) => ({ id: h.habitId, title: h.habitName, records: h.isCompleted })) ?? fallbackHabits;
+    study?.weeklyHabits?.filter((h) => !h.isDeleted).map((h) => ({ id: h.habitId, title: h.habitName, records: h.isCompleted })) ?? fallbackHabits;
 
   const habitColors = ['#D2E869', '#B2D570', '#99C08E', '#97CFD8', '#89D5C9', '#4CDD84', '#73E8F2', '#06C0E1', '#0189BE', '#C7A8DA', '#C589DE', '#CD69A7', '#FDE3A6', '#FED054', '#FF9E01', '#FFA3A5', '#F885A7', '#E26575'];
 
