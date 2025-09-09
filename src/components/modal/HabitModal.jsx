@@ -8,16 +8,17 @@ import styles from '@styles/components/modal/HabitModal.module.scss';
 function HabitModal({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506', password = '1234' }) {
   const [habits, setHabits] = useState([]);
 
+  const fetchHabits = async () => {
+    try {
+      const res = await api.get(`/habits/${studyId}/today?password=${password}`);
+      setHabits(res.data.habits || []);
+    } catch (err) {
+      console.error(err);
+      setHabits([]);
+    }
+  };
+
   useEffect(() => {
-    const fetchHabits = async () => {
-      try {
-        const res = await api.get(`/habits/${studyId}/today?password=${password}`);
-        setHabits(res.data.habits || []);
-      } catch (err) {
-        console.error(err);
-        setHabits([]);
-      }
-    };
     fetchHabits();
   }, [studyId, password]);
 
