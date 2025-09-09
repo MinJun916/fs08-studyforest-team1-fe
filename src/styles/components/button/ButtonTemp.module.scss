@@ -1,0 +1,171 @@
+/* base */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  box-sizing: border-box; /* 높이 계산 안정화 */
+  cursor: pointer;
+  line-height: 1; /* 텍스트 수직 중앙 안정화 */
+  -webkit-appearance: none;
+  appearance: none;
+  color: #fff !important;
+  font-family: 'EF_jejudoldam';
+}
+
+/* 버튼 텍스트: 기본은 JejuDoldam 고정
+   (Start/Stop 은 Button.jsx의 textStyle로 Pretendard로 오버라이드) */
+.btnText {
+  font-family: 'EF_jejudoldam';
+}
+
+/* 자식/아이콘 색 상속 */
+.btn * {
+  color: inherit;
+}
+.btn svg {
+  fill: currentColor;
+}
+
+.full {
+  width: 100%;
+}
+
+/* 모양 */
+.pill {
+  border-radius: 16px;
+}
+.rect {
+  border-radius: 50px;
+}
+.circle {
+  border-radius: 9999px;
+  padding: 0;
+}
+
+/* 사이즈 */
+.size-sm {
+  width: 140px;
+  height: 58px;
+  padding: 10px;
+  font-size: 18px;
+}
+.size-md {
+  width: 312px;
+  height: 58px;
+  padding: 10px;
+  font-size: 18px;
+}
+.size-lg {
+  width: 648px;
+  height: 58px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+/* 원형 지름 */
+.circle-sm {
+  width: 32px;
+  height: 32px;
+}
+.circle-md {
+  width: 48px;
+  height: 48px;
+}
+.circle-lg {
+  width: 64px;
+  height: 64px;
+}
+
+/* 변형(variant) */
+.green {
+  background: #99c08e;
+  color: #fff;
+  text-shadow:
+    0 -1px 0 #578246,
+    0 -2px 0 #578246,
+    0 -3px 0 #578246;
+}
+.green:hover {
+  background: #7ea673;
+}
+
+.gray {
+  background: #818181; /* 활성(ON) */
+  color: #fff;
+  text-shadow: none;
+}
+
+/* (선택) 취소 버튼: 이미지처럼 위쪽 그림자 */
+.cancel {
+  background: #ddd;
+  color: #fff;
+  text-shadow:
+    0 -1px 0 #818181,
+    0 -2px 0 #818181,
+    0 -3px 0 #818181;
+}
+
+/* disabled */
+.isDisabled {
+  pointer-events: none;
+  opacity: 1;
+  cursor: default;
+}
+
+/* 모바일 (최대 743px)에서는 버튼 작게 */
+@media (max-width: 743px) {
+  .green,
+  .gray,
+  .light-gray,
+  .cancel {
+    height: 44px;
+    padding: 0 14px;
+    font-size: 16px;
+    border-radius: 30px;
+  }
+}
+
+/* 내부 정렬 */
+.btnInner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.iconLeft {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Restart 기본 = #99C08E, Pause 기본 = #578246 */
+.restart {
+  background: #99c08e;
+  color: #fff;
+}
+.pause {
+  background: #578246;
+  color: #fff;
+}
+
+/* 눌린(토글 ON) 공통 = #818181 */
+.isToggled {
+  background: #818181 !important;
+  color: #fff;
+}
+
+/* (선택) 클릭 순간 눌림감 */
+.btn {
+  transition: background 0.15s ease;
+}
+
+.iconLeft img,
+.btnInner img {
+  display: block;
+  width: 35.2px;
+  height: 35.2px;
+  object-fit: contain;
+  margin-top: 2px; /* ✅ 살짝 아래로 내림 */
+}

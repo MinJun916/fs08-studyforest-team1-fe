@@ -1,6 +1,6 @@
 RestartButton.jsx;
 
-import Button from '@/components/button/Button';
+import Button from '@/components/button/ButtonTemp';
 import restartPng from '@assets/icons/restart.png';
 
 export default function RestartButton({

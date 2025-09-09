@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Button from '@/components/button/Button';
+import Button from '@/components/button/ButtonTemp';
 
 /* ▶ 아이콘(인라인 SVG) */
 function PlayIcon({ size = 20 }) {

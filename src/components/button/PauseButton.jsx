@@ -1,6 +1,6 @@
 Pause.jsx;
 
-import Button from '@/components/button/Button';
+import Button from '@/components/button/ButtonTemp';
 import pausePng from '@assets/icons/pause.png';
 
 export default function PauseButton({

@@ -1,4 +1,4 @@
-import Button from '@/components/button/Button';
+import Button from '@/components/button/ButtonTemp';
 import playPng from '@assets/icons/play.png';
 
 export default function StartStopButton({
