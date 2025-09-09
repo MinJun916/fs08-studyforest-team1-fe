@@ -84,10 +84,17 @@ $gray-cancel: #ddd;
 
 // ===== 크기 (사이즈) =====
 .template {
-  @include button-size(600px);
+  // 고정 너비 대신 flex 기반으로 변경
+  height: 58px;
+  font-size: 18px;
+  @include flex-center;
+  flex-shrink: 0;
+  flex: 1; // 부모 컨테이너에서 사용 가능한 공간을 균등하게 차지
+  min-width: 0; // 최소 너비 제한 제거
 
   @media (max-width: v.$breakpoint-mobile) {
-    @include button-size(312px);
+    height: 58px;
+    font-size: 18px;
     padding-bottom: 0.007px;
   }
 }
