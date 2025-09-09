@@ -222,6 +222,22 @@ $eye-gap: 12px; // 오른쪽 여백
   margin-top: 40px;
 }
 
+/* Button 컴포넌트가 전체 너비를 차지하도록 설정 */
+.btnRow :global(.btn) {
+  width: 100% !important;
+  max-width: 648px !important;
+  flex: none !important;
+  min-width: unset !important;
+}
+
+/* Button 컴포넌트의 template 클래스 오버라이드 */
+.btnRow :global(.template) {
+  width: 100% !important;
+  max-width: 648px !important;
+  flex: none !important;
+  min-width: unset !important;
+}
+
 .submitBtn {
   width: 100%;
   max-width: 648px; /* 고정폭 원하면 width: 648px; 로 교체 */

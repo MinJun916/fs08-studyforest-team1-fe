@@ -41,6 +41,7 @@ function Input({ type = 'search', onValueChange }) {
             placeholder="닉네임을 입력해주세요"
             value={inputValue}
             onChange={handleInputChange}
+            autoComplete="username"
           ></input>
         </div>
       );
@@ -56,6 +57,7 @@ function Input({ type = 'search', onValueChange }) {
               placeholder="스터디 이름을 입력해주세요"
               value={inputValue}
               onChange={handleInputChange}
+              autoComplete="off"
             ></input>
           </div>
           {!inputValue && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
@@ -74,6 +76,7 @@ function Input({ type = 'search', onValueChange }) {
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 onChange={handlePasswordChange}
+                autoComplete="new-password"
               ></input>
               <button
                 type="button"
@@ -98,6 +101,7 @@ function Input({ type = 'search', onValueChange }) {
                   placeholder="비밀번호를 다시 한 번 입력해주세요"
                   value={checkPassword}
                   onChange={handleCheckPasswordChange}
+                  autoComplete="new-password"
                 ></input>
                 <button
                   type="button"
@@ -130,6 +134,7 @@ function Input({ type = 'search', onValueChange }) {
               placeholder="비밀번호를 입력해주세요"
               value={password}
               onChange={handlePasswordChange}
+              autoComplete="current-password"
             ></input>
             <button
               type="button"
@@ -156,6 +161,7 @@ function Input({ type = 'search', onValueChange }) {
             placeholder="검색"
             value={inputValue}
             onChange={handleInputChange}
+            autoComplete="off"
           />
         </div>
       );
@@ -170,6 +176,7 @@ function Input({ type = 'search', onValueChange }) {
             placeholder="입력해주세요"
             value={inputValue}
             onChange={handleInputChange}
+            autoComplete="off"
           ></input>
         </div>
       );
