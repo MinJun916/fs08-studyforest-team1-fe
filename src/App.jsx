@@ -13,6 +13,7 @@ import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
+import StudyCard from '@/components/card/StudyCard.jsx';
 
 export default function App() {
   return (
@@ -48,7 +49,7 @@ export default function App() {
         </Route>
 
         {/* 리팩토링 임시 */}
-        {/* <Route path="refactor" element={<NotFoundPage />} /> */}
+        <Route path="refactor" element={<StudyCard />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
