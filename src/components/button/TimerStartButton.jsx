@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Button from "@/components/Button/button";
+import { useState } from 'react';
+import Button from '@/components/Button/button';
 
 /* ▶ 아이콘(인라인 SVG) */
 function PlayIcon({ size = 20 }) {
@@ -18,9 +18,9 @@ function PlayIcon({ size = 20 }) {
  * - onStart() 콜백 제공
  */
 export default function TimerStartButton({
-  label = "Start!",
-  size = "lg",
-  width = 333,            // 피그마 샷 참고 사이즈
+  label = 'Start!',
+  size = 'lg',
+  width = 333, // 피그마 샷 참고 사이즈
   onStart,
 }) {
   const [started, setStarted] = useState(false);
@@ -33,7 +33,7 @@ export default function TimerStartButton({
 
   return (
     <Button
-      variant={started ? "gray" : "green"}
+      variant={started ? 'gray' : 'green'}
       size={size}
       shape="pill"
       width={width}

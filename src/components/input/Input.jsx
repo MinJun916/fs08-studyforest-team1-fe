@@ -5,52 +5,24 @@ import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
 function Input({ type = 'search', onValueChange }) {
-  const [nickName, setNickName] = useState('');
-  const [studyName, setStudyName] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkPassword, setCheckPassword] = useState('');
+  // 공통화된 상태 관리
+  const [inputValue, setInputValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
-  const [keyword, setKeyword] = useState('');
 
-  const handleNickNameChange = (e) => {
-    setNickName(e.target.value);
-    onValueChange(nickName);
-    console.log(nickName);
-  };
-
-  const handleStudyNameChange = (e) => {
-    setStudyName(e.target.value);
-    onValueChange(studyName);
-    console.log(studyName);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    onValueChange(password);
-    console.log(password);
-  };
-
-  const handleCheckPasswordChange = (e) => {
-    setCheckPassword(e.target.value);
-    onValueChange(checkPassword);
-    console.log(checkPassword);
+  // 공통 핸들러 함수
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    onValueChange?.(value);
   };
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
   const toggleCheckPasswordVisibility = () => {
-    setShowCheckPassword(!showCheckPassword);
-  };
-
-  const isPasswordValid = password === checkPassword;
-
-  const handleKeywordChange = (e) => {
-    setKeyword(e.target.value);
-    onValueChange(keyword);
-    console.log(keyword);
+    setShowCheckPassword((prev) => !prev);
   };
 
   // 렌더링 코드
@@ -62,8 +34,8 @@ function Input({ type = 'search', onValueChange }) {
           className={styles.input}
           type="text"
           placeholder="닉네임을 입력해주세요"
-          value={nickName}
-          onChange={handleNickNameChange}
+          value={inputValue}
+          onChange={handleInputChange}
         ></input>
       </div>
     );
@@ -75,14 +47,14 @@ function Input({ type = 'search', onValueChange }) {
         <div className={styles.inputWrapper}>
           <div className={styles.inputTitle}>스터디 이름</div>
           <input
-            className={`${styles.input} ${studyName ? '' : styles.errorInput}`}
+            className={`${styles.input} ${inputValue ? '' : styles.errorInput}`}
             type="text"
             placeholder="스터디 이름을 입력해주세요"
-            value={studyName}
-            onChange={handleStudyNameChange}
+            value={inputValue}
+            onChange={handleInputChange}
           ></input>
         </div>
-        {!studyName && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
+        {!inputValue && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
       </div>
     );
   }
@@ -97,8 +69,8 @@ function Input({ type = 'search', onValueChange }) {
               className={styles.input}
               type={showPassword ? 'text' : 'password'}
               placeholder="비밀번호를 입력해주세요"
-              value={password}
-              onChange={handlePasswordChange}
+              value={inputValue}
+              onChange={handleInputChange}
             ></input>
             <button
               type="button"
@@ -118,11 +90,11 @@ function Input({ type = 'search', onValueChange }) {
             <div className={styles.inputTitle}>비밀번호 확인</div>
             <div className={styles.passwordInputWrapper}>
               <input
-                className={`${styles.input} ${isPasswordValid ? '' : styles.errorInput}`}
+                className={`${styles.input} ${inputValue ? '' : styles.errorInput}`}
                 type={showCheckPassword ? 'text' : 'password'}
                 placeholder="비밀번호를 다시 한 번 입력해주세요"
-                value={checkPassword}
-                onChange={handleCheckPasswordChange}
+                value={inputValue}
+                onChange={handleInputChange}
               ></input>
               <button
                 type="button"
@@ -137,7 +109,7 @@ function Input({ type = 'search', onValueChange }) {
               </button>
             </div>
           </div>
-          {!isPasswordValid && <div className={styles.error}>*비밀번호가 일치하지 않습니다</div>}
+          {!inputValue && <div className={styles.error}>*비밀번호가 일치하지 않습니다</div>}
         </div>
       </div>
     );
@@ -151,8 +123,8 @@ function Input({ type = 'search', onValueChange }) {
           className={styles.searchInput}
           type="text"
           placeholder="검색"
-          value={keyword}
-          onChange={handleKeywordChange}
+          value={inputValue}
+          onChange={handleInputChange}
         />
       </div>
     );
