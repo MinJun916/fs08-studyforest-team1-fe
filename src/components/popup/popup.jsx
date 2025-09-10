@@ -2,8 +2,8 @@ import styles from '@styles/components/popup/popup.module.scss';
 
 function Popup({ children }) {
   return (
-    <div>
-      <div className={styles.overlay}>{children}</div>
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>{children}</div>
     </div>
   );
 }

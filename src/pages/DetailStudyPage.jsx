@@ -52,7 +52,6 @@ export default function DetailStudyPage() {
   }, [studyId]);
 
   useEffect(() => {
-    console.log('studyId', studyId);
     isMountedRef.current = true;
     fetchStudy();
     return () => {
@@ -84,8 +83,9 @@ export default function DetailStudyPage() {
       if (res?.data?.success) {
         // if (modalAction === 'focus') navigate(`/focus/${studyId}`); // 페이지 만들면 아래꺼랑 교체
         if (modalAction === 'focus') navigate(`/focus/${studyId}`);
-        // else navigate(`/workshop/${studyId}`); // 페이지 만들면 아래꺼랑 교체
-        else navigate(`/habit/${studyId}`);
+        else {
+          navigate(`/habit/${studyId}`, { state: { password: password } });
+        }
         setShowPasswordModal(false);
         return;
       }

@@ -3,10 +3,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from '@pages/Home.jsx';
 import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
-import Workshop from '@/pages/Workshop_seungjeon.jsx';
 import Focus from '@pages/Focus.jsx';
 import NotFoundPage from '@pages/NotFoundPage.jsx';
 import EmojiList from '@components/emoji/EmojiList';
+import Habit from '@/pages/Habit';
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
         </Route>
 
         <Route path="habit">
-          <Route path=":studyId" element={<Workshop />} />
+          <Route path=":studyId" element={<Habit />} />
         </Route>
 
         <Route path="focus">
