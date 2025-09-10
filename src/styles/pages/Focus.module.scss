@@ -1,0 +1,141 @@
+.page {
+  min-height: 100vh;
+  background: #f5f3ee; /* 아이보리 톤 */
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.06),
+    0 6px 24px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+}
+
+/* ===== 상단 레이아웃 ===== */
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.leftGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.studyTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #333;
+}
+
+.subText {
+  margin: 0;
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.pointsPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: #f0f5ee;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  font-weight: 700;
+  color: #2f4f2f;
+}
+
+.leaf {
+  font-size: 14px;
+}
+
+.rightActions {
+  display: flex;
+  gap: 8px;
+}
+
+.topBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}
+
+/* ===== 타이머 패널 ===== */
+.timerPanel {
+  margin-top: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 40px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+}
+
+.timerTitle {
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  color: #555;
+}
+
+.timerDisplay {
+  font-size: 112px;
+  line-height: 1;
+  font-weight: 800;
+  color: #333;
+  letter-spacing: 2px;
+  margin: 12px 0 24px 0;
+  text-align: center;
+}
+
+.startBtn {
+  min-width: 200px;
+  height: 48px;
+  border-radius: 999px;
+  font-size: 18px;
+  font-weight: 800;
+  background: #8dc28d;
+  color: #fff;
+  border: none;
+  cursor: default; /* 기능 없음 */
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 640px) {
+  .card {
+    padding: 16px;
+  }
+  .timerDisplay {
+    font-size: 72px;
+  }
+  .rightActions {
+    gap: 6px;
+  }
+}

@@ -1,4 +1,4 @@
-import useWindowSize from '@/hooks/useWindowSize.jsx';
+import useWindowSize from '@/hooks/UseWindowSize.jsx';
 
 const WindowSizeDemo = () => {
   const { width, height, deviceType, isMobile, isTablet, isDesktop } = useWindowSize();

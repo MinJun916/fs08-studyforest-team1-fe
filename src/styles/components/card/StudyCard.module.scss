@@ -1,0 +1,184 @@
+@use '@/styles/variables' as v;
+
+.studyCard {
+  width: 358px;
+  height: 243px;
+
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(65, 65, 65, 0.5);
+
+  padding: 30px;
+
+  display: flex;
+
+  .nickName {
+    color: v.$white;
+  }
+
+  .studyName {
+    color: v.$white;
+  }
+}
+
+.studyCardWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.header {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.headerWrapper {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+}
+
+.dDate {
+  color: v.$grayEE;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.description {
+  color: v.$white;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.green {
+  background-color: v.$backgroundGreen;
+}
+
+.yellow {
+  background-color: v.$backgroundYellow;
+}
+
+.blue {
+  background-color: v.$backgroundBlue;
+}
+
+.pink {
+  background-color: v.$backgroundPink;
+}
+
+.alvaro {
+  background: url('@assets/backgroundImg/alvaro-reyes-zvmZiw3vdsQ-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.mikey {
+  background: url('@assets/backgroundImg/mikey-harris-kw0z6RyvC0s-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.andrew {
+  background: url('@assets/backgroundImg/andrew-ridley-jR4Zf-riEjI-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.chris {
+  background: url('@assets/backgroundImg/chris-lee-70l1tDAI6rM-unsplash.jpg');
+}
+
+.blackFont {
+  .nickName {
+    color: v.$green_text;
+  }
+
+  .studyName {
+    color: v.$black;
+  }
+
+  .dDate {
+    color: v.$gray81;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .description {
+    color: v.$black;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: v.$breakpoint-tablet) {
+  .studyCard {
+    width: 312px;
+    height: 243px;
+  }
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  .studyCard {
+    width: 312px;
+    height: 180px;
+
+    padding: 16px 88px 16px 16px;
+  }
+
+  .header {
+    gap: 4px;
+  }
+
+  .headerWrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 6px;
+
+    .title {
+      font-size: 16px;
+      line-height: normal;
+    }
+
+    .dDate {
+      font-size: 12px;
+    }
+
+    .description {
+      font-size: 14px;
+      line-height: normal;
+    }
+  }
+
+  .blackFont {
+    .dDate {
+      font-size: 12px;
+    }
+
+    .description {
+      font-size: 14px;
+      line-height: 24px;
+    }
+  }
+}
