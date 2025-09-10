@@ -8,7 +8,7 @@ import ic_stop from '@assets/icons/ic_stop.svg';
 
 import styles from '@styles/components/button/Button.module.scss';
 
-export default function Button({ childrenType, disabled = false, type = 'button' }) {
+export default function Button({ childrenType, disabled = false, type = 'button', onClick }) {
   const [toggled, setToggled] = useState(false);
 
   let childrenContent = null;
@@ -55,15 +55,16 @@ export default function Button({ childrenType, disabled = false, type = 'button'
       break;
   }
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     if (childrenType === 'restart' || childrenType === 'pause') {
       setToggled(!toggled);
     }
+    if (typeof onClick === 'function') onClick(e);
   };
 
   const className = clsx(
     styles[childrenType],
-    childrenType === 'confirm' ? styles.confirmTemplate : styles.template,
+    (childrenType === 'confirm' || childrenType === 'cancel') ? styles.confirmTemplate : styles.template,
     disabled && styles.isDisabled,
     toggled && styles.isToggled,
   );

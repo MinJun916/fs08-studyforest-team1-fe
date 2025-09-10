@@ -54,7 +54,7 @@ $gray-cancel: #ddd;
   -webkit-appearance: none;
   appearance: none;
   color: #fff !important;
-
+  width: 100%;
   * {
     color: inherit;
     font-family: 'EF_jejudoldam';
@@ -207,6 +207,7 @@ $gray-cancel: #ddd;
 }
 
 .confirm,
+.cancel,
 .completeModify {
   @media (max-width: v.$breakpoint-mobile) {
     @include button-size(140px);

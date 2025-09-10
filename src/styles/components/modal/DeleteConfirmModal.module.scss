@@ -1,0 +1,146 @@
+@use '@/styles/variables' as v;
+
+.modal {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 24px;
+
+  .title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: v.$black_text;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+
+  .exitBtn {
+    position: absolute;
+    right: 0;
+    width: 147px;
+    height: 17px;
+
+    // 버튼 기본 스타일 제거
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+
+    color: #578246;
+    text-align: right;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.warning {
+  padding: 12px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #e74c3c;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.description {
+  padding: 12px 0 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  color: v.$gray81;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.passwordWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 40px;
+
+  .error {
+    color: #e74c3c;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  .modal {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+    
+    .title {
+      color: v.$black_text;
+      text-align: center;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+    }
+  }
+
+  .warning {
+    color: #e74c3c;
+    text-align: center;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+
+  .description {
+    color: v.$gray81;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .passwordWrapper {
+    padding-bottom: 24px;
+  }
+
+  .buttonGroup {
+    gap: 8px;
+  }
+}
