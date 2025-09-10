@@ -1,0 +1,113 @@
+@use '@styles/variables' as v;
+
+/* 레이아웃 */
+$header-h: 100px;
+$pad-y: 21px;
+$pad-x-desktop: 220px;
+$maxw: 1920px;
+
+.siteHeader {
+  background: v.$bg;
+  border-bottom: none;
+  box-shadow: none;
+}
+
+.headerInner {
+  height: $header-h;
+  max-width: $maxw;
+  margin: 0 auto;
+  padding: $pad-y $pad-x-desktop;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.brandImg {
+  width: 181.603px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.createStudyBtn {
+  display: flex;
+  width: 252px;
+  height: 57px;
+  padding: 13px 68px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+
+  background: v.$brand;
+  border-radius: 16px;
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+
+  &:visited {
+    color: white;
+    text-decoration: none;
+  }
+
+  &:active {
+    color: white;
+    text-decoration: none;
+  }
+
+  &:focus {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.createStudyBtnText {
+  color: #fff;
+  text-align: center;
+  font-family: 'EF_jejudoldam';
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  text-shadow: 0px -2px 0px #2f4f2f;
+}
+
+/* 반응형 */
+/* 태블릿 */
+@media (max-width: v.$breakpoint-tablet) {
+  .headerInner {
+    padding: 20px 24px;
+  }
+
+  .createStudyBtn {
+    width: 160px;
+    padding: 0;
+  }
+}
+
+/* 휴대폰 */
+@media (max-width: v.$breakpoint-mobile) {
+  .headerInner {
+    padding: 30px 16px 32px 16px;
+  }
+
+  .brandImg {
+    width: 106px;
+    height: 35.021px;
+  }
+
+  .createStudyBtn {
+    width: 106px;
+    height: 38px;
+    padding: 0;
+  }
+
+  .createStudyBtnText {
+    font-size: 11px;
+  }
+}

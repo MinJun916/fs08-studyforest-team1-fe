@@ -1,0 +1,35 @@
+@use '@/styles/variables' as v;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modalContent {
+  width: 648px;
+  max-width: 90vw;
+  max-height: 90vh;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: v.$white;
+  padding: 40px 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  .modalContent {
+    width: 344px;
+    padding: 16px 16px 24px 16px;
+  }
+}

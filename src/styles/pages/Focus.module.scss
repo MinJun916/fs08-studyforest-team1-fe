@@ -1,0 +1,152 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
+.focusWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.focusPage {
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  background: v.$white;
+  width: 1248px;
+  height: 863px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.titleAndButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  span {
+    color: v.$black;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: v.$gray81;
+    background: white;
+    border: 1px solid v.$grayDD;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background: v.$grayDD;
+    }
+  }
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .timeText {
+    color: v.$gray81;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.timeContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeValue {
+  width: fit-content;
+  height: 35px;
+  display: flex;
+  padding: 8px 12px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  color: v.$black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
+}
+
+.contentHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    color: v.$black;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+}
+
+.contentBody {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

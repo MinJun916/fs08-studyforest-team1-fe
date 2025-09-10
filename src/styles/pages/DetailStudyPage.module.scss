@@ -1,0 +1,220 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
+* {
+  color: v.$black;
+  word-break: keep-all;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: all 0.3s ease;
+  &.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.toast {
+  position: fixed;
+  bottom: 10%;
+  z-index: 1001;
+}
+
+.root {
+  /* layout wrapper */
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 40px auto 0 auto;
+  max-width: 1200px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  .adminButtons {
+    display: flex;
+    button {
+      width: max-content;
+      padding: 0;
+      border-radius: 999px;
+      background: white;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: v.$green_text;
+      cursor: pointer;
+      &:after {
+        padding: 0 8px;
+        color: v.$gray81;
+        content: '|';
+      }
+    }
+    button:last-child {
+      color: v.$gray81;
+      &:after {
+        content: '';
+        padding: 0;
+      }
+    }
+  }
+}
+
+.intro {
+  h1 {
+    /* page title */
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 18px;
+    font-weight: 400;
+    color: v.$gray81;
+    margin: 0;
+    margin-bottom: 8px;
+  }
+  p {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    .userButtons {
+      display: flex;
+      gap: 8px;
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 24px;
+        font-size: 16px;
+        color: v.$gray81;
+        background: white;
+        border: 1px solid v.$grayDD;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        &:hover {
+          background: v.$grayDD;
+        }
+      }
+    }
+  }
+}
+
+.record {
+  padding: 24px;
+  border: 1px solid v.$grayDD;
+  border-radius: 20px;
+  margin-top: 40px;
+  overflow-x: auto;
+  h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+    padding: 12px 8px;
+  }
+
+  td {
+    padding: 14px 41px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .habitTitle {
+    text-align: right;
+    padding-left: 18px;
+    font-weight: 600;
+    max-width: 190px;
+  }
+
+  .pawCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+  }
+
+  .pawSvg {
+    width: 28px;
+    height: 28px;
+  }
+  .habitMsg {
+    text-align: center;
+    color: v.$gray81;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 170px auto;
+  }
+}
+
+@media (max-width: v.$breakpoint-tablet) {
+  .root {
+    margin: 40px 24px 0 24px;
+  }
+  .record {
+    h2 {
+      font-size: 20px;
+    }
+    .habitTitle {
+      padding: 14px;
+    }
+    td {
+      padding: 14px;
+    }
+  }
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  .header {
+    position: relative;
+    padding-top: 40px;
+    .adminButtons {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+  .intro {
+    .top {
+      flex-flow: row wrap;
+    }
+    h1 {
+      width: 100%;
+      font-size: 24px;
+    }
+  }
+  .record {
+    h2 {
+      font-size: 20px;
+    }
+    .habitTitle {
+      font-size: 14px;
+    }
+  }
+}

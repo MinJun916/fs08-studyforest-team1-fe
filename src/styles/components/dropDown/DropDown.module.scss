@@ -1,0 +1,82 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
+* {
+  font-family:
+    'pretendard',
+    -apple-system,
+    sans-serif;
+}
+
+.dropDown {
+  display: inline-block;
+  position: relative;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 100%;
+    margin: 12px 0;
+    text-align: right;
+  }
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 180px;
+  padding: 9px 20px;
+  background: v.$white;
+  border-radius: 15px;
+  cursor: pointer;
+  color: v.$gray81;
+  font-size: 16px;
+  border: 1px solid v.$grayDD;
+}
+
+.label {
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+.caret {
+  color: v.$gray81;
+  font-size: 14px;
+}
+
+.list {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 180px;
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  z-index: 40;
+}
+
+.item {
+  list-style: none;
+  padding: 12px 0;
+  text-align: center;
+  cursor: pointer;
+  color: v.$black;
+  font-size: 16px;
+  background: transparent;
+  border-top: 1px solid v.$grayDD;
+}
+
+.item:first-child {
+  border-top: none;
+}
+
+.item:hover,
+.highlight {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.selected {
+  font-weight: 600;
+}

@@ -1,0 +1,50 @@
+@use '@/styles/variables' as v;
+
+.title {
+  width: 100%;
+  color: v.$black_text;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-bottom: 24px;
+}
+
+.habitContent {
+  width: 100%;
+
+  .controlButtons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding-top: 24px;
+
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cancelButton {
+      width: 100%;
+    }
+
+    .submitButton {
+      width: 100%;
+    }
+  }
+}
+
+.habitListContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+@media (max-width: v.$breakpoint-mobile) {
+  .title {
+    font-size: 20px;
+  }
+}

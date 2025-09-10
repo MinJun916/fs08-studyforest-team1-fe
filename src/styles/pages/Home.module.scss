@@ -1,0 +1,213 @@
+@use '@/styles/variables' as v;
+
+.wrapper {
+  width: 1200px;
+  margin-top: 40px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    width: 697px;
+    gap: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 344px;
+    gap: 16px;
+  }
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: v.$gray81;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.recentStudies {
+  width: 100%;
+  height: 382px;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 20px;
+  background: v.$white;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    height: 332px;
+    padding: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    height: 247px;
+    padding: 16px;
+  }
+}
+
+.discoverStudies {
+  width: 100%;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 20px;
+  background: v.$white;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    padding: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    padding: 16px;
+  }
+}
+
+.title {
+  color: v.$black;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+.recentStudiesTitle {
+  @media (max-width: v.$breakpoint-mobile) {
+    margin-bottom: 0px;
+  }
+}
+
+.recentStudies {
+  gap: 40px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    gap: 18px;
+  }
+}
+
+.discoverStudies {
+  gap: 60px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    gap: 24px;
+  }
+
+  .contentsWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+
+    @media (max-width: v.$breakpoint-mobile) {
+      display: block;
+    }
+  }
+
+  .controlsWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: v.$breakpoint-mobile) {
+      display: block;
+
+      .search {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.moreBtnWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.moreBtn {
+  display: flex;
+  padding: 17px 119px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
+
+  color: v.$green_text;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: v.$grayEE;
+  }
+}
+
+.studyCardContainer {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+
+  // 데스크톱: 3개 컬럼
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // 태블릿: 2개 컬럼
+  @media (max-width: v.$breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  // 모바일: 1개 컬럼
+  @media (max-width: v.$breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 40px 20px;
+  text-align: center;
+  color: v.$gray81;
+  font-size: 16px;
+  background-color: v.$grayEE;
+  border-radius: 8px;
+  border: 1px dashed v.$grayDD;
+}
+
+.loading {
+  grid-column: 1 / -1;
+  padding: 20px;
+  text-align: center;
+  color: v.$gray81;
+  font-size: 14px;
+}

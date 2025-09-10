@@ -1,0 +1,62 @@
+@use '@styles/variables' as v;
+
+* {
+  font-family:
+    pretendard,
+    -apple-system,
+    sans-serif;
+}
+
+.toast {
+  display: inline-flex;
+  padding: 14px 18px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+}
+
+.toast_point {
+  background: v.$green;
+}
+
+.toast_warning {
+  background: v.$pink;
+}
+
+.toast_study {
+  background: v.$pink;
+}
+
+.text_point {
+  color: v.$green_text;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.text_warning {
+  color: v.$red;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.text_study {
+  color: v.$red;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@media (max-width: 768px) {
+  .text_point {
+    font-size: 14px;
+  }
+  .text_warning {
+    font-size: 14px;
+  }
+}
