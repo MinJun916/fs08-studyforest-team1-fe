@@ -22,7 +22,7 @@ export default function DetailStudyPage() {
   const [modalAction, setModalAction] = useState(null); // 'habit' | 'focus' | 'modify'
   const [modalError, setModalError] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
-  const { id: studyId } = useParams();
+  const { studyId } = useParams();
   const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
@@ -129,12 +129,9 @@ export default function DetailStudyPage() {
       const res = await api.delete(`/studies/${studyId}`, {
         data: { password }
       });
-      if (res?.data?.success) {
-        alert('스터디가 삭제되었습니다.');
-        navigate('/');
-        return;
-      }
-      setDeleteError('비밀번호가 일치하지 않습니다');
+      alert('스터디가 삭제되었습니다.');
+      navigate('/');
+      return;
     } catch (err) {
       setDeleteError('비밀번호가 일치하지 않습니다');
     }
