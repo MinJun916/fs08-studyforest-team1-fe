@@ -22,7 +22,7 @@ export default function DetailStudyPage() {
   const [modalAction, setModalAction] = useState(null); // 'habit' | 'focus' | 'modify'
   const [modalError, setModalError] = useState(null);
   const [deleteError, setDeleteError] = useState(null);
-  const { id: studyId } = useParams();
+  const { studyId } = useParams();
   const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
@@ -94,17 +94,22 @@ export default function DetailStudyPage() {
   const handleShare = () => {
     const currentUrl = window.location.href;
     if (navigator.share) {
-      navigator.share({
-        title: study?.studyName || '스터디',
-        text: study?.description || '스터디를 공유합니다',
-        url: currentUrl,
-      }).catch(console.error);
+      navigator
+        .share({
+          title: study?.studyName || '스터디',
+          text: study?.description || '스터디를 공유합니다',
+          url: currentUrl,
+        })
+        .catch(console.error);
     } else {
-      navigator.clipboard.writeText(currentUrl).then(() => {
-        alert('링크가 복사되었습니다!');
-      }).catch(() => {
-        alert('링크 복사에 실패했습니다.');
-      });
+      navigator.clipboard
+        .writeText(currentUrl)
+        .then(() => {
+          alert('링크가 복사되었습니다!');
+        })
+        .catch(() => {
+          alert('링크 복사에 실패했습니다.');
+        });
     }
   };
 
@@ -127,7 +132,7 @@ export default function DetailStudyPage() {
 
     try {
       const res = await api.delete(`/studies/${studyId}`, {
-        data: { password }
+        data: { password },
       });
       if (res?.data?.success) {
         alert('스터디가 삭제되었습니다.');
@@ -167,12 +172,13 @@ export default function DetailStudyPage() {
   ];
 
   const habits =
-
-    study?.weeklyHabits?.filter((h) => !h.isDeleted).map((h) => ({
-      id: h.habitId,
-      title: h.habitName,
-      records: h.isCompleted,
-    })) ?? fallbackHabits;
+    study?.weeklyHabits
+      ?.filter((h) => !h.isDeleted)
+      .map((h) => ({
+        id: h.habitId,
+        title: h.habitName,
+        records: h.isCompleted,
+      })) ?? fallbackHabits;
 
   const habitColors = [
     '#D2E869',
@@ -205,7 +211,14 @@ export default function DetailStudyPage() {
           onClick={handlePasswordConfirm}
           btnType={modalAction === 'habit' ? 'habit' : modalAction === 'focus' ? 'focus' : 'modify'}
         />
-        {modalError&&<div className={styles.toast}><Toast type={'study'} toastStudyText={'🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.'}/></div>}
+        {modalError && (
+          <div className={styles.toast}>
+            <Toast
+              type={'study'}
+              toastStudyText={'🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.'}
+            />
+          </div>
+        )}
       </div>
       <div className={`${styles.overlay} ${showDeleteModal ? styles.active : ''}`}>
         <DeleteConfirmModal
@@ -220,11 +233,15 @@ export default function DetailStudyPage() {
         <div className={styles.header}>
           <Emoji studyId={studyId} />
           <div className={styles.adminButtons}>
-            <button type="button" onClick={handleShare}>공유하기</button>
+            <button type="button" onClick={handleShare}>
+              공유하기
+            </button>
             <button type="button" onClick={() => openPasswordModal(study?.studyName, 'modify')}>
               수정하기
             </button>
-            <button type="button" onClick={openDeleteModal}>스터디 삭제하기</button>
+            <button type="button" onClick={openDeleteModal}>
+              스터디 삭제하기
+            </button>
           </div>
         </div>
 
@@ -235,14 +252,38 @@ export default function DetailStudyPage() {
             <div className={styles.userButtons}>
               <button type="button" onClick={() => openPasswordModal(study?.studyName, 'habit')}>
                 오늘의 습관
-                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
-                  <path d="M1 1L6 6.5L1 12" stroke="#818181" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="7"
+                  height="13"
+                  viewBox="0 0 7 13"
+                  fill="none"
+                >
+                  <path
+                    d="M1 1L6 6.5L1 12"
+                    stroke="#818181"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </button>
               <button type="button" onClick={() => openPasswordModal(study?.studyName, 'focus')}>
                 오늘의 집중
-                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
-                  <path d="M1 1L6 6.5L1 12" stroke="#818181" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="7"
+                  height="13"
+                  viewBox="0 0 7 13"
+                  fill="none"
+                >
+                  <path
+                    d="M1 1L6 6.5L1 12"
+                    stroke="#818181"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
                 </svg>
               </button>
             </div>
