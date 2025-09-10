@@ -1,42 +1,27 @@
-import { useState, useEffect } from 'react';
+import clsx from 'clsx';
+import { useNavigate } from 'react-router-dom';
 import Emoji from '@components/emoji/emoji';
 import Tag from '@components/tag/Tag.jsx';
-import api from '@/lib/axios.js';
 import dDayCounter from '@/lib/dDayCounter.js';
-import clsx from 'clsx';
 import styles from '@styles/components/card/StudyCard.module.scss';
 
-function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
-  const initialStudy = {
-    studyName: '',
-    createdAt: '',
-    totalPoints: 0,
-    backgroundImg: '',
-    description: '',
-    nickName: '',
-  };
+function StudyCard({
+  studyName,
+  createdAt,
+  totalPoints,
+  backgroundImg,
+  description,
+  nickName,
+  studyId,
+}) {
+  const navigate = useNavigate();
+  const dDay = dDayCounter(createdAt);
 
-  const [study, setStudy] = useState(initialStudy);
-  const [loading, setLoading] = useState(false);
-
-  const fetchStudy = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get(`/studies/${studyId}`);
-      setStudy(res.data.data);
-    } catch (error) {
-      console.error(error);
-      setStudy(initialStudy);
-    } finally {
-      setLoading(false);
+  const handleCardClick = () => {
+    if (studyId) {
+      navigate(`/study/${studyId}`);
     }
   };
-
-  useEffect(() => {
-    fetchStudy();
-  }, [studyId]);
-
-  const dDay = dDayCounter(study.createdAt);
 
   const bgMap = {
     green: styles.green,
@@ -50,33 +35,36 @@ function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
   };
 
   const isImg =
-    study.backgroundImg === 'alvaro' ||
-    study.backgroundImg === 'mikey' ||
-    study.backgroundImg === 'andrew' ||
-    study.backgroundImg === 'chris';
+    backgroundImg === 'alvaro' ||
+    backgroundImg === 'mikey' ||
+    backgroundImg === 'andrew' ||
+    backgroundImg === 'chris';
 
   const imgTagStyleMap = {
     bgColor: 'rgba(0, 0, 0, 0.50)',
     fontSize: 12,
-    points: study.totalPoints,
+    points: totalPoints,
     fontColor: '#fff',
   };
 
   const colorTagStyleMap = {
     bgColor: 'rgba(255, 255, 255, 0.30)',
     fontSize: 12,
-    points: study.totalPoints,
+    points: totalPoints,
     fontColor: '#414141',
   };
 
   return (
-    <div className={clsx(styles.studyCard, bgMap[study.backgroundImg], isImg || styles.blackFont)}>
+    <div
+      className={clsx(styles.studyCard, bgMap[backgroundImg], isImg || styles.blackFont)}
+      onClick={handleCardClick}
+    >
       <div className={styles.studyCardWrapper}>
         <div className={styles.header}>
           <div className={styles.headerWrapper}>
             <div className={styles.title}>
-              <span className={styles.nickName}>{study.nickName}</span>
-              <span className={styles.studyName}>{`의 ${study.studyName}`}</span>
+              <span className={styles.nickName}>{nickName}</span>
+              <span className={styles.studyName}>{`의 ${studyName}`}</span>
             </div>
             <div className={styles.point}>
               <Tag {...(isImg ? imgTagStyleMap : colorTagStyleMap)} />
@@ -84,7 +72,7 @@ function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
           </div>
           <div className={styles.dDate}>{dDay}일째 진행 중</div>
         </div>
-        <div className={styles.description}>{study.description}</div>
+        <div className={styles.description}>{description}</div>
         <div className={styles.emojiWrapper}>
           <div className={styles.emoji}>
             <Emoji studyId={studyId} />

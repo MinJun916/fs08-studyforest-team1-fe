@@ -27,14 +27,15 @@ export function getRecentStudies() {
   });
   // 만료 제거 후 저장 동기화
   if (list.length !== readRaw().length) writeRaw(list);
-  return list; // [{id, name, cover, viewedAt}, ...]
+  return list; // [{id, studyName, backgroundImg, nickName, description, totalPoints, createdAt, viewedAt}, ...]
 }
 
 /**
  * 최근목록에 추가(중복 제거 + 맨앞 삽입 + 사이즈 제한)
  */
 export function addRecentStudy(study) {
-  // study: { id, name, cover } 최소 이 3가지만 넣어도 충분
+  // study: { id, studyName, backgroundImg, nickName, description, totalPoints, createdAt }
+  // StudyCard가 필요한 모든 props를 저장
   const now = Date.now();
   const prev = readRaw().filter((item) => item.id !== study.id);
   const next = [{ ...study, viewedAt: now }, ...prev].slice(0, MAX_ITEMS);
@@ -44,33 +45,4 @@ export function addRecentStudy(study) {
 /** 전체 삭제(옵션) */
 export function clearRecentStudies() {
   localStorage.removeItem(STORAGE_KEY);
-}
-
-/**
- * 테스트용 임시 데이터 추가
- */
-export function addTestRecentStudies() {
-  const testStudies = [
-    {
-      id: '430a8f4e-9810-4e95-9df1-7295e7fcbe0d',
-      name: '스터디 생성 페이지 테스트 44',
-      cover: 'mikey',
-      viewedAt: Date.now() - 1000 * 60 * 30, // 30분 전
-    },
-    {
-      id: '32a3b878-5f3f-49de-bbbd-8f5f23570e29',
-      name: '스터디 생성 테스트 중 33',
-      cover: 'mikey',
-      viewedAt: Date.now() - 1000 * 60 * 60 * 2, // 2시간 전
-    },
-    {
-      id: '6c9362f2-b02d-422f-896b-3c4d0bd6c3de',
-      name: '테스트 생성 페이지 테스트 22',
-      cover: 'alvaro',
-      viewedAt: Date.now() - 1000 * 60 * 60 * 24, // 1일 전
-    },
-  ];
-
-  writeRaw(testStudies);
-  return testStudies;
 }

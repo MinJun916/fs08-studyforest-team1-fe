@@ -36,8 +36,12 @@ export default function DetailStudyPage() {
         setStudy(res.data.data ?? null);
         addRecentStudy({
           id: res.data.data.id,
-          name: res.data.data.studyName,
-          cover: null,
+          studyName: res.data.data.studyName,
+          backgroundImg: res.data.data.backgroundImg,
+          nickName: res.data.data.nickName,
+          description: res.data.data.description,
+          totalPoints: res.data.data.totalPoints,
+          createdAt: res.data.data.createdAt,
         });
       }
     } catch (err) {

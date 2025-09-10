@@ -2,13 +2,10 @@ import Header from '@/components/header/Header';
 import styles from '@styles/pages/Home.module.scss';
 import Input from '@/components/input/Input';
 import DropDown, { SORTOPTIONS } from '@/components/dropDown/DropDown';
-import RecentStudies from '@/components/organisms/RecentStudies';
+import RecentStudies from '@/components/card/RecentStudies';
 import StudyCard from '@/components/card/StudyCard';
 import { useState, useEffect } from 'react';
 import api from '@/lib/axios';
-// ===== 테스트용 import 시작 =====
-import { addTestRecentStudies } from '@/lib/recentStudies';
-// ===== 테스트용 import 끝 =====
 
 function Home() {
   const [hasRecentStudies, setHasRecentStudies] = useState(false);
@@ -22,14 +19,6 @@ function Home() {
   const [sortOrder, setSortOrder] = useState('newest');
   const LIMIT = 6; // 총 6개로 고정
   const [displayCount, setDisplayCount] = useState(LIMIT);
-
-  // ===== 테스트용 자동 데이터 로드 시작 =====
-  // 페이지 로드 시 자동으로 테스트 데이터 추가 (실제 배포 시 제거)
-  if (!hasRecentStudies) {
-    addTestRecentStudies();
-    setHasRecentStudies(true);
-  }
-  // ===== 테스트용 자동 데이터 로드 끝 =====
 
   const fetchAllStudies = async () => {
     if (loading) return;
@@ -140,8 +129,19 @@ function Home() {
             </div>
             <div className={styles.studyCardContainer}>
               {displayedStudies.length > 0
-                ? displayedStudies.map((study) => <StudyCard key={study.id} studyId={study.id} />)
-                : !loading && <div className={styles.empty}>스터디가 없습니다.</div>}
+                ? displayedStudies.map((study) => (
+                    <StudyCard
+                      key={study.id}
+                      studyId={study.id}
+                      nickName={study.nickName}
+                      studyName={study.studyName}
+                      description={study.description}
+                      backgroundImg={study.backgroundImg}
+                      totalPoints={study.totalPoints}
+                      createdAt={study.createdAt}
+                    />
+                  ))
+                : !loading && <div className={styles.empty}>아직 둘러 볼 스터디가 없어요</div>}
               {loading && <div className={styles.loading}>로딩 중...</div>}
             </div>
           </div>
