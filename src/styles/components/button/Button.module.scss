@@ -44,7 +44,7 @@ $gray-cancel: #ddd;
   height: $height;
   font-size: $font-size;
   @include flex-center;
-  flex-shrink: 0;
+  // flex-shrink: 0;
 }
 
 // ===== 기본 버튼 스타일 =====
@@ -89,7 +89,7 @@ $gray-cancel: #ddd;
   font-size: 18px;
   @include flex-center;
   flex-shrink: 0;
-  flex: 1; // 부모 컨테이너에서 사용 가능한 공간을 균등하게 차지
+  // flex: 1; // 부모 컨테이너에서 사용 가능한 공간을 균등하게 차지
   min-width: 0; // 최소 너비 제한 제거
 
   @media (max-width: v.$breakpoint-mobile) {
@@ -108,7 +108,8 @@ $gray-cancel: #ddd;
 }
 
 .confirmTemplate {
-  @include button-size(288px);
+  @include button-size(100%);
+  max-width: 288px;
   padding-bottom: 0.007px;
 }
 

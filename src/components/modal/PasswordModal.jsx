@@ -29,6 +29,9 @@ function PasswordModal({
           {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
         <Button childrenType={btnType} onClick={() => onClick(passwordValue)} />
+        <button className={styles.exitBtn2} onClick={onClose}>
+          나가기
+        </button>
       </div>
     </Popup>
   );
