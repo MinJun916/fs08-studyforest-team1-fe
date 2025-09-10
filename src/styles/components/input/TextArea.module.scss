@@ -1,5 +1,11 @@
 @use '@/styles/variables' as v;
 
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .textarea {
   width: 100%;
   height: 98px;
@@ -18,4 +24,12 @@
 
   resize: none;
   overflow: hidden;
+}
+
+.inputTitle {
+  color: v.$black;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }

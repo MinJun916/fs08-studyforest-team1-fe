@@ -4,20 +4,22 @@ import api from '@/lib/axios.js';
 import Popup from '@/components/popup/Popup.jsx';
 import HabitList from '@components/modal/HabitList.jsx';
 import styles from '@styles/components/modal/HabitModal.module.scss';
+import Button from '@/components/button/Button.jsx';
 
 function HabitModal({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506', password = '1234' }) {
   const [habits, setHabits] = useState([]);
 
+  const fetchHabits = async () => {
+    try {
+      const res = await api.get(`/habits/${studyId}/today?password=${password}`);
+      setHabits(res.data.habits || []);
+    } catch (err) {
+      console.error(err);
+      setHabits([]);
+    }
+  };
+
   useEffect(() => {
-    const fetchHabits = async () => {
-      try {
-        const res = await api.get(`/habits/${studyId}/today?password=${password}`);
-        setHabits(res.data.habits || []);
-      } catch (err) {
-        console.error(err);
-        setHabits([]);
-      }
-    };
     fetchHabits();
   }, [studyId, password]);
 
@@ -30,8 +32,8 @@ function HabitModal({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506', password
             <HabitList habits={habits} studyId={studyId} />
           </div>
           <div className={styles.controlButtons}>
-            <button className={styles.cancelButton}>취소</button>
-            <button className={styles.submitButton}>수정완료</button>
+            <Button childrenType="cancel" />
+            <Button childrenType="completeModify" />
           </div>
         </div>
       </div>

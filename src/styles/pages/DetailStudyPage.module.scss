@@ -1,7 +1,7 @@
 @use '@/styles/variables' as v;
 @use '@/styles/mixin' as m;
 
-*{
+* {
   color: v.$black;
   word-break: keep-all;
 }
@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  } 
+  }
 }
 
 .root {
@@ -31,7 +31,6 @@
   margin: 40px auto 0 auto;
   max-width: 1200px;
 }
-
 
 .header {
   display: flex;
@@ -59,7 +58,7 @@
       &:after {
         content: '';
         padding: 0;
-    }
+      }
     }
   }
 }
