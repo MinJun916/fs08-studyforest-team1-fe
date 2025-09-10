@@ -99,6 +99,14 @@ $gray-cancel: #ddd;
   }
 }
 
+// create 타입은 전체 너비를 차지하도록 특별 처리
+.create {
+  width: 100% !important;
+  max-width: 648px !important;
+  flex: none !important;
+  min-width: unset !important;
+}
+
 .confirmTemplate {
   @include button-size(288px);
   padding-bottom: 0.007px;

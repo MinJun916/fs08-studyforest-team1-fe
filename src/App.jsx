@@ -13,7 +13,7 @@ import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
-import Sticker from '@/components/sticker/Sticker';
+// import Sticker from '@/components/sticker/Sticker';
 
 export default function App() {
   return (
@@ -25,7 +25,7 @@ export default function App() {
         {/* 스터디 관련 라우트 */}
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
-          <Route path="detail" element={<DetailStudyPage />} />
+          <Route path=":id" element={<DetailStudyPage />} />
         </Route>
 
         {/* 기타 */}
@@ -49,7 +49,7 @@ export default function App() {
         </Route>
 
         {/* 리팩토링 임시 */}
-        <Route path="refactor" element={<Sticker />} />
+        <Route path="refactor" element={<CreateStudyPage />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />

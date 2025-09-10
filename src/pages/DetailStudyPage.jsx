@@ -1,10 +1,11 @@
 import styles from '@styles/pages/DetailStudyPage.module.scss';
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import axios from 'axios';
+import { useEffect, useState, useRef, useCallback, useParams } from 'react';
+import api from '@/lib/axios.js';
 
 import Emoji from '@/components/emoji/Emoji';
 import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
+import Header from '@/components/header/Header.jsx';
 
 export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);
@@ -13,7 +14,7 @@ export default function DetailStudyPage() {
   const [habitsState, setHabitsState] = useState([]);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [modalStudyName, setModalStudyName] = useState('스터디 이름');
-  const studyId = window.location.pathname.split('/').pop(); // URL에서 ID 추출
+  const { id: studyId } = useParams();
 
   const isMountedRef = useRef(true);
 
@@ -21,7 +22,7 @@ export default function DetailStudyPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`https://studyforest-n1at.onrender.com/studies/${studyId}`);
+      const res = await api.get(`/studies/${studyId}`);
       if (isMountedRef.current) setStudy(res.data?.data ?? null);
     } catch (err) {
       if (isMountedRef.current) setError(err);
@@ -31,12 +32,13 @@ export default function DetailStudyPage() {
   }, [studyId]);
 
   useEffect(() => {
+    console.log('studyId', studyId);
     isMountedRef.current = true;
     fetchStudy();
     return () => {
       isMountedRef.current = false;
     };
-  }, [fetchStudy]);
+  }, [fetchStudy, studyId]);
 
   const openPasswordModal = (name) => {
     setModalStudyName(name ?? study?.studyName ?? '스터디 이름');
@@ -57,9 +59,7 @@ export default function DetailStudyPage() {
     try {
       setLoading(true);
       setError(null);
-      await axios.post(
-        `https://studyforest-n1at.onrender.com/habitChecks/${studyId}/${habitId}/habitCheck/toggle`,
-      );
+      await api.post(`/habitChecks/${studyId}/${habitId}/habitCheck/toggle`);
       await fetchStudy();
     } catch (err) {
       setError(err);
@@ -111,6 +111,7 @@ export default function DetailStudyPage() {
 
   return (
     <>
+      <Header />
       <div className={`${styles.overlay} ${showPasswordModal ? styles.active : ''}`}>
         <PasswordModal
           studyName={modalStudyName}
