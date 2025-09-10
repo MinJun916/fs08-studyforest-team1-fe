@@ -1,95 +1,197 @@
-/* src/pages/Home.module.scss (또는 home.module.scss) */
+@use '@/styles/variables' as v;
 
-/* 공통 박스 스타일을 placeholder로 정의해서 재사용 */
-%surface-box {
-  background: var(--surface, #fff);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: var(--radius-12, 12px);
-  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.04));
-  padding: var(--space-24, 24px);
-}
-
-.page {
-  padding: var(--space-24, 24px);
-  max-width: 1120px;
+.wrapper {
+  width: 1200px;
+  margin-top: 40px;
   margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    width: 697px;
+    gap: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 344px;
+    gap: 16px;
+  }
 }
 
-/* 바깥 프레임은 모서리만 살짝 더 크게 */
-.frame {
-  @extend %surface-box;
-  border-radius: var(--radius-16, 16px);
+.recentStudies {
+  width: 100%;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 20px;
+  background: v.$white;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    padding: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    padding: 16px;
+  }
 }
 
-/* 섹션 박스(흰색 박스) */
-.sectionBox {
-  @extend %surface-box;
+.discoverStudies {
+  width: 100%;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 20px;
+  background: v.$white;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    padding: 24px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    padding: 16px;
+  }
 }
 
-/* 섹션 간 간격 40px (토큰이 있으면 사용, 없으면 40px로) */
-.sectionGap {
-  margin-top: var(--space-40, 40px);
-}
-
-/* 제목: 프로젝트 토큰 우선, 없으면 기본값 사용 */
 .title {
-  font-size: var(--fs-lg, 20px);
-  font-weight: var(--fw-extrabold, 800);
-  color: var(--text-strong, #000); /* 요구사항: 검정 */
-  letter-spacing: var(--tracking-tight, -0.01em);
-  margin-bottom: var(--space-16, 16px);
+  color: v.$black;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
 }
 
-/* 상단 컨트롤 바: 검색 + 드롭다운 자리 */
-.controls {
-  display: grid;
-  grid-template-columns: 1fr 240px;
-  gap: var(--gap-12, 12px);
-  align-items: center;
-  margin-bottom: var(--space-16, 16px);
+.recentStudiesTitle {
+  @media (max-width: v.$breakpoint-mobile) {
+    margin-bottom: 0px;
+  }
 }
 
-.searchBox {
-  min-height: 48px;
+.recentStudies {
+  gap: 40px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    gap: 18px;
+  }
+}
+
+.discoverStudies {
+  gap: 60px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    gap: 24px;
+  }
+
+  .contentsWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+
+    @media (max-width: v.$breakpoint-mobile) {
+      display: block;
+    }
+  }
+
+  .controlsWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: v.$breakpoint-mobile) {
+      display: block;
+
+      .search {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.moreBtnWrapper {
   display: flex;
-  align-items: center;
-}
-
-/* 드롭다운 자리(제작 전) */
-.dropdownPlaceholder {
-  min-height: 48px;
-  border: 1px dashed var(--color-border-muted, #cbd5e1);
-  border-radius: var(--radius-8, 8px);
-  display: flex;
-  align-items: center;
   justify-content: center;
-  font-size: var(--fs-sm, 14px);
-  color: var(--text-muted, #64748b);
-  background: var(--surface-subtle, #f8fafc);
-}
-
-/* 카드 그리드 */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: var(--gap-16, 16px);
-}
-
-.empty {
-  margin-top: var(--space-16, 16px);
-  color: var(--text-muted, #64748b);
-}
-
-/* 더보기 버튼 */
-.moreWrap {
-  text-align: center;
-  margin-top: var(--space-16, 16px);
+  align-items: center;
+  width: 100%;
 }
 
 .moreBtn {
-  padding: 10px 16px;
-  border-radius: var(--radius-10, 10px);
-  border: 1px solid var(--color-border, #e5e7eb);
-  background: var(--surface, #fff);
-  cursor: pointer;
+  display: flex;
+  padding: 17px 119px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
+
+  color: v.$green_text;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background: v.$grayEE;
+  }
+}
+
+.studyCardContainer {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+
+  // 데스크톱: 3개 컬럼
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // 태블릿: 2개 컬럼
+  @media (max-width: v.$breakpoint-tablet) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  // 모바일: 1개 컬럼
+  @media (max-width: v.$breakpoint-mobile) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 40px 20px;
+  text-align: center;
+  color: v.$gray81;
+  font-size: 16px;
+  background-color: v.$grayEE;
+  border-radius: 8px;
+  border: 1px dashed v.$grayDD;
+}
+
+.loading {
+  grid-column: 1 / -1;
+  padding: 20px;
+  text-align: center;
+  color: v.$gray81;
+  font-size: 14px;
 }

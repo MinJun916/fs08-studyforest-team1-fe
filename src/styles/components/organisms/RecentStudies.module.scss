@@ -1,0 +1,42 @@
+@use '@styles/variables' as v;
+
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: v.$gray81;
+  font-size: 16px;
+  background-color: v.$grayEE;
+  border-radius: 8px;
+  border: 1px dashed v.$grayDD;
+}
+
+.studyCardContainer {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+
+  // 모바일: 16px 갭
+  @media (max-width: 480px) {
+    gap: 16px;
+  }
+}
+
+// CSS로 화면 크기에 따라 카드 개수 조절
+.studyCard {
+  // 기본적으로 모든 카드 표시
+  display: block;
+
+  // 태블릿에서 3번째 카드 숨김 (2개만 표시)
+  @media (max-width: 1024px) {
+    &:nth-child(3) {
+      display: none;
+    }
+  }
+
+  // 모바일에서 2번째, 3번째 카드 숨김 (1개만 표시)
+  @media (max-width: 480px) {
+    &:nth-child(n + 2) {
+      display: none;
+    }
+  }
+}

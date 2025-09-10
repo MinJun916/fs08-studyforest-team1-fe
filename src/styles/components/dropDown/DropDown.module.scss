@@ -11,6 +11,12 @@
 .dropDown {
   display: inline-block;
   position: relative;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 100%;
+    margin: 12px 0;
+    text-align: right;
+  }
 }
 
 .toggle {
@@ -20,12 +26,12 @@
   gap: 12px;
   width: 180px;
   padding: 9px 20px;
-  background: #ffffff;
-  border: none;
+  background: v.$white;
   border-radius: 15px;
   cursor: pointer;
   color: v.$gray81;
   font-size: 16px;
+  border: 1px solid v.$grayDD;
 }
 
 .label {
@@ -34,7 +40,7 @@
 }
 
 .caret {
-  color: #9b9b9b;
+  color: v.$gray81;
   font-size: 14px;
 }
 

@@ -100,6 +100,10 @@
   border-radius: 15px;
   border: 1px solid v.$grayDD;
   background: v.$white;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 100%;
+  }
 }
 
 .searchIcon {
