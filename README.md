@@ -80,7 +80,7 @@
 ## 구현 홈페이지
 
 **Frontend**:  
-https://www.codeit.kr/
+https://fs08-studyforest-team1-fe.vercel.app/
 
 **Backend**(API Document):  
 https://studyforest-n1at.onrender.com/api-docs
