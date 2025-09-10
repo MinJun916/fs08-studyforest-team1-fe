@@ -1,58 +1,132 @@
-// export default function Focus() {
-//   return (
-//     <div style={{padding: 20}}>
-//       <h1>Focus (임시)</h1>
-//       <p>포커스 페이지가 아직 구현되지 않아 임시로 표시됩니다.</p>
-//     </div>
-//   );
-// }
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import Header from '@components/header/Header';
+import Tag from '@components/tag/Tag';
+import Timer from '@/components/timer/Timer';
 import styles from '@/styles/pages/Focus.module.scss';
+import api from '@/lib/axios';
+import { kstTimeNow } from '@/lib/dayjs.js';
+import dayjs from 'dayjs';
 
-/** 오늘의 집중 – UI 전용(타이머 기능 없음) */
-export default function Focus() {
+function Focus() {
+  const { studyId } = useParams();
+  const location = useLocation();
+  const timerRef = useRef(null);
+
+  const [study, setStudy] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [currentTime, setCurrentTime] = useState(kstTimeNow());
+
+  // DetailStudyPage에서 전달받은 비밀번호
+  const password = location.state?.password;
+
+  const fetchStudy = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await api.get(`/studies/${studyId}`);
+      const studyData = res.data.data;
+      setStudy(studyData);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudy();
+  }, [studyId]);
+
+  // 실시간 시간 업데이트 (1분마다)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const newTime = kstTimeNow();
+      setCurrentTime(newTime);
+    }, 60000); // 60초 = 1분
+
+    // 컴포넌트 언마운트 시 타이머 정리
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <section className={styles.card}>
-          {/* ===== 카드 상단 영역 ===== */}
-          <div className={styles.cardTop}>
-            {/* 왼쪽: 타이틀 → 설명 → 포인트 */}
-            <div className={styles.leftGroup}>
-              <h1 className={styles.studyTitle}>연우의 개발공장</h1>
-              <p className={styles.subText}>현재까지 획득한 포인트</p>
-              <span className={styles.pointsPill}>
-                <span className={styles.leaf} aria-hidden>
-                  🍃
-                </span>
-                310P 획득
-              </span>
+    <>
+      <Header />
+      <div className={styles.focusWrapper}>
+        <div className={styles.focusPage}>
+          <div className={styles.header}>
+            <div className={styles.titleAndButtons}>
+              <div className={styles.title}>
+                <span>{study?.nickName || '연우'}의 </span>
+                <span>{study?.studyName || '개발공장'}</span>
+              </div>
+              <div className={styles.buttons}>
+                <button type="button">
+                  오늘의 습관
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="7"
+                    height="13"
+                    viewBox="0 0 7 13"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 1L6 6.5L1 12"
+                      stroke="#818181"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+                <button type="button">
+                  홈
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="7"
+                    height="13"
+                    viewBox="0 0 7 13"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 1L6 6.5L1 12"
+                      stroke="#818181"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
-
-            {/* 오른쪽: 상단 버튼들 */}
-            <div className={styles.rightActions}>
-              <Link to="/workshop" className={styles.topBtn}>
-                오늘의 습관
-              </Link>
-              <Link to="/" className={styles.topBtn}>
-                홈
-              </Link>
+            <div className={styles.time}>
+              <div className={styles.timeText}>현재 시간</div>
+              <div className={styles.timeContainer}>
+                <div className={styles.timeValue}>{currentTime}</div>
+                <Tag
+                  bgColor={'rgba(255,255,255,0.3)'}
+                  fontSize={16}
+                  points={study?.totalPoints ?? 0}
+                  type="total"
+                />
+              </div>
             </div>
           </div>
-
-          {/* ===== 타이머 패널(모양만) ===== */}
-          <div className={styles.timerPanel} role="group" aria-label="오늘의 집중">
-            <p className={styles.timerTitle}>오늘의 집중</p>
-            <div className={styles.timerDisplay} aria-live="polite">
-              25:00
+          <div className={styles.content}>
+            <div className={styles.contentHeader}>
+              <div className={styles.title}>오늘의 집중</div>
             </div>
-            <button type="button" className={styles.startBtn} disabled>
-              Start!
-            </button>
+            <div className={styles.contentBody}>
+              <div className={styles.timerContainer}>
+                <Timer ref={timerRef} />
+              </div>
+            </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </div>
+    </>
   );
 }
+
+export default Focus;

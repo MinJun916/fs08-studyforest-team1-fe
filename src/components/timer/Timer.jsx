@@ -1,19 +1,12 @@
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
-import s from "@/styles/components/timer/Timer.module.scss";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import s from '@/styles/components/timer/Timer.module.scss';
 
 const Timer = forwardRef(function Timer(
   {
-    allowOvertime = true,  // 시간이 지나면 -00:08 등으로 표시
-    defaultMinutes = 25,   // 입력창 기본값
+    allowOvertime = true, // 시간이 지나면 -00:08 등으로 표시
+    defaultMinutes = 25, // 입력창 기본값
   },
-  ref
+  ref,
 ) {
   // UI 단계: setup(입력창) ↔ running(타이머 표시)
   const [started, setStarted] = useState(false);
@@ -32,7 +25,10 @@ const Timer = forwardRef(function Timer(
   const rafRef = useRef(null);
   const durationMsRef = useRef(defaultMinutes * 60 * 1000); // 이번 라운드 총 길이(ms)
 
-  const setIsRunning = (v) => { isRunningRef.current = v; _setIsRunning(v); };
+  const setIsRunning = (v) => {
+    isRunningRef.current = v;
+    _setIsRunning(v);
+  };
 
   // 입력값 변경 시, 아직 시작 전이라면 미리보기 시간도 업데이트
   useEffect(() => {
@@ -113,16 +109,16 @@ const Timer = forwardRef(function Timer(
 
   // 포맷
   const absMs = Math.abs(time);
-  const mm = String(Math.floor(absMs / 60000)).padStart(2, "0");
-  const ss = String(Math.floor((absMs % 60000) / 1000)).padStart(2, "0");
-  const formatted = `${isOvertime ? "-" : ""}${mm}:${ss}`;
+  const mm = String(Math.floor(absMs / 60000)).padStart(2, '0');
+  const ss = String(Math.floor((absMs % 60000) / 1000)).padStart(2, '0');
+  const formatted = `${isOvertime ? '-' : ''}${mm}:${ss}`;
 
-  const stateClass = isOvertime ? s.overtime : isRunning ? s.running : "";
+  const stateClass = isOvertime ? s.overtime : isRunning ? s.running : '';
 
   // 🔸 시작 전: 입력 폼
   if (!started) {
     return (
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <div style={{ marginBottom: 12 }}>
           <label style={{ marginRight: 8 }}>분 설정</label>
           <input
@@ -131,7 +127,7 @@ const Timer = forwardRef(function Timer(
             step={1}
             value={minutesInput}
             onChange={(e) => setMinutesInput(e.target.value)}
-            style={{ width: 80, textAlign: "right" }}
+            style={{ width: 80, textAlign: 'right' }}
           />
         </div>
         <button onClick={internalStart}>Start</button>
