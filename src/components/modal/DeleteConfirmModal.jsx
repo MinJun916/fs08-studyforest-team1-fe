@@ -1,18 +1,15 @@
 import Popup from '@/components/popup/Popup.jsx';
-import styles from '@styles/components/modal/PasswordModal.module.scss';
+import styles from '@styles/components/modal/DeleteConfirmModal.module.scss';
 import { useState } from 'react';
 import Input from '@/components/input/Input.jsx';
 import Button from '@/components/button/Button.jsx';
 
-function PasswordModal({
-  studyName = '스터디 이름',
-  onClose,
-  onClick,
-  btnType = 'modify',
-  errorMessage = null,
-  warningText = '권한이 필요해요!',
-}) {
+function DeleteConfirmModal({ studyName = '스터디 이름', onClose, onConfirm, errorMessage = null }) {
   const [passwordValue, setPasswordValue] = useState('');
+
+  const handleConfirm = () => {
+    onConfirm(passwordValue);
+  };
 
   return (
     <Popup>
@@ -23,18 +20,23 @@ function PasswordModal({
             나가기
           </button>
         </div>
-        <div className={styles.warning}>{warningText}</div>
+        <div className={styles.warning}>삭제하시겠습니까?</div>
+        <div className={styles.description}>
+          스터디를 삭제하면 모든 데이터가 사라집니다.
+          <br />
+          삭제하려면 비밀번호를 입력해주세요.
+        </div>
         <div className={styles.passwordWrapper}>
           <Input type="passwordOnly" onValueChange={(v) => setPasswordValue(v)} />
           {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
-        <Button childrenType={btnType} onClick={() => onClick(passwordValue)} />
-        <button className={styles.exitBtn2} onClick={onClose}>
-          나가기
-        </button>
+        <div className={styles.buttonGroup}>
+          <Button childrenType="cancel" onClick={onClose} />
+          <Button childrenType="confirm" onClick={handleConfirm} />
+        </div>
       </div>
     </Popup>
   );
 }
 
-export default PasswordModal;
+export default DeleteConfirmModal;

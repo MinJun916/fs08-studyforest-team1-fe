@@ -1,10 +1,13 @@
 import styles from '@styles/pages/DetailStudyPage.module.scss';
-import { useEffect, useState, useRef, useCallback, useParams } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '@/lib/axios.js';
 
+import Toast from '@/components/toast/Toast.jsx';
 import Emoji from '@/components/emoji/Emoji';
 import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
+import DeleteConfirmModal from '@/components/modal/DeleteConfirmModal';
 import Header from '@/components/header/Header.jsx';
 
 export default function DetailStudyPage() {
@@ -13,8 +16,13 @@ export default function DetailStudyPage() {
   const [error, setError] = useState(null);
   const [habitsState, setHabitsState] = useState([]);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalStudyName, setModalStudyName] = useState('스터디 이름');
+  const [modalAction, setModalAction] = useState(null); // 'habit' | 'focus' | 'modify'
+  const [modalError, setModalError] = useState(null);
+  const [deleteError, setDeleteError] = useState(null);
   const { id: studyId } = useParams();
+  const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
 
@@ -40,19 +48,88 @@ export default function DetailStudyPage() {
     };
   }, [fetchStudy, studyId]);
 
-  const openPasswordModal = (name) => {
+  const openPasswordModal = (name, action = 'modify') => {
     setModalStudyName(name ?? study?.studyName ?? '스터디 이름');
+    setModalAction(action);
+    setModalError(null);
     setShowPasswordModal(true);
   };
 
   const closePasswordModal = () => {
+    setModalError(null);
     setShowPasswordModal(false);
   };
 
-  const handlePasswordConfirm = () => {
-    // TODO: 실제 권한 확인/이동 로직을 여기에 추가하세요.
-    // 현재는 모달을 닫기만 합니다.
-    setShowPasswordModal(false);
+  const handlePasswordConfirm = async (password) => {
+    setModalError(null);
+    if (!password) {
+      setModalError('비밀번호를 입력해주세요');
+      return;
+    }
+
+    try {
+      const res = await api.get(`/habits/${studyId}/today?password=${password}`);
+      if (res?.data?.success) {
+        // if (modalAction === 'focus') navigate(`/focus/${studyId}`); // 페이지 만들면 아래꺼랑 교체
+        if (modalAction === 'focus') navigate(`/focus`);
+        // else navigate(`/workshop/${studyId}`); // 페이지 만들면 아래꺼랑 교체
+        else navigate(`/workshop`);
+        setShowPasswordModal(false);
+        return;
+      }
+      setModalError('비밀번호가 일치하지 않습니다');
+    } catch (err) {
+      setModalError('비밀번호가 일치하지 않습니다');
+    }
+  };
+
+  const handleShare = () => {
+    const currentUrl = window.location.href;
+    if (navigator.share) {
+      navigator.share({
+        title: study?.studyName || '스터디',
+        text: study?.description || '스터디를 공유합니다',
+        url: currentUrl,
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        alert('링크가 복사되었습니다!');
+      }).catch(() => {
+        alert('링크 복사에 실패했습니다.');
+      });
+    }
+  };
+
+  const openDeleteModal = () => {
+    setDeleteError(null);
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteError(null);
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteConfirm = async (password) => {
+    setDeleteError(null);
+    if (!password) {
+      setDeleteError('비밀번호를 입력해주세요');
+      return;
+    }
+
+    try {
+      const res = await api.delete(`/studies/${studyId}`, {
+        data: { password }
+      });
+      if (res?.data?.success) {
+        alert('스터디가 삭제되었습니다.');
+        navigate('/');
+        return;
+      }
+      setDeleteError('비밀번호가 일치하지 않습니다');
+    } catch (err) {
+      setDeleteError('비밀번호가 일치하지 않습니다');
+    }
   };
 
   const toggleHabit = async (habitId) => {
@@ -82,7 +159,8 @@ export default function DetailStudyPage() {
   ];
 
   const habits =
-    study?.weeklyHabits?.map((h) => ({
+
+    study?.weeklyHabits?.filter((h) => !h.isDeleted).map((h) => ({
       id: h.habitId,
       title: h.habitName,
       records: h.isCompleted,
@@ -117,6 +195,16 @@ export default function DetailStudyPage() {
           studyName={modalStudyName}
           onClose={closePasswordModal}
           onClick={handlePasswordConfirm}
+          btnType={modalAction === 'habit' ? 'habit' : modalAction === 'focus' ? 'focus' : 'modify'}
+        />
+        {modalError&&<div className={styles.toast}><Toast type={'study'} toastStudyText={'🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.'}/></div>}
+      </div>
+      <div className={`${styles.overlay} ${showDeleteModal ? styles.active : ''}`}>
+        <DeleteConfirmModal
+          studyName={study?.studyName || '스터디 이름'}
+          onClose={closeDeleteModal}
+          onConfirm={handleDeleteConfirm}
+          errorMessage={deleteError}
         />
       </div>
       <div className={styles.root}>
@@ -124,11 +212,11 @@ export default function DetailStudyPage() {
         <div className={styles.header}>
           <Emoji studyId={studyId} />
           <div className={styles.adminButtons}>
-            <button type="button">공유하기</button>
-            <button type="button" onClick={() => openPasswordModal(study?.studyName)}>
+            <button type="button" onClick={handleShare}>공유하기</button>
+            <button type="button" onClick={() => openPasswordModal(study?.studyName, 'modify')}>
               수정하기
             </button>
-            <button type="button">스터디 삭제하기</button>
+            <button type="button" onClick={openDeleteModal}>스터디 삭제하기</button>
           </div>
         </div>
 
@@ -137,11 +225,17 @@ export default function DetailStudyPage() {
           <div className={styles.top}>
             <h1>{study?.studyName ?? '연우의 개발 공장'}</h1>
             <div className={styles.userButtons}>
-              <button type="button" onClick={() => openPasswordModal(study?.studyName)}>
+              <button type="button" onClick={() => openPasswordModal(study?.studyName, 'habit')}>
                 오늘의 습관
+                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
+                  <path d="M1 1L6 6.5L1 12" stroke="#818181" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
-              <button type="button" onClick={() => openPasswordModal(study?.studyName)}>
+              <button type="button" onClick={() => openPasswordModal(study?.studyName, 'focus')}>
                 오늘의 집중
+                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
+                  <path d="M1 1L6 6.5L1 12" stroke="#818181" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </button>
             </div>
           </div>
@@ -204,7 +298,6 @@ export default function DetailStudyPage() {
                       {habit.records.map((ok, idx) => (
                         <td key={idx} aria-label={`${habit.title}-${days[idx]}`}>
                           <div className={styles.pawCell}>
-                            {/* simple single-path paw SVG; fill switches based on record */}
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="36"
