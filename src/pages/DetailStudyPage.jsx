@@ -6,6 +6,7 @@ import Emoji from '@/components/emoji/Emoji';
 import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
 import Header from '@/components/header/Header.jsx';
+import { addRecentStudy } from '@/lib/recentStudies';
 
 export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);
@@ -23,7 +24,14 @@ export default function DetailStudyPage() {
     setError(null);
     try {
       const res = await api.get(`/studies/${studyId}`);
-      if (isMountedRef.current) setStudy(res.data?.data ?? null);
+      if (isMountedRef.current) {
+        setStudy(res.data.data ?? null);
+        addRecentStudy({
+          id: res.data.data.id,
+          name: res.data.data.studyName,
+          cover: null,
+        });
+      }
     } catch (err) {
       if (isMountedRef.current) setError(err);
     } finally {

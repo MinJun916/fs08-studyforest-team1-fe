@@ -10,7 +10,7 @@ function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
   const initialStudy = {
     studyName: '',
     createdAt: '',
-    point: 0,
+    totalPoints: 0,
     backgroundImg: '',
     description: '',
     nickName: '',
@@ -24,7 +24,6 @@ function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
     try {
       const res = await api.get(`/studies/${studyId}`);
       setStudy(res.data.data);
-      console.log(res.data.data);
     } catch (error) {
       console.error(error);
       setStudy(initialStudy);
@@ -59,14 +58,14 @@ function StudyCard({ studyId = 'b6d43784-2ca5-4102-9cc9-3005056d2506' }) {
   const imgTagStyleMap = {
     bgColor: 'rgba(0, 0, 0, 0.50)',
     fontSize: 12,
-    points: study.point,
+    points: study.totalPoints,
     fontColor: '#fff',
   };
 
   const colorTagStyleMap = {
     bgColor: 'rgba(255, 255, 255, 0.30)',
     fontSize: 12,
-    points: study.point,
+    points: study.totalPoints,
     fontColor: '#414141',
   };
 

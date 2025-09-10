@@ -12,6 +12,11 @@
 
   display: flex;
 
+  @media (max-width: v.$breakpoint-mobile) {
+    width: 240px;
+    height: 180px;
+  }
+
   .nickName {
     color: v.$white;
   }
@@ -63,6 +68,10 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
+
+  @media (max-width: v.$breakpoint-mobile) {
+    font-size: 14px;
+  }
 }
 
 .green {
