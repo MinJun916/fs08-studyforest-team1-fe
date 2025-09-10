@@ -8,17 +8,13 @@ import Focus from '@pages/Focus.jsx';
 import NotFoundPage from '@pages/NotFoundPage.jsx';
 
 /* 테스트 페이지 */
-
-import ButtonsDemo from '@pages/ButtonsDemo.jsx';
 import TimerDemo from '@/pages/TimerDemo.jsx';
-
 
 import Emoji from '@/components/emoji/emoji';
 import DropDown from '@/components/dropdown/dropdown';
 import Tag from '@/components/tag/Tag.jsx';
 
 /* 리팩토링 페이지 */
-// import Sticker from '@/components/sticker/Sticker';
 
 export default function App() {
   return (
@@ -37,28 +33,8 @@ export default function App() {
         <Route path="workshop" element={<Workshop />} />
         <Route path="focus" element={<Focus />} />
 
-        {/* 테스트 페이지 */}
-        <Route path="test">
-
-          <Route path="buttons" element={<ButtonsDemo />} />
-          <Route path="timer" element={<TimerDemo />} />
-
-          <Route path="emoji" element={<Emoji studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4" />} />
-          <Route path="dropdown" element={<DropDown />} />
-          <Route
-            path="tag"
-            element={
-              <Tag
-                bgColor="rgba(0,0,0,0.5)"
-                fontSize={12}
-                studyId="6b78c2cd-cc98-44ea-810e-2c68d46ab6a4"
-              />
-            }
-          />
-        </Route>
-
         {/* 리팩토링 임시 */}
-        <Route path="refactor" element={<CreateStudyPage />} />
+        <Route path="refactor" element={<Home />} />
 
         {/* 404 */}
         <Route path="*" element={<NotFoundPage />} />
