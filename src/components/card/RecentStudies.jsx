@@ -1,4 +1,4 @@
-import styles from '@styles/components/organisms/RecentStudies.module.scss';
+import styles from '@styles/components/card/RecentStudies.module.scss';
 import { useState, useEffect } from 'react';
 import { getRecentStudies } from '@/lib/recentStudies';
 import StudyCard from '@/components/card/StudyCard';
@@ -6,7 +6,7 @@ import StudyCard from '@/components/card/StudyCard';
 function RecentStudies({ onDataChange }) {
   const [items, setItems] = useState([]);
 
-  // 모든 최근 스터디를 로드 (최대 3개)
+  // 최근 조회한 스터디를 localStorage에서 직접 가져오기
   useEffect(() => {
     const recentStudies = getRecentStudies();
     const limitedStudies = recentStudies.slice(0, 3); // 최대 3개
@@ -25,13 +25,18 @@ function RecentStudies({ onDataChange }) {
   return (
     <div className={styles.recentStudies}>
       <div className={styles.studyCardContainer}>
-        {items.map((item) => {
-          return (
-            <div key={item.id} className={styles.studyCard}>
-              <StudyCard studyId={item.id} />
-            </div>
-          );
-        })}
+        {items.map((item) => (
+          <StudyCard
+            key={item.id}
+            studyId={item.id}
+            nickName={item.nickName}
+            studyName={item.studyName}
+            description={item.description}
+            backgroundImg={item.backgroundImg}
+            totalPoints={item.totalPoints}
+            createdAt={item.createdAt}
+          />
+        ))}
       </div>
     </div>
   );
