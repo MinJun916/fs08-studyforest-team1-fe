@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '@components/header/Header';
 import HabitModal from '@components/modal/HabitModal';
 import Tag from '@components/tag/Tag';
@@ -11,7 +11,7 @@ import dayjs from 'dayjs';
 function Habit() {
   const { studyId } = useParams();
   const location = useLocation();
-
+  const navigate = useNavigate();
   const [study, setStudy] = useState(null);
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -77,8 +77,13 @@ function Habit() {
 
   useEffect(() => {
     fetchStudy();
-    fetchHabits();
   }, [studyId]);
+
+  useEffect(() => {
+    if (password) {
+      fetchHabits();
+    }
+  }, [studyId, password]);
 
   // 실시간 시간 업데이트 (1분마다)
   useEffect(() => {
@@ -217,7 +222,10 @@ function Habit() {
                 <span>{study?.studyName || '개발공장'}</span>
               </div>
               <div className={styles.buttons}>
-                <button type="button">
+                <button
+                  type="button"
+                  onClick={() => navigate(`/focus/${studyId}`, { state: { password } })}
+                >
                   오늘의 집중
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +243,7 @@ function Habit() {
                     />
                   </svg>
                 </button>
-                <button type="button">
+                <button type="button" onClick={() => navigate('/')}>
                   홈
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
