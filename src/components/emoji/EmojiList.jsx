@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '@/styles/components/emoji/Emoji.module.scss';
 
-function EmojiList({ 
-  emojis = [], 
-  onSelect,
-  maxDisplayItems = 3
-}) {
+function EmojiList({ emojis = [], onSelect, maxDisplayItems = 3 }) {
   const [items, setItems] = useState([]);
 
   const sortItems = (arr) => {
@@ -23,7 +19,7 @@ function EmojiList({
     if (emojis && emojis.length > 0) {
       const mapped = emojis.map((it) => ({
         id: it.id,
-        emoji: it.emojiType || '', 
+        emoji: it.emojiChar || it.emoji || '',
         count: it.count || 0,
         emojiType: it.emojiType || '',
         studyId: it.studyId,

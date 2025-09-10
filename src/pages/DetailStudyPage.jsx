@@ -83,9 +83,9 @@ export default function DetailStudyPage() {
       const res = await api.get(`/habits/${studyId}/today?password=${password}`);
       if (res?.data?.success) {
         // if (modalAction === 'focus') navigate(`/focus/${studyId}`); // 페이지 만들면 아래꺼랑 교체
-        if (modalAction === 'focus') navigate(`/focus`);
+        if (modalAction === 'focus') navigate(`/focus/${studyId}`);
         // else navigate(`/workshop/${studyId}`); // 페이지 만들면 아래꺼랑 교체
-        else navigate(`/workshop`);
+        else navigate(`/habit/${studyId}`);
         setShowPasswordModal(false);
         return;
       }

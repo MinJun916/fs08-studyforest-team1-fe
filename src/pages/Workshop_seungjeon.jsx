@@ -1,7 +1,7 @@
 // src/pages/Workshop.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '@/styles/pages/Workshop.module.scss';
+import styles from '@/styles/pages/Workshop_seungjeon.module.scss';
 
 const INITIAL = [
   { id: 1, text: '미라클모닝 6시 기상', completed: true },
