@@ -1,0 +1,234 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+@use 'sass:color';
+
+.habitWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 40px;
+}
+
+.habitPage {
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  background: v.$white;
+
+  width: 1248px;
+  height: 863px;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.time {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.titleAndButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.title {
+  span {
+    color: v.$black;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+}
+
+.time {
+  .timeText {
+    color: v.$gray81;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .timeValue {
+    width: fit-content;
+    height: 35px;
+    display: flex;
+    padding: 8px 12px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+
+    color: v.$black;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: v.$gray81;
+    background: white;
+    border: 1px solid v.$grayDD;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background: v.$grayDD;
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
+}
+
+.contentHeader {
+  width: 100%;
+  padding: 0 361px 0 505px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    color: v.$black;
+    text-align: right;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
+
+  .modify {
+    @include m.button-reset;
+    color: v.$gray81;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}
+
+.contentBody {
+  width: 100%;
+  height: 100%;
+  padding: 0 360px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.contentBody.nothingHabit {
+  justify-content: center;
+  align-items: center;
+}
+
+.habitName {
+  @include m.button-reset;
+  display: flex;
+  width: 400px;
+  height: 54px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 20px;
+  background: v.$brand;
+  transition: all 0.3s ease;
+
+  color: v.$white;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+
+  &:hover {
+    background: color.adjust(v.$brand, $lightness: -10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &.incompleteHabit {
+    background: v.$grayEE;
+    color: v.$gray81;
+    transform: scale(1.05);
+  }
+
+  &.completeHabit {
+    background: v.$brand;
+    color: v.$white;
+    transform: scale(1.02);
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+
+    &:hover {
+      background: color.adjust(v.$brand, $lightness: -10%);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+  }
+}
+
+.habitList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nothingHabit {
+  color: v.$gray81;
+  text-align: center;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -64,7 +64,9 @@ export default function Button({ childrenType, disabled = false, type = 'button'
 
   const className = clsx(
     styles[childrenType],
-    (childrenType === 'confirm' || childrenType === 'cancel') ? styles.confirmTemplate : styles.template,
+    childrenType === 'confirm' || childrenType === 'cancel'
+      ? styles.confirmTemplate
+      : styles.template,
     disabled && styles.isDisabled,
     toggled && styles.isToggled,
   );

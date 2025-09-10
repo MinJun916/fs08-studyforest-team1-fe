@@ -99,7 +99,7 @@ function Home() {
 
   useEffect(() => {
     fetchAllStudies();
-  }, []);
+  }, [sortOrder]);
 
   useEffect(() => {
     if (allStudies.length > 0) {

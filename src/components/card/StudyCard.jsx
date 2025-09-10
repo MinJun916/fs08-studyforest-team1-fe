@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import Emoji from '@components/emoji/emoji';
+import Emoji from '@components/emoji/Emoji';
 import Tag from '@components/tag/Tag.jsx';
 import dDayCounter from '@/lib/dDayCounter.js';
 import styles from '@styles/components/card/StudyCard.module.scss';

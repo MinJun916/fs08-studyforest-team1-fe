@@ -4,7 +4,12 @@ import { useState } from 'react';
 import Input from '@/components/input/Input.jsx';
 import Button from '@/components/button/Button.jsx';
 
-function DeleteConfirmModal({ studyName = '스터디 이름', onClose, onConfirm, errorMessage = null }) {
+function DeleteConfirmModal({
+  studyName = '스터디 이름',
+  onClose,
+  onConfirm,
+  errorMessage = null,
+}) {
   const [passwordValue, setPasswordValue] = useState('');
 
   const handleConfirm = () => {

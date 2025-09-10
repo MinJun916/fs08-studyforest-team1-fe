@@ -96,6 +96,12 @@ export default function CreateStudyPage() {
     if (isSubmitting) return;
 
     if (!form.studyName.trim() || !form.nickName.trim()) {
+      alert('닉네임과 스터디 이름을 입력해주세요.');
+      return;
+    }
+
+    if (!form.password.trim()) {
+      alert('비밀번호를 입력해주세요.');
       return;
     }
 
@@ -105,6 +111,7 @@ export default function CreateStudyPage() {
       navigate(`/study/${result.data.data.id}`);
     } catch (error) {
       console.error('스터디 생성 실패', error);
+      alert('스터디 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
     }

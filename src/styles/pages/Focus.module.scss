@@ -1,141 +1,152 @@
-.page {
-  min-height: 100vh;
-  background: #f5f3ee; /* 아이보리 톤 */
-  display: flex;
-  flex-direction: column;
-}
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
-.main {
-  display: flex;
-  justify-content: center;
-  padding: 24px;
-}
-
-.card {
+.focusWrapper {
   width: 100%;
-  max-width: 1000px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow:
-    0 1px 0 rgba(0, 0, 0, 0.06),
-    0 6px 24px rgba(0, 0, 0, 0.05);
-  padding: 24px;
-}
-
-/* ===== 상단 레이아웃 ===== */
-.cardTop {
+  height: 100%;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40px;
 }
 
-.leftGroup {
+.focusPage {
+  display: flex;
+  padding: 40px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  background: v.$white;
+  width: 1248px;
+  height: 863px;
+}
+
+.header {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 16px;
 }
 
-.studyTitle {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 800;
-  color: #333;
-}
-
-.subText {
-  margin: 0;
-  font-size: 13px;
-  color: #8a8a8a;
-}
-
-.pointsPill {
-  display: inline-flex;
+.titleAndButtons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  background: #f0f5ee;
-  border-radius: 999px;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  font-size: 13px;
-  font-weight: 700;
-  color: #2f4f2f;
 }
 
-.leaf {
-  font-size: 14px;
+.title {
+  span {
+    color: v.$black;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+  }
 }
 
-.rightActions {
+.buttons {
   display: flex;
   gap: 8px;
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: v.$gray81;
+    background: white;
+    border: 1px solid v.$grayDD;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    &:hover {
+      background: v.$grayDD;
+    }
+  }
 }
 
-.topBtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 36px;
-  padding: 0 14px;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #fff;
-  font-weight: 600;
-  font-size: 14px;
-  color: #333;
-  text-decoration: none;
-}
-
-/* ===== 타이머 패널 ===== */
-.timerPanel {
-  margin-top: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  padding: 40px 16px;
+.time {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
+  .timeText {
+    color: v.$gray81;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+
+.timeContainer {
+  display: flex;
   align-items: center;
-  background: #fff;
+  gap: 12px;
 }
 
-.timerTitle {
-  margin: 0 0 16px 0;
-  font-weight: 700;
-  color: #555;
+.timeValue {
+  width: fit-content;
+  height: 35px;
+  display: flex;
+  padding: 8px 12px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+  color: v.$black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
-.timerDisplay {
-  font-size: 112px;
-  line-height: 1;
-  font-weight: 800;
-  color: #333;
-  letter-spacing: 2px;
-  margin: 12px 0 24px 0;
-  text-align: center;
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 40px 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  border-radius: 20px;
+  border: 1px solid v.$grayDD;
+  background: v.$white;
 }
 
-.startBtn {
-  min-width: 200px;
-  height: 48px;
-  border-radius: 999px;
-  font-size: 18px;
-  font-weight: 800;
-  background: #8dc28d;
-  color: #fff;
-  border: none;
-  cursor: default; /* 기능 없음 */
-}
+.contentHeader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-/* ===== 반응형 ===== */
-@media (max-width: 640px) {
-  .card {
-    padding: 16px;
+  .title {
+    color: v.$black;
+    text-align: center;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
   }
-  .timerDisplay {
-    font-size: 72px;
-  }
-  .rightActions {
-    gap: 6px;
-  }
+}
+
+.contentBody {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }

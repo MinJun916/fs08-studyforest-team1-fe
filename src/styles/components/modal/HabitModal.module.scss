@@ -1,24 +1,14 @@
 @use '@/styles/variables' as v;
 
-.modal {
+.title {
   width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  align-items: center;
-
-  .title {
-    width: 100%;
-
-    color: v.$black_text;
-    text-align: center;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-  }
+  color: v.$black_text;
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-bottom: 24px;
 }
 
 .habitContent {
@@ -54,9 +44,7 @@
 }
 
 @media (max-width: v.$breakpoint-mobile) {
-  .modal {
-    .title {
-      font-size: 20px;
-    }
+  .title {
+    font-size: 20px;
   }
 }
