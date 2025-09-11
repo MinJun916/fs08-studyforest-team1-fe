@@ -81,7 +81,7 @@ $maxw: 1920px;
 /* 태블릿 */
 @media (max-width: v.$breakpoint-tablet) {
   .headerInner {
-    padding: 20px 24px;
+    padding: 20px 16px;
   }
 
   .createStudyBtn {
@@ -93,7 +93,7 @@ $maxw: 1920px;
 /* 휴대폰 */
 @media (max-width: v.$breakpoint-mobile) {
   .headerInner {
-    padding: 30px 16px 32px 16px;
+    padding: 30px 12px 32px 12px;
   }
 
   .brandImg {

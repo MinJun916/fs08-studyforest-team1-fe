@@ -3,10 +3,10 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '@components/header/Header';
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
+import Toast from '@/components/toast/Toast';
 import styles from '@/styles/pages/Focus.module.scss';
 import api from '@/lib/axios';
-import { kstTimeNow } from '@/lib/dayjs.js';
-import dayjs from 'dayjs';
+import ic_timer from '@/assets/icons/ic_timer.svg';
 
 function Focus() {
   const { studyId } = useParams();
@@ -16,24 +16,32 @@ function Focus() {
 
   const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [currentTime, setCurrentTime] = useState(kstTimeNow());
-  const [focusPoints, setFocusPoints] = useState(0); // 포커스로 획득한 포인트
-  const [apiError, setApiError] = useState(null); // API 에러 메시지
   const [timerMinutes, setTimerMinutes] = useState(null); // 타이머 설정 시간
+  const [showPauseToast, setShowPauseToast] = useState(false); // 일시정지 토스트 표시 여부
 
   // DetailStudyPage에서 전달받은 비밀번호 (Habit 페이지로 이동할 때 필요)
   const password = location.state?.password;
 
+  // 화살표 아이콘 컴포넌트
+  const ArrowIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="13" viewBox="0 0 7 13" fill="none">
+      <path
+        d="M1 1L6 6.5L1 12"
+        stroke="#818181"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   const fetchStudy = async () => {
     setLoading(true);
-    setError(null);
     try {
       const res = await api.get(`/studies/${studyId}`);
-      const studyData = res.data.data;
-      setStudy(studyData);
+      setStudy(res.data.data);
     } catch (err) {
-      setError(err);
+      console.error('스터디 데이터 로딩 실패:', err);
     } finally {
       setLoading(false);
     }
@@ -43,69 +51,45 @@ function Focus() {
     fetchStudy();
   }, [studyId]);
 
-  // 실시간 시간 업데이트 (1분마다)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const newTime = kstTimeNow();
-      setCurrentTime(newTime);
-    }, 60000); // 60초 = 1분
-
-    // 컴포넌트 언마운트 시 타이머 정리
-    return () => clearInterval(timer);
-  }, []);
-
   // 타이머 시작 시 설정 시간 저장
   const handleTimerStart = (minutes) => {
     setTimerMinutes(minutes);
+    setShowPauseToast(false); // 시작 시 토스트 숨김
+  };
+
+  // 타이머 일시정지 시 토스트 표시
+  const handleTimerPause = () => {
+    setShowPauseToast(true);
+
+    // 3초 후 토스트 자동 숨김
+    setTimeout(() => {
+      setShowPauseToast(false);
+    }, 3000);
+  };
+
+  // 타이머 재개 시 토스트 숨김
+  const handleTimerResume = () => {
+    setShowPauseToast(false);
   };
 
   // 타이머 완료 시 API 호출 및 포인트 업데이트
   const handleTimerComplete = async (totalMinutes) => {
     try {
       setLoading(true);
-      setApiError(null); // 이전 에러 초기화
-
-      // API 요청
+      const focusTimeInMinutes = Math.floor(totalMinutes);
       const response = await api.post(
-        `/focusSuccess?studyId=${studyId}&focusTime=${totalMinutes}&success=true`,
+        `/focusSuccess?studyId=${studyId}&focusTime=${focusTimeInMinutes}&success=true`,
       );
 
       if (response.data.success) {
-        const { focusTime, focusPoint } = response.data;
-        setFocusPoints(focusPoint.point);
-
-        // 스터디 총 포인트 업데이트
-        setStudy((prev) => ({
-          ...prev,
-          totalPoints: (prev?.totalPoints || 0) + focusPoint.point,
-        }));
-
-        // 성공 메시지 (선택사항)
-        console.log(`포인트 ${focusPoint.point}점을 획득했습니다!`);
-      } else {
-        throw new Error('API 응답이 실패했습니다.');
+        await fetchStudy(); // 백엔드에서 업데이트된 스터디 데이터 다시 가져오기
+        console.log(`포인트 ${response.data.focusPoint.point}점을 획득했습니다!`);
       }
     } catch (err) {
       console.error('타이머 완료 API 호출 실패:', err);
-      setError(err);
-
-      // 사용자 친화적인 에러 메시지
-      const errorMessage =
-        err.response?.data?.message ||
-        err.message ||
-        '포인트 저장 중 오류가 발생했습니다. 다시 시도해주세요.';
-      setApiError(errorMessage);
-
-      // 임시로 포인트 계산 (API 실패 시 대안)
-      const calculatedPoints = Math.floor(totalMinutes / 25) * 10;
-      setFocusPoints(calculatedPoints);
-      setStudy((prev) => ({
-        ...prev,
-        totalPoints: (prev?.totalPoints || 0) + calculatedPoints,
-      }));
     } finally {
       setLoading(false);
-      setTimerMinutes(null); // 타이머 완료 시 설정 시간 초기화
+      setTimerMinutes(null);
     }
   };
 
@@ -117,8 +101,8 @@ function Focus() {
           <div className={styles.header}>
             <div className={styles.titleAndButtons}>
               <div className={styles.title}>
-                <span>{study?.nickName || '연우'}의 </span>
-                <span>{study?.studyName || '개발공장'}</span>
+                <span>{study?.nickName || ''}의 </span>
+                <span>{study?.studyName || ''}</span>
               </div>
               <div className={styles.buttons}>
                 <button
@@ -126,39 +110,14 @@ function Focus() {
                   onClick={() => navigate(`/habit/${studyId}`, { state: { password } })}
                 >
                   오늘의 습관
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="7"
-                    height="13"
-                    viewBox="0 0 7 13"
-                    fill="none"
-                  >
-                    <path
-                      d="M1 1L6 6.5L1 12"
-                      stroke="#818181"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <ArrowIcon />
                 </button>
-                <button type="button" onClick={() => navigate('/')}>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/study/${studyId}`, { state: { password } })}
+                >
                   홈
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="7"
-                    height="13"
-                    viewBox="0 0 7 13"
-                    fill="none"
-                  >
-                    <path
-                      d="M1 1L6 6.5L1 12"
-                      stroke="#818181"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <ArrowIcon />
                 </button>
               </div>
             </div>
@@ -168,7 +127,7 @@ function Focus() {
                 <Tag
                   bgColor={'rgba(255,255,255,0.3)'}
                   fontSize={16}
-                  points={focusPoints}
+                  points={study?.totalPoints || 0}
                   type="add"
                 />
               </div>
@@ -177,7 +136,15 @@ function Focus() {
           <div className={styles.content}>
             <div className={styles.contentHeader}>
               <div className={styles.title}>오늘의 집중</div>
-              {timerMinutes && <div>{timerMinutes}분 타이머</div>}
+              {timerMinutes && (
+                <div className={styles.timerMinutes}>
+                  <img src={ic_timer} alt="timer" />
+                  <span>
+                    {String(Math.floor(timerMinutes)).padStart(2, '0')}:
+                    {String(Math.floor((timerMinutes % 1) * 60)).padStart(2, '0')}
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.contentBody}>
               <div className={styles.timerContainer}>
@@ -185,30 +152,16 @@ function Focus() {
                   ref={timerRef}
                   onTimerComplete={handleTimerComplete}
                   onTimerStart={handleTimerStart}
+                  onTimerPause={handleTimerPause}
+                  onTimerResume={handleTimerResume}
                   disabled={loading}
                 />
-                {loading && (
-                  <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                    포인트를 저장하는 중...
-                  </div>
-                )}
-                {apiError && (
-                  <div
-                    style={{
-                      marginTop: '20px',
-                      textAlign: 'center',
-                      color: '#f50e0e',
-                      fontSize: '14px',
-                    }}
-                  >
-                    {apiError}
-                  </div>
-                )}
               </div>
             </div>
           </div>
         </div>
       </div>
+      {showPauseToast && <Toast type="warning" />}
     </>
   );
 }

@@ -8,12 +8,31 @@
 }
 
 .toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   display: inline-flex;
-  padding: 14px 18px;
+  padding: 16px 24px;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  border-radius: 12px;
+  border-radius: 50px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: slideUp 0.3s ease-out;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
 }
 
 .toast_point {
@@ -21,7 +40,9 @@
 }
 
 .toast_warning {
-  background: v.$pink;
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
 }
 
 .toast_study {
@@ -37,11 +58,12 @@
 }
 
 .text_warning {
-  color: v.$red;
+  color: #ffffff;
   font-size: 16px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: normal;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .text_study {
@@ -53,6 +75,14 @@
 }
 
 @media (max-width: 768px) {
+  .toast {
+    bottom: 20px;
+    padding: 14px 20px;
+    margin: 0 16px;
+    max-width: calc(100vw - 32px);
+    border-radius: 40px;
+  }
+
   .text_point {
     font-size: 14px;
   }
