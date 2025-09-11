@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Picker from 'emoji-picker-react';
-import axios from 'axios';
+import api from '@/lib/axios';
+import Spinner from '@/components/spinner/Spinner';
 import styles from '@/styles/components/emoji/Emoji.module.scss';
 
 function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
-  const host = 'https://studyforest-n1at.onrender.com';
   const [open, setOpen] = useState(false);
   const [items, setItems] = useState([]); // { emoji: '😀', count: 1, id, emojiType }
+  const [loading, setLoading] = useState(false);
+  const [emojiLoading, setEmojiLoading] = useState({});
   const rootRef = useRef(null);
 
   useEffect(() => {
@@ -38,11 +40,12 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
 
   // fetch list from server
   useEffect(() => {
-    let url = `${host}/emojis?offset=0&limit=10`;
-    if (studyId) url = `${host}/emojis?studyId=${studyId}&order=count&offset=0&limit=10`;
+    let url = `/emojis?offset=0&limit=10`;
+    if (studyId) url = `/emojis?studyId=${studyId}&order=count&offset=0&limit=10`;
     let cancelled = false;
 
-    axios
+    setLoading(true);
+    api
       .get(url)
       .then((res) => {
         if (cancelled) return;
@@ -58,6 +61,9 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
       .catch((err) => {
         // non-blocking: keep local items
         console.warn('failed to fetch emojis', err?.message || err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
 
     return () => {
@@ -70,9 +76,10 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
     if (!emojiChar) return;
 
     const emojiType = emojiToType(emojiChar);
+    setEmojiLoading((prev) => ({ ...prev, [emojiChar]: true }));
 
-    axios
-      .post(`${host}/emojis`, { studyId, emojiType })
+    api
+      .post(`/emojis`, { studyId, emojiType })
       .then((res) => {
         const data = res?.data?.data ?? [];
         const mapped = data.map((it) => ({
@@ -95,7 +102,10 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
         });
         console.warn('failed to post emoji', err?.message || err);
       })
-      .finally(() => setOpen(false));
+      .finally(() => {
+        setEmojiLoading((prev) => ({ ...prev, [emojiChar]: false }));
+        setOpen(false);
+      });
 
     if (typeof onSelect === 'function') onSelect(emojiChar);
   };
@@ -103,9 +113,10 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
   const handleItemClick = (emojiChar) => {
     if (!emojiChar) return;
     const emojiType = emojiToType(emojiChar);
+    setEmojiLoading((prev) => ({ ...prev, [emojiChar]: true }));
 
-    axios
-      .post(`${host}/emojis`, { studyId, emojiType })
+    api
+      .post(`/emojis`, { studyId, emojiType })
       .then((res) => {
         const data = res?.data?.data ?? [];
         const mapped = data.map((it) => ({
@@ -127,6 +138,9 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
           return sortItems([...prev, { emoji: emojiChar, count: 1, emojiType }]);
         });
         console.warn('failed to post emoji', err?.message || err);
+      })
+      .finally(() => {
+        setEmojiLoading((prev) => ({ ...prev, [emojiChar]: false }));
       });
 
     if (typeof onSelect === 'function') onSelect(emojiChar);
@@ -134,27 +148,38 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
 
   return (
     <div ref={rootRef} className={styles.emojiBox}>
-      {items.length > 0 && (
-        <div className={styles.list}>
-          {items.slice(0, 3).map((it, i) => (
-            <div
-              key={it.emoji + i}
-              className={styles.item}
-              role="button"
-              tabIndex={0}
-              onClick={() => handleItemClick(it.emoji)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleItemClick(it.emoji);
-                }
-              }}
-            >
-              <span className={styles.itemEmoji}>{it.emoji}</span>
-              <span className={styles.itemCount}>{it.count}</span>
-            </div>
-          ))}
-        </div>
+      {loading ? (
+        <Spinner loading={loading} size={12} />
+      ) : (
+        items.length > 0 && (
+          <div className={styles.list}>
+            {items.slice(0, 3).map((it, i) => (
+              <div
+                key={it.emoji + i}
+                className={styles.item}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleItemClick(it.emoji)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleItemClick(it.emoji);
+                  }
+                }}
+                style={{ opacity: emojiLoading[it.emoji] ? 0.6 : 1 }}
+              >
+                {emojiLoading[it.emoji] ? (
+                  <Spinner loading={true} size={10} />
+                ) : (
+                  <>
+                    <span className={styles.itemEmoji}>{it.emoji}</span>
+                    <span className={styles.itemCount}>{it.count}</span>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        )
       )}
       <div className={styles.emojiAdd}>
         <button
@@ -211,9 +236,16 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
                         handleItemClick(it.emoji);
                       }
                     }}
+                    style={{ opacity: emojiLoading[it.emoji] ? 0.6 : 1 }}
                   >
-                    <span className={styles.itemEmoji}>{it.emoji}</span>
-                    <span className={styles.itemCount}>{it.count}</span>
+                    {emojiLoading[it.emoji] ? (
+                      <Spinner loading={true} size={10} />
+                    ) : (
+                      <>
+                        <span className={styles.itemEmoji}>{it.emoji}</span>
+                        <span className={styles.itemCount}>{it.count}</span>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>

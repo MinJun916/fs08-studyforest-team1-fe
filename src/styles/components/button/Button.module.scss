@@ -1,4 +1,5 @@
 @use '@styles/variables' as v;
+@use '@styles/mixin' as m;
 
 // ===== 색상 변수 =====
 $primary-green: #99c08e;
@@ -92,7 +93,7 @@ $gray-cancel: #ddd;
   // flex: 1; // 부모 컨테이너에서 사용 가능한 공간을 균등하게 차지
   min-width: 0; // 최소 너비 제한 제거
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     height: 58px;
     font-size: 18px;
     padding-bottom: 0.007px;
@@ -118,7 +119,7 @@ $gray-cancel: #ddd;
   @include button-size(64px, 64px);
   padding: 0;
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     @include button-size(48px, 48px);
 
     .childrenIcon {
@@ -143,6 +144,35 @@ $gray-cancel: #ddd;
 .start,
 .stop {
   @include green-button(false);
+}
+
+.startColored {
+  @include button-base;
+  background: $primary-green;
+  border-radius: 50px;
+  &:hover {
+    background: $primary-green-hover;
+  }
+
+  .btnText {
+    font-family: 'Pretendard';
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  @include m.mobile {
+    @include button-size(140px, 48px);
+
+    .btnText {
+      font-size: 18px;
+    }
+
+    .inlineIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 
 .cancel {
@@ -192,7 +222,7 @@ $gray-cancel: #ddd;
     font-weight: 800;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     @include button-size(140px, 48px);
 
     .btnText {
@@ -216,7 +246,7 @@ $gray-cancel: #ddd;
     font-weight: 800;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     @include button-size(140px, 48px);
 
     .btnText {
@@ -231,9 +261,8 @@ $gray-cancel: #ddd;
 }
 
 .confirm,
-.cancel,
-.completeModify {
-  @media (max-width: v.$breakpoint-mobile) {
+.cancel {
+  @include m.mobile {
     @include button-size(140px);
   }
 }

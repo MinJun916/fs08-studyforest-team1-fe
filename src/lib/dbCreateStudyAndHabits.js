@@ -1,13 +1,5 @@
 // 실행 맥락: 프론트(React/Vite)나 간단한 node 스크립트 어디서든 동작
-// axios 인스턴스가 없다면 아래처럼 최소 설정으로 만들어도 됨.
-import axios from 'axios';
-
-// Vite면 import.meta.env.VITE_API_BASE_URL 써도 됨.
-const api = axios.create({
-  baseURL: 'https://studyforest-n1at.onrender.com', // 필요시 .env로 분리
-  headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-  timeout: 10000,
-});
+import api from '@/lib/axios';
 
 async function createStudyAndHabits() {
   // 1) 스터디 생성 (이름은 내가 지어줄게)

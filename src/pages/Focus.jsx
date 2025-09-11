@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import Header from '@components/header/Header';
+import api from '@/lib/axios';
+
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
 import Toast from '@/components/toast/Toast';
+import Spinner from '@/components/spinner/Spinner';
+
 import styles from '@/styles/pages/Focus.module.scss';
-import api from '@/lib/axios';
 import ic_timer from '@/assets/icons/ic_timer.svg';
 
 function Focus() {
@@ -16,8 +18,10 @@ function Focus() {
 
   const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [timerCompleteLoading, setTimerCompleteLoading] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(null); // 타이머 설정 시간
   const [showPauseToast, setShowPauseToast] = useState(false); // 일시정지 토스트 표시 여부
+  const [getFocusPoint, setGetFocusPoint] = useState(null); // 타이머 완료 시 얻는 포인트 값
 
   // DetailStudyPage에서 전달받은 비밀번호 (Habit 페이지로 이동할 때 필요)
   const password = location.state?.password;
@@ -75,27 +79,27 @@ function Focus() {
   // 타이머 완료 시 API 호출 및 포인트 업데이트
   const handleTimerComplete = async (totalMinutes) => {
     try {
-      setLoading(true);
-      const focusTimeInMinutes = Math.floor(totalMinutes);
+      setTimerCompleteLoading(true);
+      const focusTimeInSeconds = Math.floor(totalMinutes * 60);
       const response = await api.post(
-        `/focusSuccess?studyId=${studyId}&focusTime=${focusTimeInMinutes}&success=true`,
+        `/focusSuccess?studyId=${studyId}&focusSecond=${focusTimeInSeconds}&success=true`,
       );
 
       if (response.data.success) {
         await fetchStudy(); // 백엔드에서 업데이트된 스터디 데이터 다시 가져오기
-        console.log(`포인트 ${response.data.focusPoint.point}점을 획득했습니다!`);
+        const focusPoint = response.data.focuses.focusPoint;
+        setGetFocusPoint(focusPoint);
       }
     } catch (err) {
       console.error('타이머 완료 API 호출 실패:', err);
     } finally {
-      setLoading(false);
+      setTimerCompleteLoading(false);
       setTimerMinutes(null);
     }
   };
 
   return (
     <>
-      <Header />
       <div className={styles.focusWrapper}>
         <div className={styles.focusPage}>
           <div className={styles.header}>
@@ -108,6 +112,7 @@ function Focus() {
                 <button
                   type="button"
                   onClick={() => navigate(`/habit/${studyId}`, { state: { password } })}
+                  disabled={loading || timerCompleteLoading}
                 >
                   오늘의 습관
                   <ArrowIcon />
@@ -115,6 +120,7 @@ function Focus() {
                 <button
                   type="button"
                   onClick={() => navigate(`/study/${studyId}`, { state: { password } })}
+                  disabled={loading || timerCompleteLoading}
                 >
                   홈
                   <ArrowIcon />
@@ -154,14 +160,21 @@ function Focus() {
                   onTimerStart={handleTimerStart}
                   onTimerPause={handleTimerPause}
                   onTimerResume={handleTimerResume}
-                  disabled={loading}
+                  disabled={loading || timerCompleteLoading}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      {showPauseToast && <Toast type="warning" />}
+
+      {/* 스터디 데이터 로드 중 오버레이 */}
+      {loading && <Spinner loading={loading} overlay={true} />}
+
+      {/* 타이머 완료 처리 중 오버레이 */}
+      {timerCompleteLoading && <Spinner loading={timerCompleteLoading} overlay={true} />}
+
+      {showPauseToast && <Toast type="point" point={getFocusPoint} />}
     </>
   );
 }

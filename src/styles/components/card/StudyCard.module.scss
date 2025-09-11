@@ -1,4 +1,5 @@
 @use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .studyCard {
   width: 100%;
@@ -16,7 +17,7 @@
 
   cursor: pointer;
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     height: 180px;
   }
 
@@ -79,7 +80,7 @@
   font-weight: 400;
   line-height: 24px;
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     font-size: 14px;
   }
 }
@@ -90,14 +91,17 @@
 
 .yellow {
   background-color: v.$backgroundYellow;
+  color: v.$backgroundYellow;
 }
 
 .blue {
   background-color: v.$backgroundBlue;
+  color: v.$backgroundBlue;
 }
 
 .pink {
   background-color: v.$backgroundPink;
+  color: v.$backgroundPink;
 }
 
 .alvaro {
@@ -129,8 +133,20 @@
 }
 
 .blackFont {
-  .nickName {
+  .greenName {
     color: v.$green_text;
+  }
+
+  .yellowName {
+    color: v.$yellow_text;
+  }
+
+  .blueName {
+    color: v.$blue_text;
+  }
+
+  .pinkName {
+    color: v.$pink_text;
   }
 
   .studyName {
@@ -152,13 +168,13 @@
   }
 }
 
-@media (max-width: v.$breakpoint-tablet) {
+@include m.tablet {
   .studyCard {
     height: 243px;
   }
 }
 
-@media (max-width: v.$breakpoint-mobile) {
+@include m.mobile {
   .studyCard {
     height: 180px;
 
