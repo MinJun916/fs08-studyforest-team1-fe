@@ -5,6 +5,7 @@ import api from '@/lib/axios';
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
 import Toast from '@/components/toast/Toast';
+import Spinner from '@/components/spinner/Spinner';
 
 import styles from '@/styles/pages/Focus.module.scss';
 import ic_timer from '@/assets/icons/ic_timer.svg';
@@ -17,6 +18,7 @@ function Focus() {
 
   const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [timerCompleteLoading, setTimerCompleteLoading] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(null); // 타이머 설정 시간
   const [showPauseToast, setShowPauseToast] = useState(false); // 일시정지 토스트 표시 여부
   const [getFocusPoint, setGetFocusPoint] = useState(null); // 타이머 완료 시 얻는 포인트 값
@@ -77,7 +79,7 @@ function Focus() {
   // 타이머 완료 시 API 호출 및 포인트 업데이트
   const handleTimerComplete = async (totalMinutes) => {
     try {
-      setLoading(true);
+      setTimerCompleteLoading(true);
       const focusTimeInSeconds = Math.floor(totalMinutes * 60);
       const response = await api.post(
         `/focusSuccess?studyId=${studyId}&focusSecond=${focusTimeInSeconds}&success=true`,
@@ -91,7 +93,7 @@ function Focus() {
     } catch (err) {
       console.error('타이머 완료 API 호출 실패:', err);
     } finally {
-      setLoading(false);
+      setTimerCompleteLoading(false);
       setTimerMinutes(null);
     }
   };
@@ -110,6 +112,7 @@ function Focus() {
                 <button
                   type="button"
                   onClick={() => navigate(`/habit/${studyId}`, { state: { password } })}
+                  disabled={loading || timerCompleteLoading}
                 >
                   오늘의 습관
                   <ArrowIcon />
@@ -117,6 +120,7 @@ function Focus() {
                 <button
                   type="button"
                   onClick={() => navigate(`/study/${studyId}`, { state: { password } })}
+                  disabled={loading || timerCompleteLoading}
                 >
                   홈
                   <ArrowIcon />
@@ -156,13 +160,20 @@ function Focus() {
                   onTimerStart={handleTimerStart}
                   onTimerPause={handleTimerPause}
                   onTimerResume={handleTimerResume}
-                  disabled={loading}
+                  disabled={loading || timerCompleteLoading}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* 스터디 데이터 로드 중 오버레이 */}
+      {loading && <Spinner loading={loading} overlay={true} />}
+
+      {/* 타이머 완료 처리 중 오버레이 */}
+      {timerCompleteLoading && <Spinner loading={timerCompleteLoading} overlay={true} />}
+
       {showPauseToast && <Toast type="point" point={getFocusPoint} />}
     </>
   );

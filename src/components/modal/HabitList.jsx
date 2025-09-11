@@ -3,6 +3,7 @@ import api from '@/lib/axios.js';
 
 import styles from '@styles/components/modal/HabitList.module.scss';
 import ModalSearchButton from '@/components/button/ModalSearchButton.jsx';
+import Spinner from '@/components/spinner/Spinner';
 import Ic_delete from '@assets/buttons/Ic_delete.svg';
 import Ic_plusIcon from '@assets/buttons/Ic_plusIcon.svg';
 
@@ -10,6 +11,8 @@ function HabitList({ habits: initialHabits, studyId }) {
   const [habits, setHabits] = useState(initialHabits || []);
   const [newHabitName, setNewHabitName] = useState('');
   const [isAddingHabit, setIsAddingHabit] = useState(false);
+  const [addingLoading, setAddingLoading] = useState(false);
+  const [deletingLoading, setDeletingLoading] = useState({});
 
   // props가 변경될 때 상태 업데이트
   useEffect(() => {
@@ -24,6 +27,7 @@ function HabitList({ habits: initialHabits, studyId }) {
       return;
     }
 
+    setAddingLoading(true);
     try {
       // API 요청
       const response = await api.post(`/habitModify/create/${studyId}`, { name: newHabitName });
@@ -42,6 +46,8 @@ function HabitList({ habits: initialHabits, studyId }) {
     } catch (error) {
       console.error('습관 추가 실패:', error);
       alert('습관 추가에 실패했습니다.');
+    } finally {
+      setAddingLoading(false);
     }
   };
 
@@ -56,6 +62,7 @@ function HabitList({ habits: initialHabits, studyId }) {
   };
 
   const handleDeleteHabit = async (habitId, studyId) => {
+    setDeletingLoading((prev) => ({ ...prev, [habitId]: true }));
     try {
       await api.patch(`/habits/delete/${habitId}`);
       await api.delete(`/habitModify/${habitId}`, {
@@ -66,6 +73,8 @@ function HabitList({ habits: initialHabits, studyId }) {
       setHabits((prevHabits) => prevHabits.filter((habit) => habit.id !== habitId));
     } catch (error) {
       console.error('습관 삭제 실패:', error);
+    } finally {
+      setDeletingLoading((prev) => ({ ...prev, [habitId]: false }));
     }
   };
 
@@ -85,8 +94,13 @@ function HabitList({ habits: initialHabits, studyId }) {
             <button
               className={styles.deleteBtn}
               onClick={() => handleDeleteClick(habit.id, studyId)}
+              disabled={addingLoading || deletingLoading[habit.id]}
             >
-              <img src={Ic_delete} alt="delete" />
+              {deletingLoading[habit.id] ? (
+                <Spinner loading={true} size={12} />
+              ) : (
+                <img src={Ic_delete} alt="delete" />
+              )}
             </button>
           </div>
         ))}
@@ -102,9 +116,10 @@ function HabitList({ habits: initialHabits, studyId }) {
               placeholder="습관을 입력해주세요"
               className={styles.habitInput}
               autoFocus
+              disabled={addingLoading}
             />
           </div>
-          <ModalSearchButton onClick={handleAddHabit} />
+          <ModalSearchButton onClick={handleAddHabit} disabled={addingLoading} />
         </div>
       )}
 
@@ -113,8 +128,13 @@ function HabitList({ habits: initialHabits, studyId }) {
         <button
           className={`${styles.habitItem} ${styles.addHabitItem} ${styles.addHabit}`}
           onClick={() => setIsAddingHabit(!isAddingHabit)}
+          disabled={addingLoading}
         >
-          <img src={Ic_plusIcon} alt="습관 추가" />
+          {addingLoading ? (
+            <Spinner loading={true} size={12} />
+          ) : (
+            <img src={Ic_plusIcon} alt="습관 추가" />
+          )}
         </button>
       </div>
     </div>

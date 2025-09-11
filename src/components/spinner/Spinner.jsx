@@ -9,12 +9,15 @@ const Spinner = ({
   margin = 2,
   style = {},
   overlay = false,
+  center = false,
 }) => {
   if (!loading) return null;
 
   const containerClass = overlay
     ? `${styles.spinnerContainer} ${styles.overlay} ${className}`
-    : `${styles.spinnerContainer} ${className}`;
+    : center
+      ? `${styles.spinnerContainer} ${styles.center} ${className}`
+      : `${styles.spinnerContainer} ${className}`;
 
   return (
     <div className={containerClass} style={style}>

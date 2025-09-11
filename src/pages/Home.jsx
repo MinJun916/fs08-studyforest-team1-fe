@@ -3,6 +3,7 @@ import StudyCard from '@/components/card/StudyCard';
 import Input from '@/components/input/Input';
 import DropDown, { SORTOPTIONS } from '@/components/dropDown/DropDown';
 import RecentStudies from '@/components/card/RecentStudies';
+import Spinner from '@/components/spinner/Spinner';
 
 import api from '@/lib/axios';
 import styles from '@styles/pages/Home.module.scss';
@@ -183,7 +184,7 @@ function Home() {
                     />
                   ))
                 : !loading && <div className={styles.empty}>아직 둘러 볼 스터디가 없어요</div>}
-              {loading && <div className={styles.loading}>로딩 중...</div>}
+              {loading && <Spinner loading={loading} overlay={true} />}
             </div>
           </div>
           {hasMore && (
@@ -194,7 +195,7 @@ function Home() {
                 onClick={handleLoadMore}
                 disabled={loading}
               >
-                {loading ? '로딩 중...' : '더보기'}
+                {loading ? <Spinner loading={loading} size={12} /> : '더보기'}
               </button>
             </div>
           )}

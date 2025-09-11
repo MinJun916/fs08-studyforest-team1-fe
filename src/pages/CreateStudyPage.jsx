@@ -15,6 +15,7 @@ import Input from '@/components/input/Input.jsx';
 import TextArea from '@/components/input/TextArea.jsx';
 import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
+import Spinner from '@/components/spinner/Spinner.jsx';
 
 const colorTiles = [
   { id: 'c1', kind: 'color', value: 'green' },
@@ -192,6 +193,7 @@ export default function CreateStudyPage() {
               onValueChange={onNickNameChange}
               value={form.nickName}
               showError={false}
+              disabled={loading || isSubmitting}
             />
             <Input
               ref={studyNameRef}
@@ -199,10 +201,15 @@ export default function CreateStudyPage() {
               onValueChange={onStudyNameChange}
               value={form.studyName}
               showError={false}
+              disabled={loading || isSubmitting}
             />
 
             <div className={styles.field}>
-              <TextArea onValueChange={onDescriptionChange} value={form.description} />
+              <TextArea
+                onValueChange={onDescriptionChange}
+                value={form.description}
+                disabled={loading || isSubmitting}
+              />
             </div>
 
             <div className={styles.field}>
@@ -216,6 +223,7 @@ export default function CreateStudyPage() {
                     style={getRenderStyle({ kind: 'color', value: t.value })}
                     onClick={() => selectBackground({ kind: 'color', value: t.value })}
                     aria-label="색상 배경 선택"
+                    disabled={loading || isSubmitting}
                   >
                     {isSelected(t) && <img className={styles.tileIcon} src={pawSelected} alt="" />}
                   </button>
@@ -231,6 +239,7 @@ export default function CreateStudyPage() {
                     style={getRenderStyle({ kind: 'image', value: t.value })}
                     onClick={() => selectBackground({ kind: 'image', value: t.value })}
                     aria-label="이미지 배경 선택"
+                    disabled={loading || isSubmitting}
                   >
                     {isSelected(t) && <img className={styles.tileIcon} src={pawSelected} alt="" />}
                   </button>
@@ -243,18 +252,25 @@ export default function CreateStudyPage() {
               type={studyId ? 'passwordOnly' : 'password'}
               onValueChange={onPasswordChange}
               showError={false}
+              disabled={loading || isSubmitting}
             />
 
             <div className={styles.btnRow}>
               <Button
                 childrenType={studyId ? 'completeModify' : 'create'}
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || loading}
               />
             </div>
           </form>
         </main>
       </div>
+
+      {/* 스터디 데이터 로드 중 오버레이 */}
+      {loading && <Spinner loading={loading} overlay={true} />}
+
+      {/* 스터디 생성/수정 중 오버레이 */}
+      {isSubmitting && <Spinner loading={isSubmitting} overlay={true} />}
     </>
   );
 }
