@@ -51,10 +51,10 @@
 
 .recentStudyCard {
   @media (max-width: v.$breakpoint-tablet) {
-    min-width: 358px;
+    min-width: 358px !important;
   }
 
   @media (max-width: v.$breakpoint-mobile) {
-    min-width: 240px;
+    min-width: 240px !important;
   }
 }
