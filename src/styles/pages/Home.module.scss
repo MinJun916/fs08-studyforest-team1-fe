@@ -3,7 +3,7 @@
 .wrapper {
   max-width: 1200px;
   width: 100vw;
-  margin-top: 40px;
+  padding-top: 40px;
   margin: 0 auto;
 
   display: flex;
@@ -13,11 +13,13 @@
   @media (max-width: v.$breakpoint-tablet) {
     width: 697px;
     gap: 24px;
+    padding-top: 20px;
   }
 
   @media (max-width: v.$breakpoint-mobile) {
     width: 344px;
     gap: 16px;
+    padding-top: 20px;
   }
 }
 

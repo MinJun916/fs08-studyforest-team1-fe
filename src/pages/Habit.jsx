@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import api from '@/lib/axios';
 import { kstTimeNow } from '@/lib/dayjs.js';
 
-import Header from '@components/header/Header';
 import HabitModal from '@components/modal/HabitModal';
 import Tag from '@components/tag/Tag';
 
@@ -211,7 +210,6 @@ function Habit() {
 
   return (
     <>
-      <Header />
       {showHabitModal && (
         <HabitModal onClose={closeHabitModal} studyId={studyId} password={password} />
       )}

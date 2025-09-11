@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import api from '@/lib/axios';
 
-import Header from '@components/header/Header';
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
 import Toast from '@/components/toast/Toast';
@@ -97,7 +96,6 @@ function Focus() {
 
   return (
     <>
-      <Header />
       <div className={styles.focusWrapper}>
         <div className={styles.focusPage}>
           <div className={styles.header}>
