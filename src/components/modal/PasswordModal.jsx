@@ -14,22 +14,38 @@ function PasswordModal({
 }) {
   const [passwordValue, setPasswordValue] = useState('');
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      onClick(passwordValue);
+    }
+  };
+
+  const handleClose = () => {
+    setPasswordValue('');
+    onClose();
+  };
+
   return (
     <Popup>
       <div className={styles.modal}>
         <div className={styles.header}>
           <div className={styles.title}>{studyName}</div>
-          <button className={styles.exitBtn} onClick={onClose}>
+          <button className={styles.exitBtn} onClick={handleClose}>
             나가기
           </button>
         </div>
         <div className={styles.warning}>{warningText}</div>
         <div className={styles.passwordWrapper}>
-          <Input type="passwordOnly" onValueChange={(v) => setPasswordValue(v)} />
+          <Input
+            type="passwordOnly"
+            value={passwordValue}
+            onValueChange={(v) => setPasswordValue(v)}
+            onKeyDown={handleKeyDown}
+          />
           {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
         <Button childrenType={btnType} onClick={() => onClick(passwordValue)} />
-        <button className={styles.exitBtn2} onClick={onClose}>
+        <button className={styles.exitBtn2} onClick={handleClose}>
           나가기
         </button>
       </div>

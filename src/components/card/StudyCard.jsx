@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
-import Emoji from '@components/emoji/Emoji';
+import EmojiList from '@components/emoji/EmojiList';
 import Tag from '@components/tag/Tag.jsx';
 import dDayCounter from '@/lib/dDayCounter.js';
 import styles from '@styles/components/card/StudyCard.module.scss';
@@ -13,6 +13,8 @@ function StudyCard({
   description,
   nickName,
   studyId,
+  emojis = [],
+  className,
 }) {
   const navigate = useNavigate();
   const dDay = dDayCounter(createdAt);
@@ -56,7 +58,7 @@ function StudyCard({
 
   return (
     <div
-      className={clsx(styles.studyCard, bgMap[backgroundImg], isImg || styles.blackFont)}
+      className={clsx(styles.studyCard, bgMap[backgroundImg], isImg || styles.blackFont, className)}
       onClick={handleCardClick}
     >
       <div className={styles.studyCardWrapper}>
@@ -75,7 +77,7 @@ function StudyCard({
         <div className={styles.description}>{description}</div>
         <div className={styles.emojiWrapper}>
           <div className={styles.emoji}>
-            <Emoji studyId={studyId} />
+            <EmojiList emojis={emojis} />
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@
 
 .studyCard {
   width: 100%;
+  max-width: 358px;
+  min-width: 312px;
   height: 243px;
 
   border-radius: 20px;
@@ -24,6 +26,11 @@
 
   .studyName {
     color: v.$white;
+  }
+  .title,
+  .description {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -147,14 +154,12 @@
 
 @media (max-width: v.$breakpoint-tablet) {
   .studyCard {
-    width: 312px;
     height: 243px;
   }
 }
 
 @media (max-width: v.$breakpoint-mobile) {
   .studyCard {
-    width: 312px;
     height: 180px;
 
     padding: 16px 88px 16px 16px;

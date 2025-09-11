@@ -1,0 +1,18 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
+.modalSearchButton {
+  @include m.button-reset;
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 35px;
+  background: v.$blue;
+  cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}

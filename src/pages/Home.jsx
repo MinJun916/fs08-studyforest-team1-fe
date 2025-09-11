@@ -17,28 +17,40 @@ function Home() {
   const [hasMore, setHasMore] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
+  const [totalCount, setTotalCount] = useState(0);
   const LIMIT = 6; // 총 6개로 고정
   const [displayCount, setDisplayCount] = useState(LIMIT);
 
-  const fetchAllStudies = async () => {
-    if (loading) return;
+  const fetchStudies = async (offset = 0, limit = LIMIT) => {
+    if (loading) return { studies: [], totalCount: 0 };
 
     setLoading(true);
     try {
       const params = {
-        offset: 0,
-        limit: 100,
+        offset,
+        limit,
         order: sortOrder,
       };
 
       const res = await api.get('/studies', { params });
       const studies = res.data.data || [];
-      setAllStudies(studies);
+      const totalCount = res.data.totalCount || 0;
+
+      return { studies, totalCount };
     } catch (error) {
       console.error('스터디 목록 가져오기 실패:', error);
+      return { studies: [], totalCount: 0 };
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchAllStudies = async () => {
+    // 초기에는 필요한 만큼만 가져오기 (LIMIT * 2 정도로 충분)
+    const initialLimit = Math.min(LIMIT * 2, 20); // 최대 20개까지만
+    const { studies, totalCount } = await fetchStudies(0, initialLimit);
+    setAllStudies(studies);
+    setTotalCount(totalCount);
   };
 
   const filterStudies = (studies, keyword) => {
@@ -80,11 +92,21 @@ function Home() {
     const displayed = sorted.slice(0, displayCount);
     setDisplayedStudies(displayed);
 
-    setHasMore(displayed.length < sorted.length);
+    // totalCount를 활용해서 hasMore 계산
+    setHasMore(displayed.length < totalCount);
   };
 
-  const handleLoadMore = () => {
-    setDisplayCount((prev) => prev + LIMIT);
+  const handleLoadMore = async () => {
+    if (loading) return;
+
+    // 현재 표시된 개수가 totalCount보다 적으면 더 가져오기
+    if (displayedStudies.length < totalCount) {
+      const { studies } = await fetchStudies(displayedStudies.length, LIMIT);
+      if (studies.length > 0) {
+        setAllStudies((prev) => [...prev, ...studies]);
+        setDisplayCount((prev) => prev + LIMIT);
+      }
+    }
   };
 
   const handleSearchChange = (value) => {
@@ -105,7 +127,7 @@ function Home() {
     if (allStudies.length > 0) {
       updateDisplayedStudies();
     }
-  }, [allStudies, searchKeyword, sortOrder, displayCount]);
+  }, [allStudies, searchKeyword, sortOrder, displayCount, totalCount]);
 
   return (
     <div>
@@ -139,6 +161,7 @@ function Home() {
                       backgroundImg={study.backgroundImg}
                       totalPoints={study.totalPoints}
                       createdAt={study.createdAt}
+                      emojis={study.emojis || []}
                     />
                   ))
                 : !loading && <div className={styles.empty}>아직 둘러 볼 스터디가 없어요</div>}

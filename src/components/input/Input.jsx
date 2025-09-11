@@ -4,12 +4,15 @@ import EyeOff from '@assets/icons/Ic_eyeOff.svg';
 import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
-function Input({ type = 'search', onValueChange }) {
+function Input({ type = 'search', onValueChange, onKeyDown, value }) {
   const [inputValue, setInputValue] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
+
+  // 외부에서 value prop이 전달되면 해당 값을 사용
+  const currentPassword = value !== undefined ? value : password;
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -18,9 +21,11 @@ function Input({ type = 'search', onValueChange }) {
   };
 
   const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
-    onValueChange(value);
+    const newValue = e.target.value;
+    if (value === undefined) {
+      setPassword(newValue);
+    }
+    onValueChange(newValue);
   };
 
   const handleCheckPasswordChange = (e) => {
@@ -74,7 +79,7 @@ function Input({ type = 'search', onValueChange }) {
                 className={styles.input}
                 type={showPassword ? 'text' : 'password'}
                 placeholder="비밀번호를 입력해주세요"
-                value={password}
+                value={currentPassword}
                 onChange={handlePasswordChange}
                 autoComplete="new-password"
               ></input>
@@ -132,8 +137,9 @@ function Input({ type = 'search', onValueChange }) {
               className={styles.input}
               type={showPassword ? 'text' : 'password'}
               placeholder="비밀번호를 입력해주세요"
-              value={password}
+              value={currentPassword}
               onChange={handlePasswordChange}
+              onKeyDown={onKeyDown}
               autoComplete="current-password"
             ></input>
             <button
