@@ -1,4 +1,5 @@
 @use '@styles/variables' as v;
+@use '@styles/mixin' as m;
 
 /* 레이아웃 */
 $header-h: 100px;
@@ -94,7 +95,7 @@ $maxw: 1920px;
 
 /* 반응형 */
 /* 태블릿 */
-@media (max-width: v.$breakpoint-tablet) {
+@include m.tablet {
   .headerInner {
     padding: 20px 16px;
   }
@@ -106,7 +107,7 @@ $maxw: 1920px;
 }
 
 /* 휴대폰 */
-@media (max-width: v.$breakpoint-mobile) {
+@include m.mobile {
   .headerInner {
     padding: 30px 12px 32px 12px;
   }

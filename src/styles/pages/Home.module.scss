@@ -1,4 +1,5 @@
 @use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .wrapper {
   max-width: 1200px;
@@ -10,13 +11,13 @@
   flex-direction: column;
   gap: 40px;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     width: 697px;
     gap: 24px;
     padding-top: 20px;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     width: 344px;
     gap: 16px;
     padding-top: 20px;
@@ -47,12 +48,12 @@
   border-radius: 20px;
   background: v.$white;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     // height: 332px;
     padding: 24px;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     // height: 247px;
     padding: 16px;
   }
@@ -68,11 +69,11 @@
   border-radius: 20px;
   background: v.$white;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     padding: 24px;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     padding: 16px;
   }
 }
@@ -84,14 +85,14 @@
   font-weight: 800;
   line-height: normal;
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     font-size: 16px;
     margin-bottom: 16px;
   }
 }
 
 .recentStudiesTitle {
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     margin-bottom: 0px;
   }
 }
@@ -99,7 +100,7 @@
 .recentStudies {
   gap: 40px;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     gap: 18px;
   }
 }
@@ -107,7 +108,7 @@
 .discoverStudies {
   gap: 60px;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     gap: 24px;
   }
 
@@ -118,7 +119,7 @@
     align-items: flex-start;
     gap: 24px;
 
-    @media (max-width: v.$breakpoint-mobile) {
+    @include m.mobile {
       display: block;
     }
   }
@@ -129,7 +130,7 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: v.$breakpoint-mobile) {
+    @include m.mobile {
       display: block;
 
       .search {
@@ -178,19 +179,17 @@
   gap: 20px;
   width: 100%;
 
-  // 데스크톱: 3개 컬럼
-  @media (min-width: 1025px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  // 데스크톱: 3개 컬럼 (기본값)
+  grid-template-columns: repeat(3, 1fr);
 
   // 태블릿: 2개 컬럼
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 
   // 모바일: 1개 컬럼
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     grid-template-columns: 1fr;
     gap: 16px;
   }

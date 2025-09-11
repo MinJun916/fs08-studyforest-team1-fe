@@ -1,3 +1,6 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
+
 .timerContainer {
   display: flex;
   flex-direction: column;
@@ -116,7 +119,7 @@
   color: var(--gray-gray_818181, #818181); /* 초과 회색 */
 }
 
-@media (max-width: 744px) {
+@include m.tablet {
   .timer {
     font-size: 96px;
   }
@@ -137,7 +140,7 @@
     min-width: 120px;
   }
 }
-@media (max-width: 480px) {
+@include m.mobile {
   .timer {
     font-size: 72px;
   }

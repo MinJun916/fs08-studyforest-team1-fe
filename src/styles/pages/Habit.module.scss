@@ -26,18 +26,18 @@
   width: 1168px;
   min-height: 863px;
 
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     width: 600px;
     min-height: 551px;
   }
 
   // 화면이 작을 때 자동으로 크기 조정
-  @media (max-width: 1200px) {
+  @include m.tablet {
     width: calc(100vw - 40px);
     max-width: 1168px;
   }
 
-  @media (max-width: 640px) {
+  @include m.mobile {
     width: calc(100vw - 32px);
     max-width: 600px;
   }
@@ -257,7 +257,7 @@
 }
 
 // 태블릿 반응형 디자인 (768px ~ 1024px)
-@media (max-width: v.$breakpoint-tablet) {
+@include m.tablet {
   .habitWrapper {
     padding-top: 16px;
     padding-bottom: 80px;
@@ -276,7 +276,7 @@
   }
 }
 
-@media (max-width: v.$breakpoint-mobile) {
+@include m.mobile {
   .habitWrapper {
     padding-top: 20px;
     padding-bottom: 140px;

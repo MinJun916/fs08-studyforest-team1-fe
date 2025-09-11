@@ -1,4 +1,5 @@
 @use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .inputWrapper {
   width: 100%;
@@ -101,7 +102,7 @@
   border: 1px solid v.$grayDD;
   background: v.$white;
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     width: 100%;
   }
 }
