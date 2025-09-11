@@ -15,6 +15,7 @@ export default function App() {
 
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
+          <Route path="update/:studyId" element={<CreateStudyPage />} />
           <Route path=":studyId" element={<DetailStudyPage />} />
         </Route>
 
