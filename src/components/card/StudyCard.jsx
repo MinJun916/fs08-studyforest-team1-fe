@@ -14,6 +14,7 @@ function StudyCard({
   nickName,
   studyId,
   emojis = [],
+  className,
 }) {
   const navigate = useNavigate();
   const dDay = dDayCounter(createdAt);
@@ -57,7 +58,7 @@ function StudyCard({
 
   return (
     <div
-      className={clsx(styles.studyCard, bgMap[backgroundImg], isImg || styles.blackFont)}
+      className={clsx(styles.studyCard, bgMap[backgroundImg], isImg || styles.blackFont, className)}
       onClick={handleCardClick}
     >
       <div className={styles.studyCardWrapper}>

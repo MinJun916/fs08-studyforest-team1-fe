@@ -147,16 +147,14 @@
 
 @media (max-width: v.$breakpoint-tablet) {
   .studyCard {
-    width: 312px;
     height: 243px;
   }
 }
 
 @media (max-width: v.$breakpoint-mobile) {
   .studyCard {
-    width: 312px;
     height: 180px;
-
+    
     padding: 16px 88px 16px 16px;
   }
 

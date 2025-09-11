@@ -13,6 +13,11 @@
   line-height: normal;
 }
 
+.recentStudies {
+  width: 100%;
+  overflow-x: scroll;
+}
+
 .studyCardContainer {
   display: flex;
   gap: 24px;
@@ -41,5 +46,15 @@
     &:nth-child(n + 2) {
       display: none;
     }
+  }
+}
+
+.recentStudyCard {
+  @media (max-width: v.$breakpoint-tablet) {
+    min-width: 358px;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    min-width: 240px;
   }
 }
