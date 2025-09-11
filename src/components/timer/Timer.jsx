@@ -41,13 +41,13 @@ const Timer = forwardRef(function Timer(
   // 입력값 변경 시, 아직 시작 전이라면 미리보기 시간도 업데이트
   useEffect(() => {
     if (!isStarted) {
-      // 입력값 검증: 0-720분 범위로 제한
-      const validatedMinutes = Math.max(0, Math.min(720, Number(minutesInput)));
+      // 입력값 검증: 1-720분 범위로 제한
+      const validatedMinutes = Math.max(1, Math.min(720, Number(minutesInput)));
       const validatedSeconds = Math.max(0, Math.min(59, Number(secondsInput)));
 
-      // 사용자가 설정한 시간 그대로 사용
+      // 사용자가 설정한 시간 그대로 사용 (최소 1분)
       const totalMinutes = validatedMinutes + validatedSeconds / 60;
-      const finalMinutes = totalMinutes;
+      const finalMinutes = Math.max(1, totalMinutes);
 
       const ms = finalMinutes * 60 * 1000;
       durationMsRef.current = ms;
@@ -81,11 +81,11 @@ const Timer = forwardRef(function Timer(
   const internalStart = () => {
     if (disabled) return; // 비활성화 상태면 시작하지 않음
 
-    // 입력값으로 duration 설정 후 시작
-    const validatedMinutes = Math.max(0, Math.min(720, Number(minutesInput)));
+    // 입력값으로 duration 설정 후 시작 (최소 1분)
+    const validatedMinutes = Math.max(1, Math.min(720, Number(minutesInput)));
     const validatedSeconds = Math.max(0, Math.min(59, Number(secondsInput)));
     const totalMinutes = validatedMinutes + validatedSeconds / 60;
-    const finalMinutes = totalMinutes;
+    const finalMinutes = Math.max(1, totalMinutes);
 
     durationMsRef.current = finalMinutes * 60 * 1000;
     setTime(durationMsRef.current);
@@ -140,10 +140,10 @@ const Timer = forwardRef(function Timer(
     pause();
     setIsStarted(false);
     setIsOvertime(false);
-    const validatedMinutes = Math.max(0, Math.min(720, Number(minutesInput)));
+    const validatedMinutes = Math.max(1, Math.min(720, Number(minutesInput)));
     const validatedSeconds = Math.max(0, Math.min(59, Number(secondsInput)));
     const totalMinutes = validatedMinutes + validatedSeconds / 60;
-    const finalMinutes = totalMinutes;
+    const finalMinutes = Math.max(1, totalMinutes);
     const ms = finalMinutes * 60 * 1000;
     durationMsRef.current = ms;
     setTime(ms);
@@ -170,11 +170,11 @@ const Timer = forwardRef(function Timer(
         onTimerComplete(totalMinutes);
       }
     } else {
-      // 시작하지 않은 상태에서 스탑 호출 시 현재 설정된 시간 사용
-      const validatedMinutes = Math.max(0, Math.min(720, Number(minutesInput) || 0));
+      // 시작하지 않은 상태에서 스탑 호출 시 현재 설정된 시간 사용 (최소 1분)
+      const validatedMinutes = Math.max(1, Math.min(720, Number(minutesInput) || 1));
       const validatedSeconds = Math.max(0, Math.min(59, Number(secondsInput) || 0));
       const totalMinutes = validatedMinutes + validatedSeconds / 60;
-      const finalMinutes = totalMinutes;
+      const finalMinutes = Math.max(1, totalMinutes);
       setTotalElapsedTime(finalMinutes);
       if (onTimerComplete) {
         onTimerComplete(finalMinutes);
@@ -185,10 +185,10 @@ const Timer = forwardRef(function Timer(
     pause();
     setIsStarted(false);
     setIsOvertime(false);
-    const validatedMinutes = Math.max(0, Math.min(720, Number(minutesInput)));
+    const validatedMinutes = Math.max(1, Math.min(720, Number(minutesInput)));
     const validatedSeconds = Math.max(0, Math.min(59, Number(secondsInput)));
     const totalMinutes = validatedMinutes + validatedSeconds / 60;
-    const finalMinutes = totalMinutes;
+    const finalMinutes = Math.max(1, totalMinutes);
     const ms = finalMinutes * 60 * 1000;
     durationMsRef.current = ms;
     setTime(ms);
@@ -234,14 +234,14 @@ const Timer = forwardRef(function Timer(
         <div className={`${s.timer} ${stateClass}`}>
           <input
             type="text"
-            min={0}
+            min={1}
             max={720}
             value={minutesFocused ? minutesText : String(minutesInput).padStart(2, '0')}
             onChange={(e) => {
               const value = e.target.value.replace(/\D/g, ''); // 숫자만 허용
               setMinutesText(value);
-              const numValue = parseInt(value) || 0;
-              if (numValue <= 720) {
+              const numValue = parseInt(value) || 1;
+              if (numValue >= 1 && numValue <= 720) {
                 setMinutesInput(numValue);
               }
             }}
@@ -256,7 +256,7 @@ const Timer = forwardRef(function Timer(
               } else {
                 const numValue = parseInt(minutesText);
                 if (!isNaN(numValue)) {
-                  setMinutesInput(Math.min(720, Math.max(0, numValue)));
+                  setMinutesInput(Math.min(720, Math.max(1, numValue)));
                 } else {
                   setMinutesInput(defaultMinutes);
                 }
