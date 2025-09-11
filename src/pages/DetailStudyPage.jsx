@@ -8,6 +8,7 @@ import Emoji from '@/components/emoji/Emoji';
 import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
 import DeleteConfirmModal from '@/components/modal/DeleteConfirmModal';
+import Spinner from '@/components/spinner/Spinner';
 
 import styles from '@styles/pages/DetailStudyPage.module.scss';
 
@@ -213,6 +214,7 @@ export default function DetailStudyPage() {
           />
         )}
       </div>
+      {loading && <Spinner overlay={true} />}
       <div className={styles.root}>
         {/* 상단 헤더 영역 */}
         <div className={styles.header}>
