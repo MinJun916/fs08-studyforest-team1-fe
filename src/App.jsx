@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import Header from '@components/header/Header';
 import Home from '@pages/Home.jsx';
 import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
@@ -11,7 +12,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route element={<Header />}>
+          <Route path="/" element={<Home />} />
 
         <Route path="study">
           <Route path="new" element={<CreateStudyPage />} />
@@ -19,12 +21,13 @@ export default function App() {
           <Route path=":studyId" element={<DetailStudyPage />} />
         </Route>
 
-        <Route path="habit">
-          <Route path=":studyId" element={<Habit />} />
-        </Route>
+          <Route path="habit">
+            <Route path=":studyId" element={<Habit />} />
+          </Route>
 
-        <Route path="focus">
-          <Route path=":studyId" element={<Focus />} />
+          <Route path="focus">
+            <Route path=":studyId" element={<Focus />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
+import api from '@/lib/axios';
+import { kstTimeNow } from '@/lib/dayjs.js';
+
 import Header from '@components/header/Header';
 import HabitModal from '@components/modal/HabitModal';
 import Tag from '@components/tag/Tag';
+
 import styles from '@/styles/pages/Habit.module.scss';
-import api from '@/lib/axios';
-import { kstTimeNow } from '@/lib/dayjs.js';
-import dayjs from 'dayjs';
 
 function Habit() {
   const { studyId } = useParams();

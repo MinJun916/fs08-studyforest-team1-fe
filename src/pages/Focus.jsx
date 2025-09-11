@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import api from '@/lib/axios';
+
 import Header from '@components/header/Header';
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
 import Toast from '@/components/toast/Toast';
+
 import styles from '@/styles/pages/Focus.module.scss';
-import api from '@/lib/axios';
 import ic_timer from '@/assets/icons/ic_timer.svg';
 
 function Focus() {

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '@/lib/axios.js';
-import styles from '@/styles/pages/CreateStudyPage.module.scss';
 
+import styles from '@/styles/pages/CreateStudyPage.module.scss';
 import pawSelected from '@assets/icons/ic_bg_selected.png';
 
 // 이미지 import
