@@ -91,3 +91,10 @@
     @content;
   }
 }
+
+/* Flex 중앙 정렬 */
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -9,6 +9,7 @@ import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
 import DeleteConfirmModal from '@/components/modal/DeleteConfirmModal';
 import Spinner from '@/components/spinner/Spinner';
+import ErrorPage from '@/components/errorPage/ErrorPage';
 
 import styles from '@styles/pages/DetailStudyPage.module.scss';
 
@@ -38,6 +39,11 @@ export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [errorState, setErrorState] = useState({
+    type: null, // 'network' | 'notFound' | 'permission' | 'server' | 'data'
+    message: '',
+    canRetry: false,
+  });
   const [habitsState, setHabitsState] = useState([]);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -51,6 +57,23 @@ export default function DetailStudyPage() {
 
   const isMountedRef = useRef(true);
 
+  // 데이터 검증 함수
+  const validateStudyData = (data) => {
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid study data: not an object');
+    }
+
+    if (!data.id || typeof data.id !== 'string') {
+      throw new Error('Invalid study data: missing or invalid id');
+    }
+
+    if (!data.studyName || typeof data.studyName !== 'string') {
+      throw new Error('Invalid study data: missing or invalid studyName');
+    }
+
+    return true;
+  };
+
   const showToastMessage = (type, message) => {
     setToastType(type);
     setToastMessage(message);
@@ -58,35 +81,132 @@ export default function DetailStudyPage() {
     setTimeout(() => setShowToast(false), 3000);
   };
 
-  const habits =
-    study?.weeklyHabits
-      ?.filter((h) => !h.isDeleted)
-      .map((h) => ({
-        id: h.habitId,
-        title: h.habitName,
-        records: h.isCompleted,
-      })) ?? [];
+  const handleError = (err) => {
+    console.error('Error occurred:', err);
+
+    // 네트워크 연결 확인
+    if (!navigator.onLine) {
+      setErrorState({
+        type: 'network',
+        message: '인터넷 연결을 확인해주세요.',
+        canRetry: true,
+      });
+      return;
+    }
+
+    // HTTP 응답 상태 코드 확인
+    if (err.response && err.response.status) {
+      const status = err.response.status;
+
+      if (status === 404) {
+        setErrorState({
+          type: 'notFound',
+          message: '존재하지 않는 스터디입니다.',
+          canRetry: false,
+        });
+      } else if (status === 403) {
+        setErrorState({
+          type: 'permission',
+          message: '이 스터디에 접근할 권한이 없습니다.',
+          canRetry: false,
+        });
+      } else if (status >= 500) {
+        setErrorState({
+          type: 'server',
+          message: '서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.',
+          canRetry: true,
+        });
+      } else if (status >= 400) {
+        setErrorState({
+          type: 'network',
+          message: '요청 처리 중 오류가 발생했습니다.',
+          canRetry: true,
+        });
+      } else {
+        setErrorState({
+          type: 'network',
+          message: '알 수 없는 오류가 발생했습니다.',
+          canRetry: true,
+        });
+      }
+    } else {
+      // 네트워크 오류 또는 기타 오류
+      setErrorState({
+        type: 'network',
+        message: '데이터를 불러오는 중 문제가 발생했습니다.',
+        canRetry: true,
+      });
+    }
+  };
+
+  const habits = (() => {
+    try {
+      if (!study) {
+        return [];
+      }
+      if (!study.weeklyHabits) {
+        return [];
+      }
+      if (!Array.isArray(study.weeklyHabits)) {
+        console.error('weeklyHabits is not an array');
+        return [];
+      }
+      return study.weeklyHabits
+        .filter((h) => {
+          if (!h || typeof h !== 'object') {
+            return false;
+          }
+          return !h.isDeleted;
+        })
+        .map((h) => {
+          if (!h.habitId || !h.habitName || !Array.isArray(h.isCompleted)) {
+            console.error('Invalid habit data structure:', h);
+            return null;
+          }
+          return {
+            id: h.habitId,
+            title: h.habitName,
+            records: h.isCompleted,
+          };
+        })
+        .filter(Boolean); // null 값 제거
+    } catch (error) {
+      console.error('Error processing habits data:', error);
+      return [];
+    }
+  })();
 
   const fetchStudy = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setErrorState({ type: null, message: '', canRetry: false });
+
     try {
       const res = await api.get(`/studies/${studyId}`);
       if (isMountedRef.current) {
-        setStudy(res.data.data ?? null);
-        addRecentStudy({
-          id: res.data.data.id,
-          studyName: res.data.data.studyName,
-          backgroundImg: res.data.data.backgroundImg,
-          nickName: res.data.data.nickName,
-          description: res.data.data.description,
-          totalPoints: res.data.data.totalPoints,
-          createdAt: res.data.data.createdAt,
-        });
+        if (res.data && res.data.data) {
+          const studyData = res.data.data;
+
+          // 데이터 검증
+          validateStudyData(studyData);
+
+          setStudy(studyData);
+          addRecentStudy({
+            id: studyData.id,
+            studyName: studyData.studyName,
+            backgroundImg: studyData.backgroundImg || '',
+            nickName: studyData.nickName || '',
+            description: studyData.description || '',
+            totalPoints: studyData.totalPoints || 0,
+            createdAt: studyData.createdAt || new Date().toISOString(),
+          });
+        } else {
+          throw new Error('No study data received from server');
+        }
       }
     } catch (err) {
       if (isMountedRef.current) {
-        setError(err);
+        handleError(err);
       }
     } finally {
       if (isMountedRef.current) setLoading(false);
@@ -102,9 +222,15 @@ export default function DetailStudyPage() {
   }, [fetchStudy, studyId]);
 
   const openPasswordModal = (name, action = 'modify') => {
-    setModalStudyName(name ?? study.studyName ?? '');
-    setModalAction(action);
-    setShowPasswordModal(true);
+    try {
+      const studyName = name || (study && study.studyName) || '';
+      setModalStudyName(studyName);
+      setModalAction(action);
+      setShowPasswordModal(true);
+    } catch (error) {
+      console.error('Error opening password modal:', error);
+      // 에러 상태는 useEffect나 이벤트 핸들러에서만 설정
+    }
   };
 
   const closePasswordModal = () => {
@@ -119,7 +245,7 @@ export default function DetailStudyPage() {
 
     try {
       const res = await api.get(`/habits/${studyId}/today?password=${password}`);
-      if (res?.data?.success) {
+      if (res && res.data && res.data.success) {
         if (modalAction === 'focus') {
           navigate(`/focus/${studyId}`, { state: { password: password } });
         } else if (modalAction === 'habit') {
@@ -178,16 +304,43 @@ export default function DetailStudyPage() {
 
   const toggleHabit = async (habitId) => {
     try {
+      if (!habitId || typeof habitId !== 'string') {
+        throw new Error('Invalid habit ID');
+      }
+
+      if (!studyId || typeof studyId !== 'string') {
+        throw new Error('Invalid study ID');
+      }
+
       setLoading(true);
       setError(null);
+      setErrorState({ type: null, message: '', canRetry: false });
+
       await api.post(`/habitChecks/${studyId}/${habitId}/habitCheck/toggle`);
       await fetchStudy();
     } catch (err) {
-      setError(err);
+      if (isMountedRef.current) {
+        handleError(err);
+      }
     } finally {
       if (isMountedRef.current) setLoading(false);
     }
   };
+
+  // 에러 상태일 때 ErrorPage 렌더링
+  if (errorState.type) {
+    return <ErrorPage type={errorState.type} />;
+  }
+
+  // 로딩 중일 때
+  if (loading) {
+    return <Spinner overlay={true} />;
+  }
+
+  // 스터디 데이터가 없을 때
+  if (!study) {
+    return <ErrorPage type="data" />;
+  }
 
   return (
     <>
@@ -208,13 +361,12 @@ export default function DetailStudyPage() {
         {showDeleteModal && (
           <DeleteConfirmModal
             key={showDeleteModal} // Enter 키 입력을 위한 컴포넌트 키 추가
-            studyName={study?.studyName || ''}
+            studyName={(study && study.studyName) || ''}
             onClose={closeDeleteModal}
             onConfirm={handleDeleteConfirm}
           />
         )}
       </div>
-      {loading && <Spinner overlay={true} />}
       <div className={styles.root}>
         {/* 상단 헤더 영역 */}
         <div className={styles.header}>
@@ -223,7 +375,10 @@ export default function DetailStudyPage() {
             <button type="button" onClick={handleShare}>
               공유하기
             </button>
-            <button type="button" onClick={() => openPasswordModal(study?.studyName, 'modify')}>
+            <button
+              type="button"
+              onClick={() => openPasswordModal(study && study.studyName, 'modify')}
+            >
               수정하기
             </button>
             <button type="button" onClick={openDeleteModal}>
@@ -235,9 +390,12 @@ export default function DetailStudyPage() {
         {/* 소개 및 포인트 */}
         <section className={styles.intro} aria-label="스터디 소개 및 포인트">
           <div className={styles.top}>
-            <h1>{study?.studyName ?? ''}</h1>
+            <h1>{(study && study.studyName) || ''}</h1>
             <div className={styles.userButtons}>
-              <button type="button" onClick={() => openPasswordModal(study?.studyName, 'habit')}>
+              <button
+                type="button"
+                onClick={() => openPasswordModal(study && study.studyName, 'habit')}
+              >
                 오늘의 습관
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +413,10 @@ export default function DetailStudyPage() {
                   />
                 </svg>
               </button>
-              <button type="button" onClick={() => openPasswordModal(study?.studyName, 'focus')}>
+              <button
+                type="button"
+                onClick={() => openPasswordModal(study && study.studyName, 'focus')}
+              >
                 오늘의 집중
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -276,7 +437,7 @@ export default function DetailStudyPage() {
             </div>
           </div>
           <h3>소개</h3>
-          <p>{study?.description ?? ''}</p>
+          <p>{(study && study.description) || ''}</p>
 
           <div>
             <h3>현재까지 획득한 포인트</h3>
@@ -284,7 +445,7 @@ export default function DetailStudyPage() {
               <Tag
                 bgColor={'rgba(255,255,255,0.3)'}
                 fontSize={12}
-                points={study?.totalPoints ?? 0}
+                points={(study && study.totalPoints) || 0}
               />
             </div>
           </div>
