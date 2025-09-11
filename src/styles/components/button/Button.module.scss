@@ -145,6 +145,35 @@ $gray-cancel: #ddd;
   @include green-button(false);
 }
 
+.startColored {
+  @include button-base;
+  background: $primary-green;
+  border-radius: 50px;
+  &:hover {
+    background: $primary-green-hover;
+  }
+
+  .btnText {
+    font-family: 'Pretendard';
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(140px, 48px);
+
+    .btnText {
+      font-size: 18px;
+    }
+
+    .inlineIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 .cancel {
   @include button-base;
   background: $gray-cancel;

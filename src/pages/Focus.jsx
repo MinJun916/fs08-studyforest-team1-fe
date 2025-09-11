@@ -19,6 +19,7 @@ function Focus() {
   const [loading, setLoading] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(null); // 타이머 설정 시간
   const [showPauseToast, setShowPauseToast] = useState(false); // 일시정지 토스트 표시 여부
+  const [getFocusPoint, setGetFocusPoint] = useState(null); // 타이머 완료 시 얻는 포인트 값
 
   // DetailStudyPage에서 전달받은 비밀번호 (Habit 페이지로 이동할 때 필요)
   const password = location.state?.password;
@@ -77,14 +78,15 @@ function Focus() {
   const handleTimerComplete = async (totalMinutes) => {
     try {
       setLoading(true);
-      const focusTimeInMinutes = Math.floor(totalMinutes);
+      const focusTimeInSeconds = Math.floor(totalMinutes * 60);
       const response = await api.post(
-        `/focusSuccess?studyId=${studyId}&focusTime=${focusTimeInMinutes}&success=true`,
+        `/focusSuccess?studyId=${studyId}&focusSecond=${focusTimeInSeconds}&success=true`,
       );
 
       if (response.data.success) {
         await fetchStudy(); // 백엔드에서 업데이트된 스터디 데이터 다시 가져오기
-        console.log(`포인트 ${response.data.focusPoint.point}점을 획득했습니다!`);
+        const focusPoint = response.data.focuses.focusPoint;
+        setGetFocusPoint(focusPoint);
       }
     } catch (err) {
       console.error('타이머 완료 API 호출 실패:', err);
@@ -161,7 +163,7 @@ function Focus() {
           </div>
         </div>
       </div>
-      {showPauseToast && <Toast type="warning" />}
+      {showPauseToast && <Toast type="point" point={getFocusPoint} />}
     </>
   );
 }
