@@ -121,8 +121,9 @@
 .contentHeader {
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 24px;
 
   .title {
     color: v.$black;
@@ -155,4 +156,25 @@
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+}
+
+.timerMinutes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  color: v.$black;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+
+  img {
+    width: 19px;
+    height: 19px;
+  }
 }

@@ -106,7 +106,10 @@
 }
 
 .running {
-  color: var(--red-red_F50E0E, #f50e0e); /* 작동 중 빨강 */
+  color: var(
+    --green_text-green_text_578246,
+    #578246
+  ); /* 작동 중 그린 - 브랜드 컬러와 어울리는 색상 */
 }
 
 .overtime {

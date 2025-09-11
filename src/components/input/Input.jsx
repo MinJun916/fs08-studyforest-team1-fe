@@ -4,7 +4,7 @@ import EyeOff from '@assets/icons/Ic_eyeOff.svg';
 import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
-function Input({ type = 'search', onValueChange }) {
+function Input({ type = 'search', onValueChange, onKeyDown }) {
   const [inputValue, setInputValue] = useState('');
   const [password, setPassword] = useState('');
   const [checkPassword, setCheckPassword] = useState('');
@@ -134,6 +134,7 @@ function Input({ type = 'search', onValueChange }) {
               placeholder="비밀번호를 입력해주세요"
               value={password}
               onChange={handlePasswordChange}
+              onKeyDown={onKeyDown}
               autoComplete="current-password"
             ></input>
             <button

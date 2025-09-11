@@ -8,6 +8,8 @@ const Timer = forwardRef(function Timer(
     defaultMinutes = 25, // 기본 시간
     onTimerComplete = null, // 타이머 완료 시 콜백 함수
     onTimerStart = null, // 타이머 시작 시 콜백 함수
+    onTimerPause = null, // 타이머 일시정지 시 콜백 함수
+    onTimerResume = null, // 타이머 재개 시 콜백 함수
     disabled = false, // 타이머 비활성화 상태
   },
   ref,
@@ -111,15 +113,25 @@ const Timer = forwardRef(function Timer(
       startAtRef.current = Date.now() - (durationMsRef.current - Math.max(0, time));
       setIsRunning(true);
       if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+
+      // 재개 콜백 호출 (이미 시작된 타이머를 재개할 때만)
+      if (onTimerResume) {
+        onTimerResume();
+      }
     }
-  }, [isStarted, time, tick, disabled]);
+  }, [isStarted, time, tick, disabled, onTimerResume]);
 
   const pause = useCallback(() => {
     if (disabled) return; // 비활성화 상태면 일시정지하지 않음
     setIsRunning(false);
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = null;
-  }, [disabled]);
+
+    // 일시정지 콜백 호출
+    if (onTimerPause) {
+      onTimerPause();
+    }
+  }, [disabled, onTimerPause]);
 
   const restart = useCallback(() => {
     if (disabled) return; // 비활성화 상태면 재시작하지 않음
@@ -298,8 +310,11 @@ const Timer = forwardRef(function Timer(
       <div className={s.buttonGroup}>
         {!isOvertime ? (
           <>
-            <Button childrenType="pause" onClick={pause} />
-            <Button childrenType="start" disabled={true} />
+            {isRunning ? (
+              <Button childrenType="pause" onClick={pause} />
+            ) : (
+              <Button childrenType="start" onClick={start} />
+            )}
             <Button childrenType="restart" onClick={restart} />
           </>
         ) : (

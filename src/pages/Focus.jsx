@@ -3,10 +3,12 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Header from '@components/header/Header';
 import Tag from '@components/tag/Tag';
 import Timer from '@/components/timer/Timer';
+import Toast from '@/components/toast/Toast';
 import styles from '@/styles/pages/Focus.module.scss';
 import api from '@/lib/axios';
 import { kstTimeNow } from '@/lib/dayjs.js';
 import dayjs from 'dayjs';
+import ic_timer from '@/assets/icons/ic_timer.svg';
 
 function Focus() {
   const { studyId } = useParams();
@@ -21,6 +23,7 @@ function Focus() {
   const [focusPoints, setFocusPoints] = useState(0); // 포커스로 획득한 포인트
   const [apiError, setApiError] = useState(null); // API 에러 메시지
   const [timerMinutes, setTimerMinutes] = useState(null); // 타이머 설정 시간
+  const [showPauseToast, setShowPauseToast] = useState(false); // 일시정지 토스트 표시 여부
 
   // DetailStudyPage에서 전달받은 비밀번호 (Habit 페이지로 이동할 때 필요)
   const password = location.state?.password;
@@ -57,6 +60,17 @@ function Focus() {
   // 타이머 시작 시 설정 시간 저장
   const handleTimerStart = (minutes) => {
     setTimerMinutes(minutes);
+    setShowPauseToast(false); // 시작 시 토스트 숨김
+  };
+
+  // 타이머 일시정지 시 토스트 표시
+  const handleTimerPause = () => {
+    setShowPauseToast(true);
+  };
+
+  // 타이머 재개 시 토스트 숨김
+  const handleTimerResume = () => {
+    setShowPauseToast(false);
   };
 
   // 타이머 완료 시 API 호출 및 포인트 업데이트
@@ -142,7 +156,10 @@ function Focus() {
                     />
                   </svg>
                 </button>
-                <button type="button" onClick={() => navigate('/')}>
+                <button
+                  type="button"
+                  onClick={() => navigate(`/study/${studyId}`, { state: { password } })}
+                >
                   홈
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -177,7 +194,15 @@ function Focus() {
           <div className={styles.content}>
             <div className={styles.contentHeader}>
               <div className={styles.title}>오늘의 집중</div>
-              {timerMinutes && <div>{timerMinutes}분 타이머</div>}
+              {timerMinutes && (
+                <div className={styles.timerMinutes}>
+                  <img src={ic_timer} alt="timer" />
+                  <span>
+                    {String(Math.floor(timerMinutes)).padStart(2, '0')}:
+                    {String(Math.floor((timerMinutes % 1) * 60)).padStart(2, '0')}
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.contentBody}>
               <div className={styles.timerContainer}>
@@ -185,6 +210,8 @@ function Focus() {
                   ref={timerRef}
                   onTimerComplete={handleTimerComplete}
                   onTimerStart={handleTimerStart}
+                  onTimerPause={handleTimerPause}
+                  onTimerResume={handleTimerResume}
                   disabled={loading}
                 />
                 {loading && (
@@ -209,6 +236,7 @@ function Focus() {
           </div>
         </div>
       </div>
+      {showPauseToast && <Toast type="warning" />}
     </>
   );
 }
