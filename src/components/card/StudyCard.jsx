@@ -76,9 +76,7 @@ function StudyCard({
         <div className={styles.description}>{description}</div>
         <div className={styles.emojiWrapper}>
           <div className={styles.emoji}>
-            <EmojiList 
-              emojis={emojis} 
-            />
+            <EmojiList emojis={emojis} />
           </div>
         </div>
       </div>
