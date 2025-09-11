@@ -35,6 +35,7 @@ function RecentStudies({ onDataChange }) {
             backgroundImg={item.backgroundImg}
             totalPoints={item.totalPoints}
             createdAt={item.createdAt}
+            className={styles.recentStudyCard}
           />
         ))}
       </div>
