@@ -186,7 +186,7 @@ export default function CreateStudyPage() {
         <main className={styles.card}>
           <h2 className={styles.title}>{studyId ? '스터디 수정하기' : '스터디 만들기'}</h2>
 
-          <form onSubmit={onSubmit} noValidate>
+          <form onSubmit={onSubmit} noValidate className={styles.form}>
             <Input
               ref={nickNameRef}
               type="nickName"
