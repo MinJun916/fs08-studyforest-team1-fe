@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '@/lib/axios.js';
 
 import styles from '@styles/components/modal/HabitList.module.scss';
+import ModalSearchButton from '@/components/button/ModalSearchButton.jsx';
 import Ic_delete from '@assets/buttons/Ic_delete.svg';
 import Ic_plusIcon from '@assets/buttons/Ic_plusIcon.svg';
 
@@ -92,7 +93,7 @@ function HabitList({ habits: initialHabits, studyId }) {
       {/* 습관 입력 필드 */}
       {isAddingHabit && (
         <div className={styles.habitRow}>
-          <div className={`${styles.habitItem} ${styles.addHabitItem}`}>
+          <div className={`${styles.habitItem} ${styles.habitInputItem}`}>
             <input
               type="text"
               value={newHabitName}
@@ -103,6 +104,7 @@ function HabitList({ habits: initialHabits, studyId }) {
               autoFocus
             />
           </div>
+          <ModalSearchButton onClick={handleAddHabit} />
         </div>
       )}
 
