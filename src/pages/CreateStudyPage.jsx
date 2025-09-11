@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import api from '@/lib/axios.js';
 
 import styles from '@/styles/pages/CreateStudyPage.module.scss';
@@ -15,46 +15,41 @@ import Input from '@/components/input/Input.jsx';
 import TextArea from '@/components/input/TextArea.jsx';
 import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
+import Toast from '@/components/toast/Toast.jsx';
 
-// 배경색상 및 이미지 매핑
-const colorMapping = {
-  green: '#DDE7D5',
-  yellow: '#F8EAB9',
-  blue: '#DAEBF0',
-  pink: '#F7DCE1',
-};
 
-const imageMapping = {
-  alvaro: alvaroImg,
-  mikey: mikeyImg,
-  andrew: andrewImg,
-  chris: chrisImg,
-};
+  const colorTiles = [
+    { id: 'c1', kind: 'color', value: 'green' },
+    { id: 'c2', kind: 'color', value: 'yellow' },
+    { id: 'c3', kind: 'color', value: 'blue' },
+    { id: 'c4', kind: 'color', value: 'pink' },
+  ];
 
-const colorTiles = [
-  { id: 'c1', kind: 'color', value: 'green' },
-  { id: 'c2', kind: 'color', value: 'yellow' },
-  { id: 'c3', kind: 'color', value: 'blue' },
-  { id: 'c4', kind: 'color', value: 'pink' },
-];
+  const imageTiles = [
+    { id: 'g1', kind: 'image', value: 'alvaro' },
+    { id: 'g2', kind: 'image', value: 'mikey' },
+    { id: 'g3', kind: 'image', value: 'andrew' },
+    { id: 'g4', kind: 'image', value: 'chris' },
+  ];
 
-const imageTiles = [
-  { id: 'g1', kind: 'image', value: 'alvaro' },
-  { id: 'g2', kind: 'image', value: 'mikey' },
-  { id: 'g3', kind: 'image', value: 'andrew' },
-  { id: 'g4', kind: 'image', value: 'chris' },
-];
+  const colorMapping = {
+    green: '#DDE7D5',
+    yellow: '#F8EAB9',
+    blue: '#DAEBF0',
+    pink: '#F7DCE1',
+  };
+
+  const imageMapping = {
+    alvaro: alvaroImg,
+    mikey: mikeyImg,
+    andrew: andrewImg,
+    chris: chrisImg,
+  };
 
 export default function CreateStudyPage() {
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    nickName: '',
-    studyName: '',
-    description: '',
-    password: '',
-    backgroundImg: 'green',
-  });
+  const { studyId } = useParams();
+
 
   const getRenderStyle = (bg) => {
     if (!bg || !bg.kind || !bg.value) return {};
@@ -71,6 +66,56 @@ export default function CreateStudyPage() {
     return {};
   };
 
+  const [form, setForm] = useState({
+    nickName: '',
+    studyName: '',
+    description: '',
+    password: '',
+    backgroundImg: 'green',
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState('point');
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showToastMessage = (type, message) => {
+    setToastType(type);
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
+
+  useEffect(() => {
+    if (studyId) {
+      const fetchStudyData = async () => {
+        try {
+          setLoading(true);
+          const response = await api.get(`/studies/${studyId}`);
+          const studyData = response.data.data;
+          
+          setForm(prev => ({
+            ...prev,
+            nickName: studyData.nickName || '',
+            studyName: studyData.studyName || '',
+            description: studyData.description || '',
+            backgroundImg: studyData.backgroundImg || 'green',
+            // password는 비워둠
+          }));
+        } catch (error) {
+          console.error('스터디 데이터 로드 실패:', error);
+          showToastMessage('warning', '🚨 스터디 데이터를 불러오는데 실패했습니다.');
+          navigate('/');
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchStudyData();
+    }
+  }, [studyId, navigate]);
+
   const onNickNameChange = (value) => setForm((f) => ({ ...f, nickName: value }));
   const onStudyNameChange = (value) => setForm((f) => ({ ...f, studyName: value }));
   const onDescriptionChange = (value) => setForm((f) => ({ ...f, description: value }));
@@ -80,11 +125,20 @@ export default function CreateStudyPage() {
     setForm((f) => ({ ...f, backgroundImg: bg?.value || 'green' }));
   };
 
-  const submitStudyData = async (formData) => {
+  const createStudyData = async (formData) => {
     const response = await api.post('/studies', formData);
     return {
       success: true,
       message: '스터디가 성공적으로 생성되었습니다.',
+      data: response.data,
+    };
+  };
+
+  const updateStudyData = async (formData) => {
+    const response = await api.patch(`/studies/${studyId}`, formData);
+    return {
+      success: true,
+      message: '스터디가 성공적으로 수정되었습니다.',
       data: response.data,
     };
   };
@@ -95,22 +149,32 @@ export default function CreateStudyPage() {
     if (isSubmitting) return;
 
     if (!form.studyName.trim() || !form.nickName.trim()) {
-      alert('닉네임과 스터디 이름을 입력해주세요.');
+      showToastMessage('warning', '🚨 닉네임과 스터디 이름을 입력해주세요.');
       return;
     }
 
     if (!form.password.trim()) {
-      alert('비밀번호를 입력해주세요.');
+      showToastMessage('warning', '🚨 비밀번호를 입력해주세요.');
       return;
     }
 
     try {
       setIsSubmitting(true);
-      const result = await submitStudyData(form);
-      navigate(`/study/${result.data.data.id}`);
+      let result;
+      
+      if (studyId) {
+        // 수정 모드
+        result = await updateStudyData(form);
+        showToastMessage('point', '🎉 스터디가 성공적으로 수정되었습니다.');
+        setTimeout(() => navigate(`/study/${studyId}`), 1000);
+      } else {
+        // 생성 모드
+        result = await createStudyData(form);
+        setTimeout(() => navigate(`/study/${result.data.data.id}`), 1000);
+      }
     } catch (error) {
-      console.error('스터디 생성 실패', error);
-      alert('스터디 생성에 실패했습니다. 다시 시도해주세요.');
+      console.error(studyId ? '스터디 수정 실패' : '스터디 생성 실패', error);
+      showToastMessage('warning', studyId ? '🚨 스터디 수정에 실패했습니다. 다시 시도해주세요.' : '🚨 스터디 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
     }
@@ -125,17 +189,25 @@ export default function CreateStudyPage() {
 
   return (
     <>
+      {showToast && (
+        <div className={styles.toast}>
+          <Toast
+            type={toastType}
+            toastStudyText={toastMessage}
+          />
+        </div>
+      )}
       <Header />
       <div className={styles.page}>
         <main className={styles.card}>
-          <h2 className={styles.title}>스터디 만들기</h2>
+          <h2 className={styles.title}>{studyId ? '스터디 수정하기' : '스터디 만들기'}</h2>
 
           <form onSubmit={onSubmit} noValidate>
-            <Input type="nickName" onValueChange={onNickNameChange} />
-            <Input type="studyName" onValueChange={onStudyNameChange} />
+            <Input type="nickName" onValueChange={onNickNameChange} value={form.nickName} />
+            <Input type="studyName" onValueChange={onStudyNameChange} value={form.studyName} />
 
             <div className={styles.field}>
-              <TextArea onValueChange={onDescriptionChange} />
+              <TextArea onValueChange={onDescriptionChange} value={form.description} />
             </div>
 
             <div className={styles.field}>
@@ -171,10 +243,10 @@ export default function CreateStudyPage() {
               </div>
             </div>
 
-            <Input type="password" onValueChange={onPasswordChange} />
+            <Input type={studyId ? "passwordOnly" : "password"} onValueChange={onPasswordChange} />
 
             <div className={styles.btnRow}>
-              <Button childrenType="create" type="submit" disabled={isSubmitting} />
+              <Button childrenType={studyId ? "completeModify" : "create"} type="submit" disabled={isSubmitting} />
             </div>
           </form>
         </main>

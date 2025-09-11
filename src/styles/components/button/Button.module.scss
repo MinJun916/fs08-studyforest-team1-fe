@@ -231,8 +231,7 @@ $gray-cancel: #ddd;
 }
 
 .confirm,
-.cancel,
-.completeModify {
+.cancel {
   @media (max-width: v.$breakpoint-mobile) {
     @include button-size(140px);
   }
