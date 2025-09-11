@@ -139,6 +139,7 @@ function Home() {
                       backgroundImg={study.backgroundImg}
                       totalPoints={study.totalPoints}
                       createdAt={study.createdAt}
+                      emojis={study.emojis || []}
                     />
                   ))
                 : !loading && <div className={styles.empty}>아직 둘러 볼 스터디가 없어요</div>}
