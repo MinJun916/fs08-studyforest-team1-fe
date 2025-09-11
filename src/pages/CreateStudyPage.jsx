@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '@/lib/axios.js';
 
@@ -15,7 +15,6 @@ import Input from '@/components/input/Input.jsx';
 import TextArea from '@/components/input/TextArea.jsx';
 import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
-import Toast from '@/components/toast/Toast.jsx';
 
 const colorTiles = [
   { id: 'c1', kind: 'color', value: 'green' },
@@ -49,6 +48,11 @@ export default function CreateStudyPage() {
   const navigate = useNavigate();
   const { studyId } = useParams();
 
+  // Input 컴포넌트들에 대한 ref
+  const nickNameRef = useRef(null);
+  const studyNameRef = useRef(null);
+  const passwordRef = useRef(null);
+
   const getRenderStyle = (bg) => {
     if (!bg || !bg.kind || !bg.value) return {};
 
@@ -74,16 +78,6 @@ export default function CreateStudyPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastType, setToastType] = useState('point');
-  const [toastMessage, setToastMessage] = useState('');
-
-  const showToastMessage = (type, message) => {
-    setToastType(type);
-    setToastMessage(message);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 3000);
-  };
 
   useEffect(() => {
     if (studyId) {
@@ -103,7 +97,6 @@ export default function CreateStudyPage() {
           }));
         } catch (error) {
           console.error('스터디 데이터 로드 실패:', error);
-          showToastMessage('warning', '🚨 스터디 데이터를 불러오는데 실패했습니다.');
           navigate('/');
         } finally {
           setLoading(false);
@@ -146,13 +139,16 @@ export default function CreateStudyPage() {
 
     if (isSubmitting) return;
 
-    if (!form.studyName.trim() || !form.nickName.trim()) {
-      showToastMessage('warning', '🚨 닉네임과 스터디 이름을 입력해주세요.');
-      return;
-    }
+    // Input 컴포넌트의 validateInput 함수를 사용하여 validation 실행
+    const nickNameValidation = nickNameRef.current?.validateInput(form.nickName, 'nickName');
+    const studyNameValidation = studyNameRef.current?.validateInput(form.studyName, 'studyName');
+    const passwordValidation = passwordRef.current?.validateInput(
+      form.password,
+      studyId ? 'passwordOnly' : 'password',
+    );
 
-    if (!form.password.trim()) {
-      showToastMessage('warning', '🚨 비밀번호를 입력해주세요.');
+    // validation 에러가 있으면 첫 번째 에러에서 중단
+    if (nickNameValidation?.error || studyNameValidation?.error || passwordValidation?.error) {
       return;
     }
 
@@ -163,21 +159,14 @@ export default function CreateStudyPage() {
       if (studyId) {
         // 수정 모드
         result = await updateStudyData(form);
-        showToastMessage('point', '🎉 스터디가 성공적으로 수정되었습니다.');
-        setTimeout(() => navigate(`/study/${studyId}`), 1000);
+        navigate(`/study/${studyId}`);
       } else {
         // 생성 모드
         result = await createStudyData(form);
-        setTimeout(() => navigate(`/study/${result.data.data.id}`), 1000);
+        navigate(`/study/${result.data.data.id}`);
       }
     } catch (error) {
       console.error(studyId ? '스터디 수정 실패' : '스터디 생성 실패', error);
-      showToastMessage(
-        'warning',
-        studyId
-          ? '🚨 스터디 수정에 실패했습니다. 다시 시도해주세요.'
-          : '🚨 스터디 생성에 실패했습니다. 다시 시도해주세요.',
-      );
     } finally {
       setIsSubmitting(false);
     }
@@ -192,18 +181,25 @@ export default function CreateStudyPage() {
 
   return (
     <>
-      {showToast && (
-        <div className={styles.toast}>
-          <Toast type={toastType} toastStudyText={toastMessage} />
-        </div>
-      )}
       <div className={styles.page}>
         <main className={styles.card}>
           <h2 className={styles.title}>{studyId ? '스터디 수정하기' : '스터디 만들기'}</h2>
 
           <form onSubmit={onSubmit} noValidate>
-            <Input type="nickName" onValueChange={onNickNameChange} value={form.nickName} />
-            <Input type="studyName" onValueChange={onStudyNameChange} value={form.studyName} />
+            <Input
+              ref={nickNameRef}
+              type="nickName"
+              onValueChange={onNickNameChange}
+              value={form.nickName}
+              showError={false}
+            />
+            <Input
+              ref={studyNameRef}
+              type="studyName"
+              onValueChange={onStudyNameChange}
+              value={form.studyName}
+              showError={false}
+            />
 
             <div className={styles.field}>
               <TextArea onValueChange={onDescriptionChange} value={form.description} />
@@ -242,7 +238,12 @@ export default function CreateStudyPage() {
               </div>
             </div>
 
-            <Input type={studyId ? 'passwordOnly' : 'password'} onValueChange={onPasswordChange} />
+            <Input
+              ref={passwordRef}
+              type={studyId ? 'passwordOnly' : 'password'}
+              onValueChange={onPasswordChange}
+              showError={false}
+            />
 
             <div className={styles.btnRow}>
               <Button

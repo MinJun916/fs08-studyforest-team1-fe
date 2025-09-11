@@ -15,11 +15,11 @@ export default function App() {
         <Route element={<Header />}>
           <Route path="/" element={<Home />} />
 
-        <Route path="study">
-          <Route path="new" element={<CreateStudyPage />} />
-          <Route path="update/:studyId" element={<CreateStudyPage />} />
-          <Route path=":studyId" element={<DetailStudyPage />} />
-        </Route>
+          <Route path="study">
+            <Route path="new" element={<CreateStudyPage />} />
+            <Route path="update/:studyId" element={<CreateStudyPage />} />
+            <Route path=":studyId" element={<DetailStudyPage />} />
+          </Route>
 
           <Route path="habit">
             <Route path=":studyId" element={<Habit />} />
