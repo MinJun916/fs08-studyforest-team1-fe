@@ -36,6 +36,17 @@ function StudyCard({
     chris: styles.chris,
   };
 
+  const bgNameMap = {
+    green: styles.greenName,
+    yellow: styles.yellowName,
+    blue: styles.blueName,
+    pink: styles.pinkName,
+    alvaro: styles.alvaroName,
+    mikey: styles.mikeyName,
+    andrew: styles.andrewName,
+    chris: styles.chrisName,
+  };
+
   const isImg =
     backgroundImg === 'alvaro' ||
     backgroundImg === 'mikey' ||
@@ -65,7 +76,7 @@ function StudyCard({
         <div className={styles.header}>
           <div className={styles.headerWrapper}>
             <div className={styles.title}>
-              <span className={styles.nickName}>{nickName}</span>
+              <span className={clsx(styles.nickName, bgNameMap[backgroundImg])}>{nickName}</span>
               <span className={styles.studyName}>{`의 ${studyName}`}</span>
             </div>
             <div className={styles.point}>

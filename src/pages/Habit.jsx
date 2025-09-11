@@ -4,9 +4,9 @@ import dayjs from 'dayjs';
 import api from '@/lib/axios';
 import { kstTimeNow } from '@/lib/dayjs.js';
 
-import Header from '@components/header/Header';
 import HabitModal from '@components/modal/HabitModal';
 import Tag from '@components/tag/Tag';
+import Spinner from '@/components/spinner/Spinner';
 
 import styles from '@/styles/pages/Habit.module.scss';
 
@@ -17,6 +17,7 @@ function Habit() {
   const [study, setStudy] = useState(null);
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [habitToggleLoading, setHabitToggleLoading] = useState({});
   const [error, setError] = useState(null);
   const [currentTime, setCurrentTime] = useState(kstTimeNow());
   const [showHabitModal, setShowHabitModal] = useState(false);
@@ -144,7 +145,7 @@ function Habit() {
     }));
 
     try {
-      setLoading(true);
+      setHabitToggleLoading((prev) => ({ ...prev, [habitId]: true }));
       const res = await api.post(`/habitChecks/${studyId}/${habitId}/habitCheck/toggle`);
       const habitCheckData = res.data.data;
 
@@ -173,7 +174,7 @@ function Habit() {
         totalPoints: currentPoints,
       }));
     } finally {
-      setLoading(false);
+      setHabitToggleLoading((prev) => ({ ...prev, [habitId]: false }));
     }
   };
 
@@ -211,7 +212,6 @@ function Habit() {
 
   return (
     <>
-      <Header />
       {showHabitModal && (
         <HabitModal onClose={closeHabitModal} studyId={studyId} password={password} />
       )}
@@ -220,13 +220,14 @@ function Habit() {
           <div className={styles.header}>
             <div className={styles.titleAndButtons}>
               <div className={styles.title}>
-                <span>{study?.nickName || '연우'}의 </span>
-                <span>{study?.studyName || '개발공장'}</span>
+                <span>{study?.nickName || ''}의 </span>
+                <span>{study?.studyName || ''}</span>
               </div>
               <div className={styles.buttons}>
                 <button
                   type="button"
                   onClick={() => navigate(`/focus/${studyId}`, { state: { password } })}
+                  disabled={loading}
                 >
                   오늘의 집중
                   <svg
@@ -248,6 +249,7 @@ function Habit() {
                 <button
                   type="button"
                   onClick={() => navigate(`/study/${studyId}`, { state: { password } })}
+                  disabled={loading}
                 >
                   홈
                   <svg
@@ -284,11 +286,18 @@ function Habit() {
           <div className={styles.content}>
             <div className={styles.contentHeader}>
               <div className={styles.title}>오늘의 습관</div>
-              <button className={styles.modify} type="button" onClick={() => handleModifyClick()}>
+              <button
+                className={styles.modify}
+                type="button"
+                onClick={() => handleModifyClick()}
+                disabled={loading}
+              >
                 목록 수정
               </button>
             </div>
-            <div className={styles.contentBody}>
+            <div
+              className={`${styles.contentBody} ${habits.length === 0 ? styles.nothingHabit : ''}`}
+            >
               <div className={styles.habitList}>
                 {habits.length === 0 && (
                   <div className={styles.nothingHabit}>
@@ -308,8 +317,13 @@ function Habit() {
                       type="button"
                       key={habit.id}
                       onClick={() => handleHabitClick(studyId, habit.id)}
+                      disabled={loading || habitToggleLoading[habit.id]}
                     >
-                      {habit.name}
+                      {habitToggleLoading[habit.id] ? (
+                        <Spinner loading={true} size={12} />
+                      ) : (
+                        habit.name
+                      )}
                     </button>
                   ))}
               </div>
@@ -317,6 +331,9 @@ function Habit() {
           </div>
         </div>
       </div>
+
+      {/* 스터디/습관 데이터 로드 중 오버레이 */}
+      {loading && <Spinner loading={loading} overlay={true} />}
     </>
   );
 }

@@ -1,4 +1,5 @@
 @use '@styles/variables' as v;
+@use '@styles/mixin' as m;
 
 .empty {
   display: flex;
@@ -24,7 +25,7 @@
   width: 100%;
 
   // 모바일: 16px 갭
-  @media (max-width: 480px) {
+  @include m.mobile {
     gap: 16px;
   }
 }
@@ -35,14 +36,14 @@
   display: block;
 
   // 태블릿에서 3번째 카드 숨김 (2개만 표시)
-  @media (max-width: 1024px) {
+  @include m.tablet {
     &:nth-child(3) {
       display: none;
     }
   }
 
   // 모바일에서 2번째, 3번째 카드 숨김 (1개만 표시)
-  @media (max-width: 480px) {
+  @include m.mobile {
     &:nth-child(n + 2) {
       display: none;
     }
@@ -50,11 +51,11 @@
 }
 
 .recentStudyCard {
-  @media (max-width: v.$breakpoint-tablet) {
+  @include m.tablet {
     min-width: 358px !important;
   }
 
-  @media (max-width: v.$breakpoint-mobile) {
+  @include m.mobile {
     min-width: 240px !important;
   }
 }

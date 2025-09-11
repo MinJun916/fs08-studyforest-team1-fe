@@ -1,4 +1,5 @@
 @use '@styles/variables' as v;
+@use '@styles/mixin' as m;
 
 /* 레이아웃 */
 $header-h: 100px;
@@ -7,16 +8,31 @@ $pad-x-desktop: 220px;
 $maxw: 1920px;
 
 .siteHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: 100%;
+  min-height: $header-h;
+  padding: $pad-y $pad-x-desktop;
+  z-index: 100;
   background: v.$bg;
-  border-bottom: none;
-  box-shadow: none;
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  }
+}
+
+.mainContent {
+  padding-top: $header-h;
 }
 
 .headerInner {
-  height: $header-h;
   max-width: $maxw;
   margin: 0 auto;
-  padding: $pad-y $pad-x-desktop;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,36 +94,118 @@ $maxw: 1920px;
 }
 
 /* 반응형 */
+/* 중간 크기 화면 (1200px 이하) */
+@media (max-width: 1200px) {
+  .siteHeader {
+    padding: 16px 40px;
+    min-height: 90px;
+  }
+
+  .mainContent {
+    padding-top: 90px;
+  }
+
+  .brandImg {
+    width: 160px;
+    height: 53px;
+  }
+
+  .createStudyBtn {
+    width: 200px;
+    height: 52px;
+    padding: 12px 32px;
+  }
+
+  .createStudyBtnText {
+    font-size: 17px;
+  }
+}
+
+/* 작은 데스크톱/큰 태블릿 (900px 이하) */
+@media (max-width: 900px) {
+  .siteHeader {
+    padding: 14px 24px;
+    min-height: 85px;
+  }
+
+  .mainContent {
+    padding-top: 85px;
+  }
+
+  .brandImg {
+    width: 140px;
+    height: 46px;
+  }
+
+  .createStudyBtn {
+    width: 180px;
+    height: 48px;
+    padding: 11px 24px;
+  }
+
+  .createStudyBtnText {
+    font-size: 16px;
+  }
+}
+
 /* 태블릿 */
-@media (max-width: v.$breakpoint-tablet) {
+@include m.tablet {
+  .siteHeader {
+    padding: 12px 20px;
+    min-height: 75px;
+  }
+
+  .mainContent {
+    padding-top: 75px;
+  }
+
   .headerInner {
-    padding: 20px 16px;
+    padding: 0;
+  }
+
+  .brandImg {
+    width: 130px;
+    height: 43px;
   }
 
   .createStudyBtn {
     width: 160px;
-    padding: 0;
+    height: 44px;
+    padding: 10px 20px;
+  }
+
+  .createStudyBtnText {
+    font-size: 15px;
   }
 }
 
 /* 휴대폰 */
-@media (max-width: v.$breakpoint-mobile) {
+@include m.mobile {
+  .siteHeader {
+    padding: 12px 16px;
+    min-height: 70px;
+  }
+
+  .mainContent {
+    padding-top: 70px;
+  }
+
   .headerInner {
-    padding: 30px 12px 32px 12px;
-  }
-
-  .brandImg {
-    width: 106px;
-    height: 35.021px;
-  }
-
-  .createStudyBtn {
-    width: 106px;
-    height: 38px;
     padding: 0;
   }
 
+  .brandImg {
+    width: 120px;
+    height: 40px;
+  }
+
+  .createStudyBtn {
+    width: 140px;
+    height: 42px;
+    padding: 10px 16px;
+  }
+
   .createStudyBtnText {
-    font-size: 11px;
+    font-size: 14px;
   }
 }

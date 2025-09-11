@@ -1,5 +1,6 @@
-@use '@/styles/variables' as v;
 @use 'sass:color';
+@use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 
 .container {
   display: flex;
@@ -47,6 +48,26 @@
   flex-wrap: wrap;
 }
 
+.retryButton {
+  display: inline-block;
+  padding: 12px 24px;
+  background: v.$brand;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background: color.scale(v.$brand, $lightness: -10%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
 .homeButton {
   display: inline-block;
   padding: 12px 24px;
@@ -88,7 +109,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@include m.tablet {
   .errorCode {
     font-size: 80px;
   }
@@ -106,9 +127,37 @@
     align-items: center;
   }
 
+  .retryButton,
   .homeButton,
   .backButton {
     width: 100%;
     max-width: 200px;
+  }
+}
+
+// 다크 모드 지원 (필요시)
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+
+  .title {
+    color: #ecf0f1;
+  }
+
+  .description {
+    color: #bdc3c7;
+  }
+
+  .backButton {
+    background: #34495e;
+    color: #ecf0f1;
+    border-color: #4a5f7a;
+
+    &:hover {
+      background: #4a5f7a;
+      border-color: v.$brand;
+      color: v.$brand;
+    }
   }
 }

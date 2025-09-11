@@ -6,7 +6,7 @@ import CreateStudyPage from '@pages/CreateStudyPage.jsx';
 import DetailStudyPage from '@pages/DetailStudyPage.jsx';
 import Habit from '@/pages/Habit';
 import Focus from '@pages/Focus.jsx';
-import NotFoundPage from '@pages/NotFoundPage.jsx';
+import ErrorPage from '@/components/errorPage/ErrorPage';
 
 export default function App() {
   return (
@@ -15,11 +15,11 @@ export default function App() {
         <Route element={<Header />}>
           <Route path="/" element={<Home />} />
 
-        <Route path="study">
-          <Route path="new" element={<CreateStudyPage />} />
-          <Route path="update/:studyId" element={<CreateStudyPage />} />
-          <Route path=":studyId" element={<DetailStudyPage />} />
-        </Route>
+          <Route path="study">
+            <Route path="new" element={<CreateStudyPage />} />
+            <Route path="update/:studyId" element={<CreateStudyPage />} />
+            <Route path=":studyId" element={<DetailStudyPage />} />
+          </Route>
 
           <Route path="habit">
             <Route path=":studyId" element={<Habit />} />
@@ -30,7 +30,7 @@ export default function App() {
           </Route>
         </Route>
 
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="*" element={<ErrorPage type="notFound" />} />
       </Routes>
     </BrowserRouter>
   );

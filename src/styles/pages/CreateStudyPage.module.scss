@@ -1,4 +1,5 @@
 @use '@/styles/variables' as v;
+@use '@/styles/mixin' as m;
 @use 'sass:color';
 @use 'sass:list';
 
@@ -42,7 +43,7 @@ $eye-gap: 12px; // 오른쪽 여백
 .card form {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* 전체 세로 간격 */
+  gap: 24px; /* 전체 세로 간격 */
 }
 
 /* 헤딩 기본 마진 제거 후, 제목 아래 간격만 관리 */
@@ -291,7 +292,7 @@ $eye-gap: 12px; // 오른쪽 여백
 
 /* ------------------ Responsive ------------------ */
 /* iPad mini 및 태블릿 (≤ 744px): 4열 유지, 패딩만 축소 */
-@media (max-width: 744px) {
+@include m.tablet {
   .card {
     padding: 20px 16px;
   }
@@ -302,7 +303,7 @@ $eye-gap: 12px; // 오른쪽 여백
 }
 
 /* 모바일 (≤ 480px): 2열로 변경 */
-@media (max-width: 480px) {
+@include m.mobile {
   .bgGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;

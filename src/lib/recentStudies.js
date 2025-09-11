@@ -42,6 +42,14 @@ export function addRecentStudy(study) {
   writeRaw(next);
 }
 
+/**
+ * 특정 스터디를 최근목록에서 제거
+ */
+export function removeRecentStudy(studyId) {
+  const list = readRaw().filter((item) => item.id !== studyId);
+  writeRaw(list);
+}
+
 /** 전체 삭제(옵션) */
 export function clearRecentStudies() {
   localStorage.removeItem(STORAGE_KEY);
