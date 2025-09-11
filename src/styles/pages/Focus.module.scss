@@ -5,9 +5,11 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  margin-top: 40px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  overflow-x: hidden; // 가로 스크롤 방지
 }
 
 .focusPage {
@@ -18,8 +20,26 @@
   gap: 24px;
   border-radius: 20px;
   background: v.$white;
-  width: 1248px;
-  height: 863px;
+  box-sizing: border-box;
+
+  width: 1168px;
+  min-height: 863px;
+
+  @media (max-width: v.$breakpoint-tablet) {
+    width: 600px;
+    min-height: 551px;
+  }
+
+  // 화면이 작을 때 자동으로 크기 조정
+  @media (max-width: 1200px) {
+    width: calc(100vw - 40px);
+    max-width: 1168px;
+  }
+
+  @media (max-width: 640px) {
+    width: calc(100vw - 32px);
+    max-width: 600px;
+  }
 }
 
 .header {
@@ -176,5 +196,109 @@
   img {
     width: 19px;
     height: 19px;
+  }
+}
+
+// 태블릿 반응형 디자인 (768px ~ 1024px)
+@media (max-width: v.$breakpoint-tablet) {
+  .focusWrapper {
+    padding-top: 16px;
+    padding-bottom: 80px;
+  }
+
+  .title {
+    span {
+      font-size: 28px;
+    }
+  }
+
+  .time {
+    .timeText {
+      font-size: 16px;
+    }
+
+    .timeValue {
+      font-size: 14px;
+      padding: 6px 10px;
+      height: 32px;
+    }
+  }
+
+  .timeContainer {
+    gap: 10px;
+  }
+
+  .buttons {
+    gap: 12px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+
+  .content {
+    padding: 32px 20px;
+    gap: 60px;
+  }
+
+  .contentHeader {
+    .title {
+      font-size: 20px;
+    }
+  }
+
+  .timer {
+    font-size: 120px;
+  }
+}
+
+// 모바일 반응형 디자인 (480px 이하)
+@media (max-width: v.$breakpoint-mobile) {
+  .focusWrapper {
+    padding-top: 20px;
+    padding-bottom: 140px;
+  }
+
+  .focusPage {
+    width: 344px;
+    min-height: 551px;
+    padding: 24px 16px;
+  }
+
+  .title {
+    span {
+      font-size: 24px;
+    }
+  }
+
+  .titleAndButtons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .time {
+    margin-top: 16px;
+
+    .timeContainer {
+      gap: 8px;
+    }
+  }
+
+  .content {
+    margin-top: 24px;
+    padding: 24px 16px;
+    gap: 40px;
+  }
+
+  .contentHeader {
+    .title {
+      font-size: 18px;
+    }
+  }
+
+  .timer {
+    font-size: 80px;
   }
 }

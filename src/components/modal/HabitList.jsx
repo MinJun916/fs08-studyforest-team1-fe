@@ -99,7 +99,7 @@ function HabitList({ habits: initialHabits, studyId }) {
               value={newHabitName}
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
-              placeholder="습관을 입력하고 Enter를 눌러주세요"
+              placeholder="습관을 입력해주세요"
               className={styles.habitInput}
               autoFocus
             />

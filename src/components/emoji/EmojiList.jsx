@@ -7,7 +7,7 @@ function EmojiList({ emojis = [], onSelect, maxDisplayItems = 3 }) {
   const emojiTypeToChar = (emojiType) => {
     if (!emojiType) return '';
     try {
-      const codePoints = emojiType.split('-').map(hex => parseInt(hex, 16));
+      const codePoints = emojiType.split('-').map((hex) => parseInt(hex, 16));
       return String.fromCodePoint(...codePoints);
     } catch (error) {
       console.warn('Failed to convert emojiType to character:', emojiType);
