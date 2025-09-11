@@ -295,7 +295,9 @@ function Habit() {
                 목록 수정
               </button>
             </div>
-            <div className={styles.contentBody}>
+            <div
+              className={`${styles.contentBody} ${habits.length === 0 ? styles.nothingHabit : ''}`}
+            >
               <div className={styles.habitList}>
                 {habits.length === 0 && (
                   <div className={styles.nothingHabit}>

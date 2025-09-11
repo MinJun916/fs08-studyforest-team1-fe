@@ -14,12 +14,15 @@
   .deleteBtn {
     border: none;
     display: flex;
+    width: 54px;
+    height: 54px;
     padding: 12px;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    border-radius: 35px;
+    border-radius: 20px;
     background: v.$pink;
+    flex-shrink: 0;
 
     cursor: pointer;
 
