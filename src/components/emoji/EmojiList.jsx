@@ -4,6 +4,17 @@ import styles from '@/styles/components/emoji/Emoji.module.scss';
 function EmojiList({ emojis = [], onSelect, maxDisplayItems = 3 }) {
   const [items, setItems] = useState([]);
 
+  const emojiTypeToChar = (emojiType) => {
+    if (!emojiType) return '';
+    try {
+      const codePoints = emojiType.split('-').map(hex => parseInt(hex, 16));
+      return String.fromCodePoint(...codePoints);
+    } catch (error) {
+      console.warn('Failed to convert emojiType to character:', emojiType);
+      return '';
+    }
+  };
+
   const sortItems = (arr) => {
     return (arr || []).slice().sort((a, b) => {
       const diff = (b.count || 0) - (a.count || 0);
@@ -19,12 +30,14 @@ function EmojiList({ emojis = [], onSelect, maxDisplayItems = 3 }) {
     if (emojis && emojis.length > 0) {
       const mapped = emojis.map((it) => ({
         id: it.id,
-        emoji: it.emojiChar || it.emoji || '',
+        emoji: it.emojiChar || it.emoji || emojiTypeToChar(it.emojiType) || '',
         count: it.count || 0,
         emojiType: it.emojiType || '',
         studyId: it.studyId,
       }));
       setItems(sortItems(mapped));
+    } else {
+      setItems([]);
     }
   }, [emojis]);
 
