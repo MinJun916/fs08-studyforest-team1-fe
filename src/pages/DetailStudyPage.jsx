@@ -194,6 +194,7 @@ export default function DetailStudyPage() {
           />
         </div>
       )}
+      <Header />
       <div className={`${styles.overlay} ${showPasswordModal ? styles.active : ''}`}>
         <PasswordModal
           studyName={modalStudyName}

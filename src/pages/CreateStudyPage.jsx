@@ -15,6 +15,7 @@ import Input from '@/components/input/Input.jsx';
 import TextArea from '@/components/input/TextArea.jsx';
 import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
+import Toast from '@/components/toast/Toast.jsx';
 
 
   const colorTiles = [
@@ -75,6 +76,16 @@ export default function CreateStudyPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState('point');
+  const [toastMessage, setToastMessage] = useState('');
+
+  const showToastMessage = (type, message) => {
+    setToastType(type);
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
 
   useEffect(() => {
     if (studyId) {
@@ -94,7 +105,7 @@ export default function CreateStudyPage() {
           }));
         } catch (error) {
           console.error('스터디 데이터 로드 실패:', error);
-          alert('스터디 데이터를 불러오는데 실패했습니다.');
+          showToastMessage('warning', '🚨 스터디 데이터를 불러오는데 실패했습니다.');
           navigate('/');
         } finally {
           setLoading(false);
@@ -138,12 +149,12 @@ export default function CreateStudyPage() {
     if (isSubmitting) return;
 
     if (!form.studyName.trim() || !form.nickName.trim()) {
-      alert('닉네임과 스터디 이름을 입력해주세요.');
+      showToastMessage('warning', '🚨 닉네임과 스터디 이름을 입력해주세요.');
       return;
     }
 
     if (!form.password.trim()) {
-      alert('비밀번호를 입력해주세요.');
+      showToastMessage('warning', '🚨 비밀번호를 입력해주세요.');
       return;
     }
 
@@ -154,16 +165,16 @@ export default function CreateStudyPage() {
       if (studyId) {
         // 수정 모드
         result = await updateStudyData(form);
-        alert('스터디가 성공적으로 수정되었습니다.');
-        navigate(`/study/${studyId}`);
+        showToastMessage('point', '🎉 스터디가 성공적으로 수정되었습니다.');
+        setTimeout(() => navigate(`/study/${studyId}`), 1000);
       } else {
         // 생성 모드
         result = await createStudyData(form);
-        navigate(`/study/${result.data.data.id}`);
+        setTimeout(() => navigate(`/study/${result.data.data.id}`), 1000);
       }
     } catch (error) {
       console.error(studyId ? '스터디 수정 실패' : '스터디 생성 실패', error);
-      alert(studyId ? '스터디 수정에 실패했습니다. 다시 시도해주세요.' : '스터디 생성에 실패했습니다. 다시 시도해주세요.');
+      showToastMessage('warning', studyId ? '🚨 스터디 수정에 실패했습니다. 다시 시도해주세요.' : '🚨 스터디 생성에 실패했습니다. 다시 시도해주세요.');
     } finally {
       setIsSubmitting(false);
     }
@@ -178,6 +189,14 @@ export default function CreateStudyPage() {
 
   return (
     <>
+      {showToast && (
+        <div className={styles.toast}>
+          <Toast
+            type={toastType}
+            toastStudyText={toastMessage}
+          />
+        </div>
+      )}
       <Header />
       <div className={styles.page}>
         <main className={styles.card}>

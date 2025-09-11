@@ -13,7 +13,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
-  display: inline-flex;
+  display: flex;
   padding: 16px 24px;
   justify-content: center;
   align-items: center;
@@ -22,6 +22,7 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.3s ease-out;
   backdrop-filter: blur(10px);
+  white-space: nowrap;
 }
 
 @keyframes slideUp {
@@ -66,8 +67,8 @@
   .toast {
     bottom: 20px;
     padding: 14px 20px;
-    margin: 0 16px;
-    max-width: calc(100vw - 32px);
+    // margin: 0 16px;
+    max-width: calc(100vw - 10px);
     border-radius: 40px;
   }
 
