@@ -227,7 +227,7 @@ export default function DetailStudyPage() {
         </div>
 
         {/* 소개 및 포인트 */}
-        <section className={styles.intro} ariaLabel="스터디 소개 및 포인트">
+        <section className={styles.intro} aria-label="스터디 소개 및 포인트">
           <div className={styles.top}>
             <h1>{study?.studyName ?? ''}</h1>
             <div className={styles.userButtons}>
@@ -285,7 +285,7 @@ export default function DetailStudyPage() {
         </section>
 
         {/* 습관 기록표(마크업만) */}
-        <section className={styles.record} ariaLabel="습관 기록표">
+        <section className={styles.record} aria-label="습관 기록표">
           <h2>습관 기록표</h2>
 
           <div>
@@ -326,7 +326,7 @@ export default function DetailStudyPage() {
                         {habit.title}
                       </td>
                       {habit.records.map((ok, idx) => (
-                        <td key={idx} ariaLabel={`${habit.title}-${days[idx]}`}>
+                        <td key={idx} aria-label={`${habit.title}-${days[idx]}`}>
                           <div className={styles.pawCell}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
