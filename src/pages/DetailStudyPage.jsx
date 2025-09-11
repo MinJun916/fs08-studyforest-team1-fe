@@ -42,12 +42,20 @@ export default function DetailStudyPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalStudyName, setModalStudyName] = useState('');
   const [modalAction, setModalAction] = useState(null); // 'habit' | 'focus' | 'modify'
-  const [modalError, setModalError] = useState(null);
-  const [deleteError, setDeleteError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState('point');
+  const [toastMessage, setToastMessage] = useState('');
   const { studyId } = useParams();
   const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
+  
+  const showToastMessage = (type, message) => {
+    setToastType(type);
+    setToastMessage(message);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 3000);
+  };
   
   const habits =
     study?.weeklyHabits
@@ -93,19 +101,16 @@ export default function DetailStudyPage() {
   const openPasswordModal = (name, action = 'modify') => {
     setModalStudyName(name ?? study.studyName ?? '');
     setModalAction(action);
-    setModalError(null);
     setShowPasswordModal(true);
   };
 
   const closePasswordModal = () => {
-    setModalError(null);
     setShowPasswordModal(false);
   };
 
   const handlePasswordConfirm = async (password) => {
-    setModalError(null);
     if (!password) {
-      setModalError('비밀번호를 입력해주세요');
+      showToastMessage('warning', '🚨 비밀번호를 입력해주세요');
       return;
     }
 
@@ -122,48 +127,35 @@ export default function DetailStudyPage() {
         setShowPasswordModal(false);
         return;
       }
-      setModalError('비밀번호가 일치하지 않습니다');
+      showToastMessage('warning', '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
     } catch (err) {
-      setModalError('비밀번호가 일치하지 않습니다');
+      showToastMessage('warning', '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
     }
   };
 
   const handleShare = () => {
     const currentUrl = window.location.href;
-    if (navigator.share) {
-      navigator
-        .share({
-          title: study.studyName || '',
-          text: study.description || '',
-          url: currentUrl,
-        })
-        .catch(console.error);
-    } else {
-      navigator.clipboard
-        .writeText(currentUrl)
-        .then(() => {
-          alert('링크가 복사되었습니다!');
-        })
-        .catch(() => {
-          alert('링크 복사에 실패했습니다.');
-        });
-    }
+    navigator.clipboard
+      .writeText(currentUrl)
+      .then(() => {
+        showToastMessage('point', '🎉 링크가 복사되었습니다!');
+      })
+      .catch(() => {
+        showToastMessage('warning', '🚨 링크 복사에 실패했습니다.');
+      });
   };
 
   const openDeleteModal = () => {
-    setDeleteError(null);
     setShowDeleteModal(true);
   };
 
   const closeDeleteModal = () => {
-    setDeleteError(null);
     setShowDeleteModal(false);
   };
 
   const handleDeleteConfirm = async (password) => {
-    setDeleteError(null);
     if (!password) {
-      setDeleteError('비밀번호를 입력해주세요');
+      showToastMessage('warning', '🚨 비밀번호를 입력해주세요');
       return;
     }
 
@@ -171,11 +163,11 @@ export default function DetailStudyPage() {
       const res = await api.delete(`/studies/${studyId}`, {
         data: { password },
       });
-      alert('스터디가 삭제되었습니다.');
-      navigate('/');
+      showToastMessage('warning', '🚨 스터디가 삭제되었습니다.');
+      setTimeout(() => navigate('/'), 1000);
       return;
     } catch (err) {
-      setDeleteError('비밀번호가 일치하지 않습니다');
+      showToastMessage('warning', '🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.');
     }
   };
 
@@ -194,7 +186,14 @@ export default function DetailStudyPage() {
 
   return (
     <>
-      <Header />
+      {showToast && (
+        <div className={styles.toast}>
+          <Toast
+            type={toastType}
+            toastStudyText={toastMessage}
+          />
+        </div>
+      )}
       <div className={`${styles.overlay} ${showPasswordModal ? styles.active : ''}`}>
         <PasswordModal
           studyName={modalStudyName}
@@ -202,21 +201,12 @@ export default function DetailStudyPage() {
           onClick={handlePasswordConfirm}
           btnType={modalAction === 'habit' ? 'habit' : modalAction === 'focus' ? 'focus' : 'modify'}
         />
-        {modalError && (
-          <div className={styles.toast}>
-            <Toast
-              type={'study'}
-              toastStudyText={'🚨 비밀번호가 일치하지 않습니다. 다시 입력해주세요.'}
-            />
-          </div>
-        )}
       </div>
       <div className={`${styles.overlay} ${showDeleteModal ? styles.active : ''}`}>
         <DeleteConfirmModal
           studyName={study?.studyName || ''}
           onClose={closeDeleteModal}
           onConfirm={handleDeleteConfirm}
-          errorMessage={deleteError}
         />
       </div>
       <div className={styles.root}>

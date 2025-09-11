@@ -3,13 +3,18 @@ import styles from '@styles/components/toast/Toast.module.scss';
 function Toast({ type = 'point', point = 50, toastStudyText = '' }) {
   let toastText = '';
   if (type === 'point') {
-    toastText = `🎉 ${point}포인트를 획득했습니다!`;
+    if (toastStudyText === '') {
+      toastText = `🎉 ${point}포인트를 획득했습니다!`;
+    } else {
+      toastText = toastStudyText;
+    }
   }
   if (type === 'warning') {
-    toastText = `🚨 집중이 중단되었습니다.`;
-  }
-  if (type === 'study') {
-    toastText = toastStudyText;
+    if (toastStudyText === '') {
+      toastText = `🚨 집중이 중단되었습니다.`;  
+    } else {
+      toastText = toastStudyText;
+    }
   }
 
   return (
