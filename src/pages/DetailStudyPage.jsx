@@ -1,7 +1,7 @@
-import styles from '@styles/pages/DetailStudyPage.module.scss';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '@/lib/axios.js';
+import { addRecentStudy } from '@/lib/recentStudies';
 
 import Toast from '@/components/toast/Toast.jsx';
 import Emoji from '@/components/emoji/Emoji';
@@ -9,7 +9,8 @@ import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
 import DeleteConfirmModal from '@/components/modal/DeleteConfirmModal';
 import Header from '@/components/header/Header.jsx';
-import { addRecentStudy } from '@/lib/recentStudies';
+
+import styles from '@styles/pages/DetailStudyPage.module.scss';
 
 export default function DetailStudyPage() {
   const [study, setStudy] = useState(null);

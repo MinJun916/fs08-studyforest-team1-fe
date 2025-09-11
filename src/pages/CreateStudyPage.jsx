@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '@/lib/axios.js';
-import styles from '@/styles/pages/CreateStudyPage.module.scss';
 
+import styles from '@/styles/pages/CreateStudyPage.module.scss';
 import pawSelected from '@assets/icons/ic_bg_selected.png';
 
 // 이미지 import
@@ -16,22 +16,45 @@ import TextArea from '@/components/input/TextArea.jsx';
 import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
 
+// 배경색상 및 이미지 매핑
+const colorMapping = {
+  green: '#DDE7D5',
+  yellow: '#F8EAB9',
+  blue: '#DAEBF0',
+  pink: '#F7DCE1',
+};
+
+const imageMapping = {
+  alvaro: alvaroImg,
+  mikey: mikeyImg,
+  andrew: andrewImg,
+  chris: chrisImg,
+};
+
+const colorTiles = [
+  { id: 'c1', kind: 'color', value: 'green' },
+  { id: 'c2', kind: 'color', value: 'yellow' },
+  { id: 'c3', kind: 'color', value: 'blue' },
+  { id: 'c4', kind: 'color', value: 'pink' },
+];
+
+const imageTiles = [
+  { id: 'g1', kind: 'image', value: 'alvaro' },
+  { id: 'g2', kind: 'image', value: 'mikey' },
+  { id: 'g3', kind: 'image', value: 'andrew' },
+  { id: 'g4', kind: 'image', value: 'chris' },
+];
+
 export default function CreateStudyPage() {
   const navigate = useNavigate();
-
-  const colorMapping = {
-    green: '#DDE7D5',
-    yellow: '#F8EAB9',
-    blue: '#DAEBF0',
-    pink: '#F7DCE1',
-  };
-
-  const imageMapping = {
-    alvaro: alvaroImg,
-    mikey: mikeyImg,
-    andrew: andrewImg,
-    chris: chrisImg,
-  };
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    nickName: '',
+    studyName: '',
+    description: '',
+    password: '',
+    backgroundImg: 'green',
+  });
 
   const getRenderStyle = (bg) => {
     if (!bg || !bg.kind || !bg.value) return {};
@@ -47,30 +70,6 @@ export default function CreateStudyPage() {
     }
     return {};
   };
-
-  const colorTiles = [
-    { id: 'c1', kind: 'color', value: 'green' },
-    { id: 'c2', kind: 'color', value: 'yellow' },
-    { id: 'c3', kind: 'color', value: 'blue' },
-    { id: 'c4', kind: 'color', value: 'pink' },
-  ];
-
-  const imageTiles = [
-    { id: 'g1', kind: 'image', value: 'alvaro' },
-    { id: 'g2', kind: 'image', value: 'mikey' },
-    { id: 'g3', kind: 'image', value: 'andrew' },
-    { id: 'g4', kind: 'image', value: 'chris' },
-  ];
-
-  const [form, setForm] = useState({
-    nickName: '',
-    studyName: '',
-    description: '',
-    password: '',
-    backgroundImg: 'green',
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onNickNameChange = (value) => setForm((f) => ({ ...f, nickName: value }));
   const onStudyNameChange = (value) => setForm((f) => ({ ...f, studyName: value }));

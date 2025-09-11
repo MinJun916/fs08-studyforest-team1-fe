@@ -1,15 +1,14 @@
-import Header from '@/components/header/Header';
-import styles from '@styles/pages/Home.module.scss';
+import { useState, useEffect } from 'react';
+import StudyCard from '@/components/card/StudyCard';
 import Input from '@/components/input/Input';
 import DropDown, { SORTOPTIONS } from '@/components/dropDown/DropDown';
 import RecentStudies from '@/components/card/RecentStudies';
-import StudyCard from '@/components/card/StudyCard';
-import { useState, useEffect } from 'react';
+
 import api from '@/lib/axios';
+import styles from '@styles/pages/Home.module.scss';
 
 function Home() {
   const [hasRecentStudies, setHasRecentStudies] = useState(false);
-
   const [allStudies, setAllStudies] = useState([]);
   const [filteredStudies, setFilteredStudies] = useState([]);
   const [displayedStudies, setDisplayedStudies] = useState([]);
@@ -18,10 +17,9 @@ function Home() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [sortOrder, setSortOrder] = useState('newest');
   const [totalCount, setTotalCount] = useState(0);
-  const LIMIT = 6; // 총 6개로 고정
-  const [displayCount, setDisplayCount] = useState(LIMIT);
+  const [displayCount, setDisplayCount] = useState(6);
 
-  const fetchStudies = async (offset = 0, limit = LIMIT) => {
+  const fetchStudies = async (offset = 0, limit = displayCount) => {
     if (loading) return { studies: [], totalCount: 0 };
 
     setLoading(true);
@@ -45,9 +43,12 @@ function Home() {
     }
   };
 
+  /**
+   * 초기 스터디 데이터를 로드하는 함수
+   * 성능 최적화를 위해 필요한 만큼만 가져옴
+   */
   const fetchAllStudies = async () => {
-    // 초기에는 필요한 만큼만 가져오기 (LIMIT * 2 정도로 충분)
-    const initialLimit = Math.min(LIMIT * 2, 20); // 최대 20개까지만
+    const initialLimit = Math.min(displayCount * 2, 20);
     const { studies, totalCount } = await fetchStudies(0, initialLimit);
     setAllStudies(studies);
     setTotalCount(totalCount);
@@ -65,6 +66,9 @@ function Home() {
     );
   };
 
+  /**
+   * 스터디 목록을 정렬하는 함수
+   */
   const sortStudies = (studies, order) => {
     const sorted = [...studies];
 
@@ -83,6 +87,9 @@ function Home() {
     }
   };
 
+  /**
+   * 필터링, 정렬, 페이징을 적용하여 표시할 스터디 목록을 업데이트하는 함수
+   */
   const updateDisplayedStudies = () => {
     const filtered = filterStudies(allStudies, searchKeyword);
     setFilteredStudies(filtered);
@@ -92,37 +99,49 @@ function Home() {
     const displayed = sorted.slice(0, displayCount);
     setDisplayedStudies(displayed);
 
-    // totalCount를 활용해서 hasMore 계산
     setHasMore(displayed.length < totalCount);
   };
 
+  /**
+   * 더 많은 스터디를 로드하는 함수
+   * 무한 스크롤 방식으로 동작
+   */
   const handleLoadMore = async () => {
     if (loading) return;
 
-    // 현재 표시된 개수가 totalCount보다 적으면 더 가져오기
     if (displayedStudies.length < totalCount) {
-      const { studies } = await fetchStudies(displayedStudies.length, LIMIT);
+      const { studies } = await fetchStudies(displayedStudies.length, displayCount);
       if (studies.length > 0) {
         setAllStudies((prev) => [...prev, ...studies]);
-        setDisplayCount((prev) => prev + LIMIT);
+        setDisplayCount((prev) => prev + displayCount);
       }
     }
   };
 
+  /**
+   * 검색 키워드 변경 핸들러
+   * 검색 시 표시 개수를 초기화하여 첫 페이지부터 보여줌
+   */
   const handleSearchChange = (value) => {
     setSearchKeyword(value);
-    setDisplayCount(LIMIT);
+    setDisplayCount(displayCount);
   };
 
+  /**
+   * 정렬 기준 변경 핸들러
+   * 정렬 변경 시 표시 개수를 초기화하여 첫 페이지부터 보여줌
+   */
   const handleSortChange = (value) => {
     setSortOrder(value);
-    setDisplayCount(LIMIT);
+    setDisplayCount(displayCount);
   };
 
+  // 정렬 기준이 변경될 때마다 스터디 목록을 다시 가져옴
   useEffect(() => {
     fetchAllStudies();
   }, [sortOrder]);
 
+  // 스터디 데이터나 필터 조건이 변경될 때마다 표시 목록을 업데이트
   useEffect(() => {
     if (allStudies.length > 0) {
       updateDisplayedStudies();
@@ -131,7 +150,6 @@ function Home() {
 
   return (
     <div>
-      <Header />
       <div className={styles.wrapper}>
         <div className={styles.recentStudies}>
           <div className={`${styles.title} ${styles.recentStudiesTitle}`}>최근 조회한 스터디</div>
