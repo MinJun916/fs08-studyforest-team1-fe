@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '@/lib/axios.js';
-import { addRecentStudy } from '@/lib/recentStudies';
+import { addRecentStudy, removeRecentStudy } from '@/lib/recentStudies';
 
 import Toast from '@/components/toast/Toast.jsx';
 import Emoji from '@/components/emoji/Emoji';
 import Tag from '@/components/tag/Tag';
 import PasswordModal from '@/components/modal/PasswordModal';
 import DeleteConfirmModal from '@/components/modal/DeleteConfirmModal';
-import Header from '@/components/header/Header.jsx';
 
 import styles from '@styles/pages/DetailStudyPage.module.scss';
 
@@ -50,14 +49,14 @@ export default function DetailStudyPage() {
   const navigate = useNavigate();
 
   const isMountedRef = useRef(true);
-  
+
   const showToastMessage = (type, message) => {
     setToastType(type);
     setToastMessage(message);
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
   };
-  
+
   const habits =
     study?.weeklyHabits
       ?.filter((h) => !h.isDeleted)
@@ -85,7 +84,9 @@ export default function DetailStudyPage() {
         });
       }
     } catch (err) {
-      if (isMountedRef.current) setError(err);
+      if (isMountedRef.current) {
+        setError(err);
+      }
     } finally {
       if (isMountedRef.current) setLoading(false);
     }
@@ -164,6 +165,8 @@ export default function DetailStudyPage() {
       const res = await api.delete(`/studies/${studyId}`, {
         data: { password },
       });
+      // 최근 본 스터디 목록에서도 제거
+      removeRecentStudy(studyId);
       showToastMessage('warning', '🚨 스터디가 삭제되었습니다.');
       setTimeout(() => navigate('/'), 1000);
       return;
@@ -189,13 +192,9 @@ export default function DetailStudyPage() {
     <>
       {showToast && (
         <div className={styles.toast}>
-          <Toast
-            type={toastType}
-            toastStudyText={toastMessage}
-          />
+          <Toast type={toastType} toastStudyText={toastMessage} />
         </div>
       )}
-      <Header />
       <div className={`${styles.overlay} ${showPasswordModal ? styles.active : ''}`}>
         <PasswordModal
           studyName={modalStudyName}
@@ -205,11 +204,14 @@ export default function DetailStudyPage() {
         />
       </div>
       <div className={`${styles.overlay} ${showDeleteModal ? styles.active : ''}`}>
-        <DeleteConfirmModal
-          studyName={study?.studyName || ''}
-          onClose={closeDeleteModal}
-          onConfirm={handleDeleteConfirm}
-        />
+        {showDeleteModal && (
+          <DeleteConfirmModal
+            key={showDeleteModal} // Enter 키 입력을 위한 컴포넌트 키 추가
+            studyName={study?.studyName || ''}
+            onClose={closeDeleteModal}
+            onConfirm={handleDeleteConfirm}
+          />
+        )}
       </div>
       <div className={styles.root}>
         {/* 상단 헤더 영역 */}

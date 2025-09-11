@@ -17,39 +17,37 @@ import Button from '@/components/button/Button.jsx';
 import Header from '@/components/header/Header.jsx';
 import Toast from '@/components/toast/Toast.jsx';
 
+const colorTiles = [
+  { id: 'c1', kind: 'color', value: 'green' },
+  { id: 'c2', kind: 'color', value: 'yellow' },
+  { id: 'c3', kind: 'color', value: 'blue' },
+  { id: 'c4', kind: 'color', value: 'pink' },
+];
 
-  const colorTiles = [
-    { id: 'c1', kind: 'color', value: 'green' },
-    { id: 'c2', kind: 'color', value: 'yellow' },
-    { id: 'c3', kind: 'color', value: 'blue' },
-    { id: 'c4', kind: 'color', value: 'pink' },
-  ];
+const imageTiles = [
+  { id: 'g1', kind: 'image', value: 'alvaro' },
+  { id: 'g2', kind: 'image', value: 'mikey' },
+  { id: 'g3', kind: 'image', value: 'andrew' },
+  { id: 'g4', kind: 'image', value: 'chris' },
+];
 
-  const imageTiles = [
-    { id: 'g1', kind: 'image', value: 'alvaro' },
-    { id: 'g2', kind: 'image', value: 'mikey' },
-    { id: 'g3', kind: 'image', value: 'andrew' },
-    { id: 'g4', kind: 'image', value: 'chris' },
-  ];
+const colorMapping = {
+  green: '#DDE7D5',
+  yellow: '#F8EAB9',
+  blue: '#DAEBF0',
+  pink: '#F7DCE1',
+};
 
-  const colorMapping = {
-    green: '#DDE7D5',
-    yellow: '#F8EAB9',
-    blue: '#DAEBF0',
-    pink: '#F7DCE1',
-  };
-
-  const imageMapping = {
-    alvaro: alvaroImg,
-    mikey: mikeyImg,
-    andrew: andrewImg,
-    chris: chrisImg,
-  };
+const imageMapping = {
+  alvaro: alvaroImg,
+  mikey: mikeyImg,
+  andrew: andrewImg,
+  chris: chrisImg,
+};
 
 export default function CreateStudyPage() {
   const navigate = useNavigate();
   const { studyId } = useParams();
-
 
   const getRenderStyle = (bg) => {
     if (!bg || !bg.kind || !bg.value) return {};
@@ -94,8 +92,8 @@ export default function CreateStudyPage() {
           setLoading(true);
           const response = await api.get(`/studies/${studyId}`);
           const studyData = response.data.data;
-          
-          setForm(prev => ({
+
+          setForm((prev) => ({
             ...prev,
             nickName: studyData.nickName || '',
             studyName: studyData.studyName || '',
@@ -161,7 +159,7 @@ export default function CreateStudyPage() {
     try {
       setIsSubmitting(true);
       let result;
-      
+
       if (studyId) {
         // 수정 모드
         result = await updateStudyData(form);
@@ -174,7 +172,12 @@ export default function CreateStudyPage() {
       }
     } catch (error) {
       console.error(studyId ? '스터디 수정 실패' : '스터디 생성 실패', error);
-      showToastMessage('warning', studyId ? '🚨 스터디 수정에 실패했습니다. 다시 시도해주세요.' : '🚨 스터디 생성에 실패했습니다. 다시 시도해주세요.');
+      showToastMessage(
+        'warning',
+        studyId
+          ? '🚨 스터디 수정에 실패했습니다. 다시 시도해주세요.'
+          : '🚨 스터디 생성에 실패했습니다. 다시 시도해주세요.',
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -191,13 +194,9 @@ export default function CreateStudyPage() {
     <>
       {showToast && (
         <div className={styles.toast}>
-          <Toast
-            type={toastType}
-            toastStudyText={toastMessage}
-          />
+          <Toast type={toastType} toastStudyText={toastMessage} />
         </div>
       )}
-      <Header />
       <div className={styles.page}>
         <main className={styles.card}>
           <h2 className={styles.title}>{studyId ? '스터디 수정하기' : '스터디 만들기'}</h2>
@@ -243,10 +242,14 @@ export default function CreateStudyPage() {
               </div>
             </div>
 
-            <Input type={studyId ? "passwordOnly" : "password"} onValueChange={onPasswordChange} />
+            <Input type={studyId ? 'passwordOnly' : 'password'} onValueChange={onPasswordChange} />
 
             <div className={styles.btnRow}>
-              <Button childrenType={studyId ? "completeModify" : "create"} type="submit" disabled={isSubmitting} />
+              <Button
+                childrenType={studyId ? 'completeModify' : 'create'}
+                type="submit"
+                disabled={isSubmitting}
+              />
             </div>
           </form>
         </main>

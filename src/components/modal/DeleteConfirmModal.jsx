@@ -16,12 +16,23 @@ function DeleteConfirmModal({
     onConfirm(passwordValue);
   };
 
+  const handleCancel = () => {
+    setPasswordValue(''); // 비밀번호 입력값 초기화
+    onClose();
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleConfirm();
+    }
+  };
+
   return (
     <Popup>
       <div className={styles.modal}>
         <div className={styles.header}>
           <div className={styles.title}>{studyName}</div>
-          <button className={styles.exitBtn} onClick={onClose}>
+          <button className={styles.exitBtn} onClick={handleCancel}>
             나가기
           </button>
         </div>
@@ -32,11 +43,15 @@ function DeleteConfirmModal({
           삭제하려면 비밀번호를 입력해주세요.
         </div>
         <div className={styles.passwordWrapper}>
-          <Input type="passwordOnly" onValueChange={(v) => setPasswordValue(v)} />
+          <Input
+            type="passwordOnly"
+            onValueChange={(v) => setPasswordValue(v)}
+            onKeyDown={handleKeyDown}
+          />
           {errorMessage && <div className={styles.error}>{errorMessage}</div>}
         </div>
         <div className={styles.buttonGroup}>
-          <Button childrenType="cancel" onClick={onClose} />
+          <Button childrenType="cancel" onClick={handleCancel} />
           <Button childrenType="confirm" onClick={handleConfirm} />
         </div>
       </div>
