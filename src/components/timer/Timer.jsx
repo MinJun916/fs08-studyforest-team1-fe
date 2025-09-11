@@ -1,5 +1,6 @@
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import s from '@/styles/components/timer/Timer.module.scss';
+import Button from '@/components/button/Button';
 
 const Timer = forwardRef(function Timer(
   {
@@ -285,9 +286,7 @@ const Timer = forwardRef(function Timer(
             className={s.secondsInput}
           />
         </div>
-        <button onClick={internalStart} disabled={disabled}>
-          {disabled ? '처리 중...' : 'Start'}
-        </button>
+        <Button childrenType="start" onClick={internalStart} />
       </div>
     );
   }
@@ -299,18 +298,12 @@ const Timer = forwardRef(function Timer(
       <div className={s.buttonGroup}>
         {!isOvertime ? (
           <>
-            <button onClick={pause} disabled={disabled}>
-              {disabled ? '처리 중...' : '일시정지'}
-            </button>
-            <button disabled>시작</button>
-            <button onClick={restart} disabled={disabled}>
-              {disabled ? '처리 중...' : '재시작'}
-            </button>
+            <Button childrenType="pause" onClick={pause} />
+            <Button childrenType="start" disabled={true} />
+            <Button childrenType="restart" onClick={restart} />
           </>
         ) : (
-          <button onClick={stop} disabled={disabled}>
-            {disabled ? '처리 중...' : '스탑'}
-          </button>
+          <Button childrenType="stop" onClick={stop} />
         )}
       </div>
     </div>

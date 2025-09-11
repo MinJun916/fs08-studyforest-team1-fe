@@ -184,8 +184,31 @@ $gray-cancel: #ddd;
 }
 
 // ===== 특수 스타일 =====
-.start,
+.start {
+  .btnText {
+    font-family: 'Pretendard';
+    text-align: center;
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  @media (max-width: v.$breakpoint-mobile) {
+    @include button-size(140px, 48px);
+
+    .btnText {
+      font-size: 18px;
+    }
+
+    .inlineIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 .stop {
+  @include button-size(333px, 60px);
+
   .btnText {
     font-family: 'Pretendard';
     text-align: center;
