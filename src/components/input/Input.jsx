@@ -1,23 +1,34 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Eye from '@assets/icons/Ic_eye.svg';
 import EyeOff from '@assets/icons/Ic_eyeOff.svg';
 import styles from '@styles/components/input/Input.module.scss';
 import Ic_search from '@assets/icons/Ic_search.svg';
 
 function Input({ type = 'search', onValueChange, onKeyDown, value }) {
-  const [inputValue, setInputValue] = useState('');
-  const [password, setPassword] = useState('');
+  const [inputValue, setInputValue] = useState(value || '');
+  const [password, setPassword] = useState(value || '');
   const [checkPassword, setCheckPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showCheckPassword, setShowCheckPassword] = useState(false);
 
+  // value prop이 변경되면 내부 상태 업데이트
+  useEffect(() => {
+    if (value !== undefined) {
+      setInputValue(value);
+      setPassword(value);
+    }
+  }, [value]);
+
   // 외부에서 value prop이 전달되면 해당 값을 사용
   const currentPassword = value !== undefined ? value : password;
+  const currentInputValue = value !== undefined ? value : inputValue;
 
   const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputValue(value);
-    onValueChange(value);
+    const newValue = e.target.value;
+    if (value === undefined) {
+      setInputValue(newValue);
+    }
+    onValueChange(newValue);
   };
 
   const handlePasswordChange = (e) => {
@@ -44,7 +55,7 @@ function Input({ type = 'search', onValueChange, onKeyDown, value }) {
             className={styles.input}
             type="text"
             placeholder="닉네임을 입력해주세요"
-            value={inputValue}
+            value={currentInputValue}
             onChange={handleInputChange}
             autoComplete="username"
           ></input>
@@ -57,15 +68,15 @@ function Input({ type = 'search', onValueChange, onKeyDown, value }) {
           <div className={styles.inputWrapper}>
             <div className={styles.inputTitle}>스터디 이름</div>
             <input
-              className={`${styles.input} ${inputValue ? '' : styles.errorInput}`}
+              className={`${styles.input} ${currentInputValue ? '' : styles.errorInput}`}
               type="text"
               placeholder="스터디 이름을 입력해주세요"
-              value={inputValue}
+              value={currentInputValue}
               onChange={handleInputChange}
               autoComplete="off"
             ></input>
           </div>
-          {!inputValue && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
+          {!currentInputValue && <div className={styles.error}>*스터디 이름을 입력해주세요</div>}
         </div>
       );
 
