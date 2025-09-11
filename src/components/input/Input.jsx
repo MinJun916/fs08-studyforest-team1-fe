@@ -25,6 +25,11 @@ const Input = forwardRef(
       }
     }, [value]);
 
+    // showError prop이 변경되면 내부 상태 업데이트
+    useEffect(() => {
+      setShowError(initialShowError);
+    }, [initialShowError]);
+
     // 외부에서 value prop이 전달되면 해당 값을 사용
     const currentPassword = value !== undefined ? value : password;
     const currentInputValue = value !== undefined ? value : inputValue;
