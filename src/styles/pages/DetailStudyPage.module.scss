@@ -153,6 +153,7 @@ p {
     padding: 14px 41px;
     text-align: center;
     vertical-align: middle;
+    height: auto;
   }
 
   .habitTitle {
@@ -160,6 +161,9 @@ p {
     padding-left: 18px;
     font-weight: 600;
     max-width: 190px;
+    white-space: normal;
+    word-wrap: break-word;
+    line-height: 1.4;
   }
 
   .pawCell {
