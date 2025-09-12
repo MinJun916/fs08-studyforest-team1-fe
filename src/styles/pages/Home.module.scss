@@ -12,13 +12,13 @@
   gap: 40px;
 
   @include m.tablet {
-    width: 697px;
+    min-width: 697px;
     gap: 24px;
-    padding-top: 20px;
+    padding: 20px 24px 0 24px;
   }
 
   @include m.mobile {
-    width: 344px;
+    min-width: 344px;
     gap: 16px;
     padding-top: 20px;
   }
