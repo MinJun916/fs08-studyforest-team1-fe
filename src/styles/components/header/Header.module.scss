@@ -15,7 +15,8 @@ $maxw: 1920px;
 
   width: 100%;
   min-height: $header-h;
-  padding: $pad-y $pad-x-desktop;
+  padding: $pad-y 0;
+  margin: 0 auto;
   z-index: 100;
   background: v.$bg;
 
@@ -31,7 +32,7 @@ $maxw: 1920px;
 }
 
 .headerInner {
-  max-width: $maxw;
+  max-width: calc($maxw - $pad-x-desktop * 2);
   margin: 0 auto;
   display: flex;
   align-items: center;

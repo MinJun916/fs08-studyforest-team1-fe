@@ -53,7 +53,7 @@ const Input = forwardRef(
     const handleCheckPasswordChange = (e) => {
       const value = e.target.value;
       setCheckPassword(value);
-      onValueChange(value);
+      // 비밀번호 확인 필드는 onValueChange를 호출하지 않음
     };
 
     // 유효성 검사 공통 함수들
@@ -107,6 +107,15 @@ const Input = forwardRef(
     useImperativeHandle(ref, () => ({
       validateInput: (value, inputType) => {
         const result = validateInput(value, inputType);
+        
+        // password 타입일 때 비밀번호 확인도 함께 검증
+        if (inputType === 'password' && !result.error) {
+          if (checkPassword && !validatePasswordMatch(value, checkPassword)) {
+            setShowError(true);
+            return { error: true, message: '*비밀번호가 일치하지 않습니다' };
+          }
+        }
+        
         // 에러가 있으면 showError를 true로 설정
         if (result.error) {
           setShowError(true);
@@ -124,6 +133,10 @@ const Input = forwardRef(
           default:
             return inputValue;
         }
+      },
+      setError: (message) => {
+        setShowError(true);
+        // 커스텀 에러 메시지를 표시하기 위한 함수 (현재는 기본 동작만)
       },
     }));
 

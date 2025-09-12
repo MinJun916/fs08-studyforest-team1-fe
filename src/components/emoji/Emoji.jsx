@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Picker from 'emoji-picker-react';
 import api from '@/lib/axios';
-import Spinner from '@/components/spinner/Spinner';
 import styles from '@/styles/components/emoji/Emoji.module.scss';
 
 function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-e6a3fb4d7854' }) {
@@ -148,38 +147,30 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
 
   return (
     <div ref={rootRef} className={styles.emojiBox}>
-      {loading ? (
-        <Spinner loading={loading} size={12} />
-      ) : (
-        items.length > 0 && (
-          <div className={styles.list}>
-            {items.slice(0, 3).map((it, i) => (
-              <div
-                key={it.emoji + i}
-                className={styles.item}
-                role="button"
-                tabIndex={0}
-                onClick={() => handleItemClick(it.emoji)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleItemClick(it.emoji);
-                  }
-                }}
-                style={{ opacity: emojiLoading[it.emoji] ? 0.6 : 1 }}
-              >
-                {emojiLoading[it.emoji] ? (
-                  <Spinner loading={true} size={10} />
-                ) : (
-                  <>
-                    <span className={styles.itemEmoji}>{it.emoji}</span>
-                    <span className={styles.itemCount}>{it.count}</span>
-                  </>
-                )}
-              </div>
-            ))}
-          </div>
-        )
+      {items.length > 0 && (
+        <div className={styles.list}>
+          {items.slice(0, 3).map((it, i) => (
+            <div
+              key={it.emoji + i}
+              className={styles.item}
+              role="button"
+              tabIndex={0}
+              onClick={() => handleItemClick(it.emoji)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleItemClick(it.emoji);
+                }
+              }}
+              style={{ opacity: emojiLoading[it.emoji] ? 0.6 : 1 }}
+            >
+              <>
+                <span className={styles.itemEmoji}>{it.emoji}</span>
+                <span className={styles.itemCount}>{it.count}</span>
+              </>
+            </div>
+          ))}
+        </div>
       )}
       <div className={styles.emojiAdd}>
         <button
@@ -238,14 +229,10 @@ function Emoji({ onSelect, pickerProps = {}, studyId = 'c0071d8c-90e4-471b-b9cf-
                     }}
                     style={{ opacity: emojiLoading[it.emoji] ? 0.6 : 1 }}
                   >
-                    {emojiLoading[it.emoji] ? (
-                      <Spinner loading={true} size={10} />
-                    ) : (
-                      <>
-                        <span className={styles.itemEmoji}>{it.emoji}</span>
-                        <span className={styles.itemCount}>{it.count}</span>
-                      </>
-                    )}
+                    <>
+                      <span className={styles.itemEmoji}>{it.emoji}</span>
+                      <span className={styles.itemCount}>{it.count}</span>
+                    </>
                   </div>
                 ))}
               </div>

@@ -61,19 +61,14 @@ function Focus() {
     setShowPauseToast(false); // 시작 시 토스트 숨김
   };
 
-  // 타이머 일시정지 시 토스트 표시
+  // 타이머 일시정지 시 처리
   const handleTimerPause = () => {
-    setShowPauseToast(true);
-
-    // 3초 후 토스트 자동 숨김
-    setTimeout(() => {
-      setShowPauseToast(false);
-    }, 3000);
+    // 일시정지 시에는 별도 처리 없음
   };
 
-  // 타이머 재개 시 토스트 숨김
+  // 타이머 재개 시 처리
   const handleTimerResume = () => {
-    setShowPauseToast(false);
+    // 재개 시에는 별도 처리 없음
   };
 
   // 타이머 완료 시 API 호출 및 포인트 업데이트
@@ -89,6 +84,12 @@ function Focus() {
         await fetchStudy(); // 백엔드에서 업데이트된 스터디 데이터 다시 가져오기
         const focusPoint = response.data.focuses.focusPoint;
         setGetFocusPoint(focusPoint);
+        setShowPauseToast(true); // 타이머 완료 시 토스트 표시
+
+        // 3초 후 토스트 자동 숨김
+        setTimeout(() => {
+          setShowPauseToast(false);
+        }, 3000);
       }
     } catch (err) {
       console.error('타이머 완료 API 호출 실패:', err);
