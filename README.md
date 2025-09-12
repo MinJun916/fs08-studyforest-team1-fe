@@ -80,25 +80,60 @@
 
 ## 🔎 팀원별 구현 기능 상세
 
-### 🧑‍💻 신민준 (Fullstack)
+### 🧑‍💻 신민준 (Team Lead)(스크럼 마스터)(Fullstack)(FE Lead)(BE Lead)(FE 배포)(BE 배포)
 
-- 구현 기능 상세
+BE
+
+- ERD 분석 및 설계
+- 기술스택 세팅
+- 기본 라우트 세팅
+- 미들웨어 세팅
+- API 개발 및 Swagger Docs
+
+FE
+
+- 프론트 설정파일 세팅
+- 루트 레이아웃 세팅
+- 전체 컴포넌트 코드 리뉴얼
+- 전체 페이지 코드 리팩토링
+- 로딩 컴포넌트, 스피너 구현
+- 404 페이지 구현
+- 에러 페이지 구현
 
 ### 🎨 이유찬 (Frontend)
 
-- 구현 기능 상세
+FE 기술스택 세팅
 
 ### 🎨 장수인 (Frontend)
 
-- 구현 기능 상세
+- 컴포넌트 제작
+  (버튼, 스티커, 토스트, 헤더)
+
+- 페이지 제작
+  (스터디 생성, 집중 일부)
 
 ### 🎨 홍승전 (Frontend)
 
-- 구현 기능 상세
+- 컴포넌트 제작
+  (인풋, 팝업, 카드)
+
+- 페이지 제작
+  (홈, 습관, 집중 일부)
 
 ### 🧑‍💻 이광체 (Fullstack)
 
-- 구현 기능 상세
+BE
+
+- ERD 분석 및 설계
+- DB 스키마 및 Mock 데어터
+- API 개발 및 Swagger Docs
+- API 코드 유지보수
+
+FE
+
+- 이모지/태그 컴포넌트
+- 드롭다운 컴포넌트
+- 스터디 상세 페이지
 
 ---
 
@@ -107,19 +142,22 @@
 ```
 
 .
-├── src
-│   ├── assets
-│   ├── components
-│   ├── pages
-│   ├── styles
-│   ├── App.jsx
-│   └── main.jsx
 ├── eslint.config.js
 ├── index.html
 ├── jsconfig.json
 ├── package-lock.json
 ├── package.json
 ├── README.md
+├── src
+│   ├── App.jsx
+│   ├── assets
+│   ├── components
+│   ├── hooks
+│   ├── lib
+│   ├── main.jsx
+│   ├── pages
+│   └── styles
+├── vercel.json
 └── vite.config.js
 
 ```
@@ -138,4 +176,4 @@ https://studyforest-n1at.onrender.com/api-docs
 
 ## 프로젝트 회고록
 
-(제작한 발표자료 링크 혹은 첨부파일 첨부)
+[초급 프로젝트 1팀 제출 자료](https://drive.google.com/drive/folders/194QeIH9rCtqDJT-3r2WjNUWbeRMi17WT?usp=drive_link)
