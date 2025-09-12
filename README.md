@@ -9,11 +9,11 @@
 
 ## 👥 팀원 구성
 
-- **신민준** (Fullstack | Team Lead | FE Lead | BE Lead) 🧑‍💻 [(개인 Github 링크)]()
-- **이유찬** (Frontend) 🎨 [(개인 Github 링크)]()
-- **장수인** (Frontend) 🎨 [(개인 Github 링크)]()
-- **홍승전** (Frontend) 🎨 [(개인 Github 링크)]()
-- **이광체** (Fullstack) 🧑‍💻 [(개인 Github 링크)]()
+- **신민준** (Fullstack | Team Lead | FE Lead | BE Lead) 🧑‍💻
+- **이유찬** (Frontend) 🎨
+- **장수인** (Frontend) 🎨
+- **홍승전** (Frontend) 🎨
+- **이광체** (Fullstack) 🧑‍💻
 
 ---
 
