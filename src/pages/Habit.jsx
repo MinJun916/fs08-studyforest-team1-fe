@@ -319,11 +319,13 @@ function Habit() {
                       onClick={() => handleHabitClick(studyId, habit.id)}
                       disabled={loading || habitToggleLoading[habit.id]}
                     >
+                    <div className={styles.habitNameText}>
                       {habitToggleLoading[habit.id] ? (
                         <Spinner loading={true} size={12} />
                       ) : (
                         habit.name
                       )}
+                    </div>
                     </button>
                   ))}
               </div>
