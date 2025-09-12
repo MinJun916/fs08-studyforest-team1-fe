@@ -38,7 +38,7 @@
   line-height: normal;
   color: var(--black-black_414141, #414141);
   text-align: center;
-  width: 200px;
+  width: 240px;
   min-width: 200px;
   border-bottom: 2px solid transparent;
   transition: border-bottom-color 0.2s ease;
@@ -86,7 +86,7 @@
   line-height: normal;
   color: var(--black-black_414141, #414141);
   text-align: center;
-  width: 200px;
+  width: 240px;
   min-width: 200px;
   border-bottom: 2px solid transparent;
   transition: border-bottom-color 0.2s ease;
@@ -125,7 +125,7 @@
   }
   .minutesInput {
     font-size: 96px;
-    width: 120px;
+    width: 140px;
     min-width: 120px;
   }
   .separator {
@@ -136,7 +136,7 @@
   }
   .secondsInput {
     font-size: 96px;
-    width: 120px;
+    width: 140px;
     min-width: 120px;
   }
 }
@@ -146,7 +146,7 @@
   }
   .minutesInput {
     font-size: 72px;
-    width: 90px;
+    width: 110px;
     min-width: 90px;
   }
   .separator {
@@ -157,7 +157,7 @@
   }
   .secondsInput {
     font-size: 72px;
-    width: 90px;
+    width: 110px;
     min-width: 90px;
   }
 }
